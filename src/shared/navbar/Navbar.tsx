@@ -1,20 +1,10 @@
 import logo from "@/assets/expat-logo.png";
 import Profile from "@/components/profile/Profile";
+import { menuItems } from "@/contexts/menuItems";
 import Image from "next/image";
 import Link from "next/link";
 
-interface MenuItem {
-  label: string;
-  href: string;
-}
-
 const Navbar = () => {
-  const menuItems: MenuItem[] = [
-    { label: "Dashboard", href: "/" },
-    { label: "Country search", href: "/" },
-    { label: "Saved profile", href: "/" },
-  ];
-
   return (
     <div className="py-6">
       <div className="container">
@@ -24,7 +14,7 @@ const Navbar = () => {
               <Image
                 src={logo}
                 alt="Expat Girls logo"
-                className="w-[108px] h-[80px] object-contain"
+                className="w-[108px] h-[60px] object-contain"
               />
             </Link>
             <ul className="flex items-center gap-[56px]">
@@ -32,7 +22,7 @@ const Navbar = () => {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-[18px] font-medium transition-colors duration-300 hover:text-primary"
+                    className="font-medium transition-colors duration-300 hover:text-primary"
                   >
                     {item.label}
                   </Link>
