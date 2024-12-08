@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -15,7 +14,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { menuItems } from "@/constants/menuItems";
 import { cn } from "@/lib/utils";
-import { SideDrawerProps } from "@/types/sideDrawer";
+import { SideDrawerProps } from "@/types/SideDrawer";
 
 export function SideDrawer({ className }: SideDrawerProps) {
   return (
