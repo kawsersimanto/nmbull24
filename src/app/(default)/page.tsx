@@ -1,8 +1,10 @@
+import Banner from "@/components/home/Banner";
+
 const Home = () => {
   return (
-    <div className="min-h-[500vh] bg-slate-500">
-      <div className="">Home</div>
-    </div>
+    <>
+      <Banner />
+    </>
   );
 };
 
