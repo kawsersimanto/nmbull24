@@ -1,15 +1,13 @@
 import logo from "@/assets/expat-logo.png";
-import Profile from "@/components/profile/Profile";
 import { menuItems } from "@/constants/menuItems";
 import Image from "next/image";
 import Link from "next/link";
-import { SideDrawer } from "../side-drawer/SideDrawer";
 
-const Navbar = () => {
+const HomeNavbar = () => {
   return (
     <div className="fixed top-6 left-0 right-0">
       <div className="container">
-        <div className="py-[14px] px-5 bg-white rounded-2xl">
+        <div className="py-[14px] px-5 bg-[rgba(244,244,244,0.20)] backdrop-blur-[12px] rounded-2xl">
           <div className="flex items-center justify-between">
             <Link href="/">
               <Image
@@ -23,17 +21,19 @@ const Navbar = () => {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="font-medium transition-colors duration-300 hover:text-primary"
+                    className="font-medium transition-colors duration-300 text-white hover:text-primary"
                   >
                     {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="flex items-center gap-3">
-              <SideDrawer className="lg:hidden" />
-              <Profile />
-            </div>
+            <Link
+              href="/login"
+              className="bg-white py-[10px] px-6 rounded-xl font-semibold text-primary"
+            >
+              Log in
+            </Link>
           </div>
         </div>
       </div>
@@ -41,4 +41,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default HomeNavbar;
