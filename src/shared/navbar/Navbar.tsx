@@ -7,7 +7,7 @@ import { SideDrawer } from "../side-drawer/SideDrawer";
 
 const Navbar = () => {
   return (
-    <div className="fixed top-6 left-0 right-0">
+    <div className="fixed top-6 left-0 right-0 z-[999]">
       <div className="container">
         <div className="py-[14px] px-5 bg-white rounded-2xl">
           <div className="flex items-center justify-between">

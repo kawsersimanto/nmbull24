@@ -6,7 +6,7 @@ import { SideDrawer } from "../side-drawer/SideDrawer";
 
 const HomeNavbar = () => {
   return (
-    <div className="fixed top-6 left-0 right-0">
+    <div className="fixed top-6 left-0 right-0 z-[999]">
       <div className="container">
         <div className="py-[14px] px-5 bg-[rgba(244,244,244,0.20)] backdrop-blur-[12px] rounded-2xl">
           <div className="flex items-center justify-between">
