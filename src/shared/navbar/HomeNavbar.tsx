@@ -2,6 +2,7 @@ import logo from "@/assets/expat-logo.png";
 import { menuItems } from "@/constants/menuItems";
 import Image from "next/image";
 import Link from "next/link";
+import { SideDrawer } from "../side-drawer/SideDrawer";
 
 const HomeNavbar = () => {
   return (
@@ -28,12 +29,15 @@ const HomeNavbar = () => {
                 </li>
               ))}
             </ul>
-            <Link
-              href="/login"
-              className="bg-white py-[10px] px-6 rounded-xl font-semibold text-primary"
-            >
-              Log in
-            </Link>
+            <div className="flex items-center gap-3">
+              <SideDrawer className="lg:hidden" />
+              <Link
+                href="/login"
+                className="bg-white py-[10px] lg:px-6 px-4 rounded-xl lg:font-semibold font-medium text-primary"
+              >
+                Log in
+              </Link>
+            </div>
           </div>
         </div>
       </div>

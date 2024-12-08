@@ -11,7 +11,6 @@ interface children {
 
 const Layout = ({ children }: children) => {
   const path = usePathname();
-  console.log(path);
 
   return (
     <>
