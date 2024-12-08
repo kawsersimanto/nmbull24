@@ -7,7 +7,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { profileMenuItems } from "@/constants/profileMenuItems";
 import { ChevronRight, LogOut } from "lucide-react";
+import Link from "next/link";
 
 export default function Profile() {
   return (
@@ -31,25 +33,22 @@ export default function Profile() {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-[280px]" align="end">
-          <DropdownMenuItem className="flex items-center justify-between py-3">
-            <span>My Profile</span>
-            <ChevronRight className="h-4 w-4" />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center justify-between py-3">
-            <span>Get verified</span>
-            <ChevronRight className="h-4 w-4" />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center justify-between py-3">
-            <span>Help & support</span>
-            <ChevronRight className="h-4 w-4" />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center justify-between py-3">
-            <span>Privacy & terms</span>
-            <ChevronRight className="h-4 w-4" />
-          </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center justify-between py-3 text-red-500">
-            <span>Logout</span>
-            <LogOut className="h-4 w-4" />
+          {profileMenuItems.map((item) => (
+            <DropdownMenuItem key={item.label} className="py-3">
+              <Link
+                href={item.href}
+                className="flex items-center justify-between w-full"
+              >
+                {item.label}
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            </DropdownMenuItem>
+          ))}
+          <DropdownMenuItem>
+            <button className="flex items-center justify-between py-1 text-red-500 w-full">
+              <span>Logout</span>
+              <LogOut className="h-4 w-4" />
+            </button>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

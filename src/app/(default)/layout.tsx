@@ -1,9 +1,15 @@
 import Navbar from "@/shared/navbar/Navbar";
+import { ReactNode } from "react";
 
-const Layout = () => {
+interface children {
+  children: ReactNode;
+}
+
+const Layout = ({ children }: children) => {
   return (
     <>
       <Navbar />
+      {children}
     </>
   );
 };

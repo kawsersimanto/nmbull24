@@ -7,7 +7,7 @@ import { SideDrawer } from "../side-drawer/SideDrawer";
 
 const Navbar = () => {
   return (
-    <div className="py-6">
+    <div className="py-6 sticky top-0 left-0 right-0">
       <div className="container">
         <div className="py-[14px] px-5 bg-white rounded-2xl">
           <div className="flex items-center justify-between">
@@ -31,8 +31,8 @@ const Navbar = () => {
               ))}
             </ul>
             <div className="flex items-center gap-3">
-              <Profile />
               <SideDrawer className="lg:hidden" />
+              <Profile />
             </div>
           </div>
         </div>
