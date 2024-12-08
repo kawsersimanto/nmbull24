@@ -1,8 +1,9 @@
 import logo from "@/assets/expat-logo.png";
 import Profile from "@/components/profile/Profile";
-import { menuItems } from "@/contexts/menuItems";
+import { menuItems } from "@/constants/menuItems";
 import Image from "next/image";
 import Link from "next/link";
+import { SideDrawer } from "../side-drawer/SideDrawer";
 
 const Navbar = () => {
   return (
@@ -14,10 +15,10 @@ const Navbar = () => {
               <Image
                 src={logo}
                 alt="Expat Girls logo"
-                className="w-[108px] h-[60px] object-contain"
+                className="lg:w-[108px] w-[65px] h-[auto] lg:h-[60px] object-contain"
               />
             </Link>
-            <ul className="flex items-center gap-[56px]">
+            <ul className="lg:flex hidden items-center gap-[56px]">
               {menuItems.map((item) => (
                 <li key={item.label}>
                   <Link
@@ -29,7 +30,10 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
-            <Profile />
+            <div className="flex items-center gap-3">
+              <Profile />
+              <SideDrawer className="lg:hidden" />
+            </div>
           </div>
         </div>
       </div>

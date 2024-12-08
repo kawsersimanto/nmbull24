@@ -14,10 +14,12 @@ export default function Profile() {
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger className="w-full">
-          <div className="flex items-center gap-3 rounded-lg border p-3 hover:bg-accent">
-            <Avatar className="h-10 w-10">
+          <div className="flex items-center lg:gap-3 gap-1 rounded-lg border lg:p-3 px-2 py-1 hover:bg-accent">
+            <Avatar className="lg:h-10 h-8 w-8 lg:w-10">
               <AvatarImage src="/placeholder.svg" alt="Profile picture" />
-              <AvatarFallback>SH</AvatarFallback>
+              <AvatarFallback className="lg:text-inherit text-sm">
+                SH
+              </AvatarFallback>
             </Avatar>
             <div className="lg:flex flex-col items-start hidden">
               <div className="text-sm font-medium">Hey Saifur Hadid</div>
