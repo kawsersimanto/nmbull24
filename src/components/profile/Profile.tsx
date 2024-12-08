@@ -19,7 +19,7 @@ export default function Profile() {
               <AvatarImage src="/placeholder.svg" alt="Profile picture" />
               <AvatarFallback>SH</AvatarFallback>
             </Avatar>
-            <div className="flex flex-col items-start">
+            <div className="lg:flex flex-col items-start hidden">
               <div className="text-sm font-medium">Hey Saifur Hadid</div>
               <div className="text-xs text-red-500">
                 Your account not verified yet
@@ -28,7 +28,7 @@ export default function Profile() {
             <ChevronRight className="ml-auto h-4 w-4 text-muted-foreground" />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-[280px]" align="start">
+        <DropdownMenuContent className="w-[280px]" align="end">
           <DropdownMenuItem className="flex items-center justify-between py-3">
             <span>My Profile</span>
             <ChevronRight className="h-4 w-4" />
