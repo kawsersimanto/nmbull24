@@ -1,11 +1,26 @@
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import ForgotPasswordSchema ,{ForgotPasswordData} from "@/schema/ForgotPasswordSchema"
 
 export default function ForgotPassword() {
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<any>({
+    resolver: zodResolver(ForgotPasswordSchema),
+  });
+  const onSubmit = (data:ForgotPasswordData)=>{
+    console.log(data)
+  }
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white p-4">
+    <div className="flex min-h-screen items-center font-sans justify-center bg-white p-4">
       <div className="w-full max-w-[400px] space-y-6">
         {/* Logo */}
         <div className="flex justify-center">
@@ -37,7 +52,7 @@ export default function ForgotPassword() {
             </p>
           </div>
 
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm text-gray-600">
                 Email address
@@ -46,12 +61,12 @@ export default function ForgotPassword() {
                 id="email"
                 placeholder="name@example.com"
                 type="email"
-                required
                 className="w-full border-gray-200"
+                {...register("email")}
               />
             </div>
 
-            <div className="flex items-center justify-end text-sm">
+            <div className="flex items-center justify-start text-sm">
               <span className="text-gray-600">Remember the password?</span>
               <Link href="/login" className="ml-1 text-blue-600 hover:underline">
                 Sign in
@@ -60,7 +75,7 @@ export default function ForgotPassword() {
 
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="w-full bg-primary hover:bg-blue-700"
             >
               Send Code
               <svg
