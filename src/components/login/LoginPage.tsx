@@ -1,17 +1,35 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import LoginSchema, { LoginFormData } from "@/schema/LoginSchema";
+
 
 export default function LoginPage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<any>({
+    resolver: zodResolver(LoginSchema), // Use the imported schema
+  });
+
+  const onSubmit = (data: LoginFormData) => {
+    console.log("Form Data: ", data);
+  };
+
   return (
     <div className="flex min-h-screen">
       {/* Left side - Image */}
       <div className="relative hidden w-1/2 lg:block">
         <Image
-          src="/placeholder.svg?height=800&width=600"
+          src="https://i.ibb.co/rskVH3c/Leonardo-Phoenix-a-majestic-ancient-tree-with-a-towering-trunk-3.jpg"
           alt="People looking at map"
           className="object-cover"
           fill
@@ -44,16 +62,21 @@ export default function LoginPage() {
           </div>
 
           {/* Form */}
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email">Email address</Label>
               <Input
                 id="email"
                 placeholder="Enter your email"
                 type="email"
-                required
                 className="w-full"
+                {...register("email")}
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message as string}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -62,14 +85,19 @@ export default function LoginPage() {
                 id="password"
                 placeholder="Enter your password"
                 type="password"
-                required
                 className="w-full"
+                {...register("password")}
               />
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password.message as string}
+                </p>
+              )}
             </div>
 
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <Checkbox id="remember" />
+                <Checkbox id="remember" {...register("rememberMe")} />
                 <label
                   htmlFor="remember"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -106,6 +134,5 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
