@@ -1,5 +1,6 @@
 "use client";
 
+import { Footer } from "@/shared/footer/Footer";
 import HomeNavbar from "@/shared/navbar/HomeNavbar";
 import Navbar from "@/shared/navbar/Navbar";
 import { usePathname } from "next/navigation";
@@ -16,6 +17,7 @@ const Layout = ({ children }: children) => {
     <>
       {path === "/" ? <HomeNavbar /> : <Navbar />}
       {children}
+      <Footer></Footer>
     </>
   );
 };

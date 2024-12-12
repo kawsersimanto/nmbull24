@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import ForgotPasswordSchema ,{ForgotPasswordData} from "@/schema/ForgotPasswordSchema"
+import Image from "next/image"
+import logo from "@/assets/expat-logo.png";
 
 export default function ForgotPassword() {
   const {
@@ -20,53 +22,43 @@ export default function ForgotPassword() {
     console.log(data)
   }
   return (
-    <div className="flex min-h-screen items-center font-sans justify-center bg-white p-4">
-      <div className="w-full max-w-[400px] space-y-6">
+    <div className="flex min-h-screen items-center justify-center bg-white p-4 sm:p-6 md:p-8">
+      <div className="w-full max-w-[454px] space-y-6">
         {/* Logo */}
         <div className="flex justify-center">
           <div className="flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-6 w-6 text-blue-600"
-            >
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-            <span className="text-xl font-bold text-blue-600">EXPAT</span>
-            <span className="text-xl font-light">Global System</span>
+            <Image
+              src={logo}
+              alt="Expat Girls logo"
+              className="w-[142.045px] h-[100px] object-contain"
+            />
           </div>
         </div>
 
         {/* Form */}
         <div className="space-y-4">
           <div className="space-y-1 text-center">
-            <h1 className="text-2xl font-semibold">Forget Password!</h1>
-            <p className="text-sm text-gray-500">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-sans font-semibold">Forget Password!</h1>
+            <p className="text-xs sm:text-sm md:text-base text-gray-500">
               Enter Your Registered Email Below.
             </p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm text-gray-600">
+              <Label htmlFor="email" className="text-base sm:text-lg md:text-[18px] font-normal text-[#475467]">
                 Email address
               </Label>
               <Input
                 id="email"
-                placeholder="name@example.com"
+                placeholder="georgia.young@example.com"
                 type="email"
-                className="w-full border-gray-200"
+                className="w-full text-[18px] text-[#475467] border-[#98A2B3] pr-10 placeholder:text-[#98A2B3] placeholder:text-sm placeholder:font-normal"
                 {...register("email")}
               />
             </div>
 
-            <div className="flex items-center justify-start text-sm">
+            <div className="flex items-center justify-start text-xs sm:text-sm">
               <span className="text-gray-600">Remember the password?</span>
               <Link href="/login" className="ml-1 text-blue-600 hover:underline">
                 Sign in
@@ -99,4 +91,3 @@ export default function ForgotPassword() {
     </div>
   )
 }
-
