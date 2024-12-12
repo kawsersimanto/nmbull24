@@ -24,15 +24,15 @@ const TravelCard: React.FC<TravelCardProps> = ({
   imageUrl,
 }) => {
   return (
-    <Card key={id} className="overflow-hidden">
-      <CardContent className="p-4"> {/* Padding set to 16px */}
+    <Card key={id} className="overflow-hidden shadow-lg rounded-lg">
+      <CardContent className="p-4">
         <div className="relative">
           <Image
             src={imageUrl}
             alt={name}
-            width={355.994} // Specific width
-            height={263.971} // Specific height
-            className="object-cover" // Ensure image is covered properly
+            width={355.994}
+            height={263.971}
+            className="object-cover rounded-md w-full h-[200px] sm:h-[250px] lg:h-[263px]"
           />
           <Button
             size="icon"
@@ -43,9 +43,9 @@ const TravelCard: React.FC<TravelCardProps> = ({
           </Button>
         </div>
         <div className="mt-5">
-          <div className="flex items-center mb-4 justify-between">
-            <h3 className="font-semibold">{name}</h3>
-            <span className="text-sm text-gray-600">
+          <div className="flex flex-col sm:flex-row sm:items-center mb-4 justify-between">
+            <h3 className="font-semibold text-lg sm:text-xl">{name}</h3>
+            <span className="text-sm text-gray-600 mt-2 sm:mt-0">
               Age: {age}y
             </span>
           </div>
@@ -62,7 +62,7 @@ const TravelCard: React.FC<TravelCardProps> = ({
           </div>
           <Button
             variant="ghost"
-            className="w-full mt-[28px] border border-solid border-[#0872BA] justify-center text-[#0872BA] hover:text-blue-700"
+            className="w-full mt-6 sm:mt-8 border border-solid border-[#0872BA] justify-center text-[#0872BA] hover:text-blue-700 text-[15.011px] font-medium"
           >
             See profile details
             <svg
@@ -77,7 +77,7 @@ const TravelCard: React.FC<TravelCardProps> = ({
               strokeLinejoin="round"
               className="ml-2 h-4 w-4"
             >
-              <polyline points="9 18 15 12 9 6" />
+              <path d="M4 12h16m0 0l-4-4m4 4l-4 4" />
             </svg>
           </Button>
         </div>

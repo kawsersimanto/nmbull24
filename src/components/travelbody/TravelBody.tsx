@@ -1,4 +1,3 @@
-// components/TravelBody.tsx
 import React from 'react';
 import TravelCard from '../travelCard/TravelCard';
 
@@ -71,7 +70,7 @@ const searchResults: SearchResult[] = [
 
 const TravelBody = () => {
   return (
-    <div className="container mt-20">
+    <div className="container mt-20 px-4 sm:px-6 lg:px-8">
       <div className="w-12 h-2 bg-[#0872BA] mx-auto lg:mx-0"></div>
       <div className="font-sans text-5xl font-semibold mt-2 text-[#1D2939]">
         <h1>Some of our verified members</h1>
@@ -81,7 +80,7 @@ const TravelBody = () => {
       </div>
 
       <div className="container mx-auto p-4">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {searchResults.map((result) => (
             <TravelCard key={result.id} {...result} />
           ))}
