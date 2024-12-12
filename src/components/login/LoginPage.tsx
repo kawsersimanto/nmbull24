@@ -9,7 +9,8 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoginSchema, { LoginFormData } from "@/schema/LoginSchema";
-
+import loginimg from '@/assets/login/Rectangle 10333.png';
+import logo from "@/assets/expat-logo.png";
 
 export default function LoginPage() {
   const {
@@ -25,11 +26,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex flex-col lg:flex-row bg-white min-h-screen">
       {/* Left side - Image */}
-      <div className="relative hidden w-1/2 lg:block">
+      <div className="relative hidden lg:block w-1/2">
         <Image
-          src="https://i.ibb.co/rskVH3c/Leonardo-Phoenix-a-majestic-ancient-tree-with-a-towering-trunk-3.jpg"
+          src={loginimg}
           alt="People looking at map"
           className="object-cover"
           fill
@@ -38,33 +39,22 @@ export default function LoginPage() {
       </div>
 
       {/* Right side - Login Form */}
-      <div className="flex w-full items-center justify-center lg:w-1/2">
-        <div className="w-full max-w-md space-y-8 px-4 md:px-8">
+      <div className="flex w-full items-center justify-center lg:w-1/2 p-6">
+        <div className="w-full max-w-[524px] space-y-8">
           {/* Logo */}
-          <div className="flex justify-center">
-            <div className="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-6 w-6 text-blue-600"
-              >
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
-              <span className="text-xl font-bold text-blue-600">EXPAT</span>
-              <span className="text-xl font-light">Global System</span>
-            </div>
+          <div className="flex justify-center mb-8">
+            <Image
+              src={logo}
+              alt="Expat Logo"
+              className="w-24 h-auto object-contain lg:w-28"
+            />
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Email Input */}
             <div className="space-y-2">
-              <Label htmlFor="email">Email address</Label>
+              <Label className="text-[18px] font-semibold" htmlFor="email">Email address</Label>
               <Input
                 id="email"
                 placeholder="Enter your email"
@@ -79,8 +69,9 @@ export default function LoginPage() {
               )}
             </div>
 
+            {/* Password Input */}
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label className="text-[18px] font-semibold" htmlFor="password">Password</Label>
               <Input
                 id="password"
                 placeholder="Enter your password"
@@ -95,7 +86,8 @@ export default function LoginPage() {
               )}
             </div>
 
-            <div className="flex items-center justify-between">
+            {/* Remember Me and Forgot Password */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
               <div className="flex items-center space-x-2">
                 <Checkbox id="remember" {...register("rememberMe")} />
                 <label
@@ -105,6 +97,7 @@ export default function LoginPage() {
                   Remember Me
                 </label>
               </div>
+
               <Link
                 href="/forgot-password"
                 className="text-sm text-blue-600 hover:text-blue-500"
@@ -113,7 +106,11 @@ export default function LoginPage() {
               </Link>
             </div>
 
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-500">
+            {/* Submit Button */}
+            <Button 
+              type="submit" 
+              className="w-full bg-primary hover:bg-blue-500"
+            >
               Log in
               <svg
                 xmlns="http://www.w3.org/2000/svg"

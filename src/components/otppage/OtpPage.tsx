@@ -1,48 +1,41 @@
+"use client"
 
-'use client'
-import { Button } from "@/components/ui/button";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { Check } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { Button } from "@/components/ui/button";
+import { Check } from 'lucide-react';
 
-// Define validation function for OTP
-const validateOtp = (otp: string[]) => {
-  // Check if the OTP length is exactly 6 and contains only numbers
-  if (otp.length !== 6 || otp.some((digit) => !/^[0-9]$/.test(digit))) {
-    return "OTP must be 6 digits and contain only numbers";
-  }
-  return true;
-};
+// Define the validation schema for the OTP field using zod
+const otpSchema = z.object({
+  otp: z
+    .string()
+    .length(6, "OTP must be exactly 6 digits")
+    .regex(/^[0-9]+$/, "OTP must contain only numbers"),
+});
 
-export default function OtpPage() {
-  // Initialize react-hook-form
+export default function OTPVerification() {
+  // Use react-hook-form with the zodResolver
   const {
     control,
     handleSubmit,
     formState: { errors },
-    setError, // Used to manually set errors if needed
   } = useForm({
+    resolver: zodResolver(otpSchema),
     defaultValues: {
-      otp: Array(6).fill(""), // Set default value for OTP
+      otp: "", // Initialize the otp value as an empty string
     },
+    mode: "onSubmit", // Validate only on submit
   });
 
-  // Handle OTP submission
   const onSubmit = (data: any) => {
-    // Validate OTP array only when form is submitted
-    const otpValidation = validateOtp(data.otp);
-    if (otpValidation !== true) {
-      setError("otp", { type: "manual", message: otpValidation });
-      return;
-    }
-
-    console.log("OTP Submitted:", data);
-    // Handle OTP submission logic here
+    console.log("OTP Submitted:", data); // Handle the OTP submission
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white p-4">
-      <div className="w-full max-w-[400px] space-y-8 rounded border border-primary p-6">
+    <div className="flex min-h-screen items-center font-sans  justify-center bg-white p-4">
+      <div className="w-full border border-primary max-w-[454px] space-y-8 rounded">
         {/* Logo */}
         <div className="flex justify-center">
           <div className="flex items-center gap-2">
@@ -54,13 +47,13 @@ export default function OtpPage() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="h-6 w-6 text-blue-600"
+              className="h-6 w-6 text-primary"
             >
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
               <polyline points="9 22 9 12 15 12 15 22" />
             </svg>
-            <span className="text-xl font-bold text-blue-600">EXPAT</span>
-            <span className="text-xl font-light">Global System</span>
+            <span className="text-xl font-sans font-bold text-blue-600">EXPAT</span>
+            <span className="text-xl font-sans font-light">Global System</span>
           </div>
         </div>
 
@@ -75,39 +68,37 @@ export default function OtpPage() {
           </p>
         </div>
 
-        {/* OTP Input */}
+        {/* OTP Input Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex justify-center">
-            <InputOTP maxLength={6} className="gap-2">
-              <InputOTPGroup>
-                {Array(6)
-                  .fill(null)
-                  .map((_, index) => (
-                    <Controller
-                      key={index}
-                      name={`otp[${index}]`} // Correct name format for array indices
-                      control={control}
-                      render={({ field }) => (
-                        <InputOTPSlot
-                          index={index}
-                          {...field}
-                          className="h-10 w-10 rounded border-gray-200"
-                        />
-                      )}
-                    />
-                  ))}
-              </InputOTPGroup>
-            </InputOTP>
+            <Controller
+              name="otp"
+              control={control}
+              render={({ field }) => (
+                <InputOTP {...field} maxLength={6} className="w-full">
+                  <InputOTPGroup className="w-full">
+                    {[...Array(6)].map((_, index) => (
+                      <InputOTPSlot
+                        key={index}
+                        index={index}
+                        className="h-[56px] w-[55.67px] rounded-[8px] border border-[#98A2B3] mx-2"
+                      />
+                    ))}
+                  </InputOTPGroup>
+                </InputOTP>
+              )}
+            />
           </div>
 
           {/* OTP Error Message */}
           {errors.otp && (
             <p className="text-center text-sm text-red-500">
-              {errors.otp?.message as string}
+              {errors.otp.message}
             </p>
           )}
 
-          <Button type="submit" className="w-full bg-primary text-center hover:bg-blue-700">
+          {/* Submit Button */}
+          <Button type="submit" className="w-full bg-primary hover:bg-blue-700">
             Submit
             <svg
               xmlns="http://www.w3.org/2000/svg"
