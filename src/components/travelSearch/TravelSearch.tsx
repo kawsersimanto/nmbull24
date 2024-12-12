@@ -1,48 +1,48 @@
-"use client"
-import travelimg from "@/assets/home/travelbanner.png"
-import { Button } from "@/components/ui/button"
+"use client";
+import travelimg from "@/assets/home/travelbanner.png";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 export default function TravelSearch() {
   return (
     <div className="mt-[160px]">
       <div className="container">
         <div
-          className="grid rounded-2xl pt-[40px] pb-[60px] px-[134px] grid-cols-1 gap-10 text-white bg-cover bg-center bg-no-repeat"
+          className="grid rounded-2xl pt-[40px] pb-[60px] px-[34px] lg:px-[134px] grid-cols-1 gap-10 text-white bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${travelimg.src})` }}
         >
           <div className="">
-            <h1 className="text-[54px] text-center font-normal">
+            <h1 className="text-[30px] sm:text-[40px] md:text-[54px] text-center font-normal">
               Quick search your travel partner
             </h1>
           </div>
           <div className="max-w-[532px] w-full mx-auto"> {/* Ensure it takes full width of max 532px */}
             <div className="rounded-lg bg-white/10 backdrop-blur-md p-6 space-y-6">
-              <div className="text-white text-2xl mb-5 text-center">Search for</div>
+              <div className="text-white text-xl sm:text-2xl mb-5 text-center">Search for</div>
               <div className="grid gap-6">
                 {/* Travel Type */}
-                <div className="grid grid-cols-2">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-white">
-                    Travel type
-                  </label>
-                  <Select>
-                    <SelectTrigger className="bg-transparent border-white text-white">
-                      <SelectValue placeholder="Select travel type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="leisure">Leisure</SelectItem>
-                      <SelectItem value="business">Business</SelectItem>
-                      <SelectItem value="adventure">Adventure</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-white">
+                      Travel type
+                    </label>
+                    <Select>
+                      <SelectTrigger className="bg-transparent border-white text-white">
+                        <SelectValue placeholder="Select travel type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="leisure">Leisure</SelectItem>
+                        <SelectItem value="business">Business</SelectItem>
+                        <SelectItem value="adventure">Adventure</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
                 {/* Destination (Updated to Dropdown) */}
@@ -55,13 +55,11 @@ export default function TravelSearch() {
                       <SelectValue placeholder="Select destination" />
                     </SelectTrigger>
                     <SelectContent>
-                      {/* Add your destination options here */}
                       <SelectItem value="USA">United States</SelectItem>
                       <SelectItem value="Canada">Canada</SelectItem>
                       <SelectItem value="France">France</SelectItem>
                       <SelectItem value="Germany">Germany</SelectItem>
                       <SelectItem value="Japan">Japan</SelectItem>
-                      {/* Add more destinations as needed */}
                     </SelectContent>
                   </Select>
                 </div>
@@ -71,7 +69,7 @@ export default function TravelSearch() {
                   <label className="text-sm font-medium text-white">
                     Travel Begin (MM/YY)
                   </label>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Select>
                       <SelectTrigger className="bg-transparent border-white text-white">
                         <SelectValue placeholder="Month" />
@@ -105,7 +103,7 @@ export default function TravelSearch() {
                   <label className="text-sm font-medium text-white">
                     Age
                   </label>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Select>
                       <SelectTrigger className="bg-transparent border-white text-white">
                         <SelectValue placeholder="From" />
@@ -151,7 +149,7 @@ export default function TravelSearch() {
                 </div>
               </div>
 
-              <Button className="w-full bg-primary hover:bg-blue-700">
+              <Button className="w-full bg-primary hover:bg-blue-700 mt-6">
                 Let&apos;s find a member
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

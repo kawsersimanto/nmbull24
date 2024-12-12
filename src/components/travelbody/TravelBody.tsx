@@ -79,12 +79,23 @@ const TravelBody = () => {
         </p>
       </div>
 
-      <div className="container mx-auto p-4">
+      <div className="mx-auto p-4">
         <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {searchResults.map((result) => (
             <TravelCard key={result.id} {...result} />
           ))}
         </div>
+      </div>
+      <div className=" mx-auto mt-[78px] text-center">
+        <div className="inline-block bg-[#0872BA4D] text-black px-4 py-2 -rotate-6 rounded-full text-sm mb-6 font-sans">
+          Testimonial
+        </div>
+        <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 font-sans">
+        Feelings of our traveler
+        </h1>
+        <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-sans">
+        Find the perfect room to share with travelers heading to the same destination.
+        </p>
       </div>
     </div>
   );
