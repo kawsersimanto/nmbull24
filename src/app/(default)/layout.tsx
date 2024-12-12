@@ -14,7 +14,8 @@ const Layout = ({ children }: children) => {
 
   return (
     <>
-      {path === "/" ? <HomeNavbar /> : <Navbar />}
+      {/* {path === "/" ? <HomeNavbar /> : <Navbar />} */}
+      <HomeNavbar/>
       {children}
     </>
   );
