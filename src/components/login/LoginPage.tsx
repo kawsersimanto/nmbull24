@@ -11,15 +11,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import LoginSchema, { LoginFormData } from "@/schema/LoginSchema";
 import loginimg from '@/assets/login/Rectangle 10333.png';
 import logo from "@/assets/expat-logo.png";
+import { useState } from "react";
 
 export default function LoginPage() {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<any>({
-  //   resolver: zodResolver(LoginSchema), // Use the imported schema
-  // })
+  const [check,setCheck] = useState(false)
+ 
   const {
     register,
     handleSubmit,
@@ -96,7 +92,7 @@ export default function LoginPage() {
             {/* Remember Me and Forgot Password */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
               <div className="flex items-center space-x-2">
-                <Checkbox id="remember" {...register("rememberMe")} />
+                <Checkbox id="remember" onChange={()=>setCheck(!check)} />
                 <label
                   htmlFor="remember"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

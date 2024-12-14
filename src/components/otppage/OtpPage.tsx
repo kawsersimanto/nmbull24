@@ -15,13 +15,16 @@ const otpSchema = z.object({
     .regex(/^[0-9]+$/, "OTP must contain only numbers"),
 });
 
+// Infer the type of the form data from the OTP schema
+type OTPFormData = z.infer<typeof otpSchema>;
+
 export default function OTPVerification() {
   // Use react-hook-form with the zodResolver
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<OTPFormData>({
     resolver: zodResolver(otpSchema),
     defaultValues: {
       otp: "", // Initialize the otp value as an empty string
@@ -29,12 +32,12 @@ export default function OTPVerification() {
     mode: "onSubmit", // Validate only on submit
   });
 
-  const onSubmit = (data: any) => {
-    console.log("OTP Submitted:", data)// Handle the OTP submission
+  const onSubmit = (data: OTPFormData) => {
+    console.log("OTP Submitted:", data); // Handle the OTP submission
   }
 
   return (
-    <div className="flex min-h-screen items-center font-sans  justify-center bg-white p-4">
+    <div className="flex min-h-screen items-center font-sans justify-center bg-white p-4">
       <div className="w-full border border-primary max-w-[454px] space-y-8 rounded">
         {/* Logo */}
         <div className="flex justify-center">
