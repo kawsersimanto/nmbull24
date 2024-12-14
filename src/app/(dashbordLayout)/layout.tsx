@@ -1,60 +1,30 @@
 "use client";
 
-import AdminSidebar from "@/components/admin/Sidebar/Sidebar";
-import { Button } from "@/components/ui/button";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+import Sidebar from "@/components/admin/Sidebar/AdminSidebar";
 import AdminNavbar from "@/shared/navbar/AdminNavbar";
-import HomeNavbar from "@/shared/navbar/HomeNavbar";
-import Navbar from "@/shared/navbar/Navbar";
-import { Ghost, LogOut } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
+// import Header from '@/app/components/Header';
+// import Sidebar from '@/app/components/Sidebar';
+import React, { ReactNode } from "react";
 
-interface children {
+interface AdminLayoutProps {
   children: ReactNode;
 }
 
-const AdminLaout = ({ children }: children) => {
-  const path = usePathname();
-
+const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   return (
-    <>
-      <div className="">
-        {/* Dashboard Header */}
-        {/* <Navbar /> */}
+    <div className="flex md:flex-row flex-col">
+      {/* Sidebar */}
+      <Sidebar />
 
+      <div className="w-full ">
+        {/* Header */}
         <AdminNavbar />
 
-        <ResizablePanelGroup
-          direction="horizontal"
-          className="min-h-[100vh] max-w-full rounded-lg border md:min-w-[450px]"
-        >
-          <ResizablePanel className="relative h-[100vh] pt-5" defaultSize={15}>
-            <AdminSidebar />
-            <div className="absolute bottom-32 flex justify-center  w-full gap-2  z-40">
-              <Button className="flex items-center gap-2" variant={"ghost"}>
-                {" "}
-                <span>
-                  <LogOut />
-                </span>{" "}
-                Logout
-              </Button>
-            </div>
-          </ResizablePanel>
-          <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={75}>
-            <div className=" p-6 bg-[#d9d9d9]">
-              <span className="font-semibold">{children}</span>
-            </div>
-          </ResizablePanel>
-        </ResizablePanelGroup>
+        {/* Main Content Area */}
+        <main className="bg-[#efefef] px-10 py-5 ">{children}</main>
       </div>
-    </>
+    </div>
   );
 };
 
-export default AdminLaout;
+export default AdminLayout;

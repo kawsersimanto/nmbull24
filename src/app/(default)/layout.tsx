@@ -1,8 +1,6 @@
 "use client";
 
 import HomeNavbar from "@/shared/navbar/HomeNavbar";
-import Navbar from "@/shared/navbar/Navbar";
-import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 
 interface children {
@@ -10,7 +8,7 @@ interface children {
 }
 
 const Layout = ({ children }: children) => {
-  const path = usePathname();
+
 
   return (
     <>
