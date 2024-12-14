@@ -5,19 +5,19 @@ import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="container mt-[115px] bg-white px-[120px]">
+    <footer className="container mt-[115px] pt-[40px] bg-white px-[15px] md:px-[120px]">
       <div className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid gap-8 md:grid-cols-3">
           {/* Logo and Description */}
           <div className="space-y-4">
             <div>
-            <Image
-              src={logo}
-              alt="Expat Logo"
-              className="w-24 h-auto object-contain lg:w-28"
-            />
+              <Image
+                src={logo}
+                alt="Expat Logo"
+                className="w-[140px] h-[103px] object-contain lg:w-28"
+              />
             </div>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 max-w-[588px]">
               Scan a Turning Hearts Medallion to learn about and interact with those
               who have passed on. You can also begin documenting the legacy you
               wish to leave behind.
@@ -59,7 +59,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Quick Link</h3>
+            <h3 className="text-lg font-semibold">Quick Links</h3>
             <nav className="flex flex-col space-y-2">
               <Link href="/" className="text-gray-600 hover:text-blue-600">
                 Home
@@ -93,7 +93,7 @@ export function Footer() {
 
         {/* Copyright */}
         <div className="mt-12 border-t pt-8">
-          <p className="text-right text-sm text-gray-600">
+          <p className="text-center text-sm text-gray-600">
             © {new Date().getFullYear()} Ash and Fire. All Rights Reserved.
           </p>
         </div>
