@@ -18,11 +18,11 @@ const getHomeFeatures: PerfectTraveler[] = [
 export const PerfectTraveler = () => {
   return (
     <div>
-      <div className="container relative">
-        <div className="bg-white shadow lg:p-16 p-4">
+      <div className="container relative mt-[100px] ">
+        <div className="bg-white shadow lg:p-[40px] p-4">
         <div className=" mx-auto text-center">
       <div className="w-16 h-1 bg-blue-600 mx-auto mb-4" />
-      <h2 className="lg:text-5xl font-bold tracking-tight text-slate-900 text-3xl pb-8 font-sans">
+      <h2 className="lg:text-5xl font-bold tracking-tight text-slate-900 text-3xl pb-10 font-sans">
         Perfect for every type of traveler
       </h2>
     </div>

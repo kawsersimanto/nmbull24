@@ -13,17 +13,24 @@ import loginimg from '@/assets/login/Rectangle 10333.png';
 import logo from "@/assets/expat-logo.png";
 
 export default function LoginPage() {
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<any>({
+  //   resolver: zodResolver(LoginSchema), // Use the imported schema
+  // })
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<any>({
+  } = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema), // Use the imported schema
   });
 
   const onSubmit = (data: LoginFormData) => {
-    console.log("Form Data: ", data);
-  };
+    console.log("Form Data: ", data)
+  }
 
   return (
     <div className="flex flex-col lg:flex-row bg-white min-h-screen">

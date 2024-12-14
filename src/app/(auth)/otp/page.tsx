@@ -1,4 +1,4 @@
-import Banner from '@/components/home/Banner';
+
 import OtpPage from '@/components/otppage/OtpPage';
 import React from 'react';
 const page = () => {

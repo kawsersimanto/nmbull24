@@ -1,26 +1,29 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import ForgotPasswordSchema ,{ForgotPasswordData} from "@/schema/ForgotPasswordSchema"
-import Image from "next/image"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import ForgotPasswordSchema, { ForgotPasswordData } from "@/schema/ForgotPasswordSchema";
+import Image from "next/image";
 import logo from "@/assets/expat-logo.png";
 
 export default function ForgotPassword() {
+  // Use the correct type for the form data
   const {
     register,
     handleSubmit,
-    formState: {errors},
-  } = useForm<any>({
+    formState: { errors },
+  } = useForm<ForgotPasswordData>({
     resolver: zodResolver(ForgotPasswordSchema),
   });
-  const onSubmit = (data:ForgotPasswordData)=>{
-    console.log(data)
-  }
+
+  const onSubmit = (data: ForgotPasswordData) => {
+    console.log(data);
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-white p-4 sm:p-6 md:p-8">
       <div className="w-full max-w-[454px] space-y-6">
@@ -46,7 +49,10 @@ export default function ForgotPassword() {
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-base sm:text-lg md:text-[18px] font-normal text-[#475467]">
+              <Label
+                htmlFor="email"
+                className="text-base sm:text-lg md:text-[18px] font-normal text-[#475467]"
+              >
                 Email address
               </Label>
               <Input
@@ -54,8 +60,11 @@ export default function ForgotPassword() {
                 placeholder="georgia.young@example.com"
                 type="email"
                 className="w-full text-[18px] text-[#475467] border-[#98A2B3] pr-10 placeholder:text-[#98A2B3] placeholder:text-sm placeholder:font-normal"
-                {...register("email")}
+                {...register("email")} // Register the input with validation
               />
+              {errors.email && (
+                <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
+              )}
             </div>
 
             <div className="flex items-center justify-start text-xs sm:text-sm">
@@ -89,5 +98,5 @@ export default function ForgotPassword() {
         </div>
       </div>
     </div>
-  )
+  );
 }

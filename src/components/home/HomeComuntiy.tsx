@@ -6,7 +6,7 @@ import { homeComunityItem } from "@/constants/homeComunityItem";
 
 export const HomeComuntiy = () => {
   return (
-    <div className="container mx-auto py-12 lg:mt-[240px] mt-[100px]">
+    <div className="container mx-auto  lg:mt-[310px] mt-[100px]">
       <div className="bg-white rounded-lg p-6">
         {homeComunityItem.map((data, index) => (
           <div key={index} className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center justify-center">

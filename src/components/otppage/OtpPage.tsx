@@ -30,8 +30,8 @@ export default function OTPVerification() {
   });
 
   const onSubmit = (data: any) => {
-    console.log("OTP Submitted:", data); // Handle the OTP submission
-  };
+    console.log("OTP Submitted:", data)// Handle the OTP submission
+  }
 
   return (
     <div className="flex min-h-screen items-center font-sans  justify-center bg-white p-4">
