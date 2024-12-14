@@ -1,4 +1,4 @@
-import { MenuItem } from "@/types/MenuItem";
+import { MenuItem } from "@/types/menuIteminterface";
 
 const menuItems: MenuItem[] = [
   { label: "Dashboard", href: "/" },

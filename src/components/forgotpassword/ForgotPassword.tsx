@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import ForgotPasswordSchema ,{ForgotPasswordData} from "@/schema/ForgotPasswordSchema"
+import ForgotPasswordSchema, { ForgotPasswordData } from "@/schema/ForgotPasswordSchema"
 import Image from "next/image"
 import logo from "@/assets/expat-logo.png";
 
@@ -14,13 +14,15 @@ export default function ForgotPassword() {
   const {
     register,
     handleSubmit,
-    formState: {errors},
-  } = useForm<any>({
+    formState: { errors },
+  } = useForm<ForgotPasswordData>({
     resolver: zodResolver(ForgotPasswordSchema),
   });
-  const onSubmit = (data:ForgotPasswordData)=>{
+
+  const onSubmit = (data: ForgotPasswordData) => {
     console.log(data)
-  }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-white p-4 sm:p-6 md:p-8">
       <div className="w-full max-w-[454px] space-y-6">
@@ -56,6 +58,9 @@ export default function ForgotPassword() {
                 className="w-full text-[18px] text-[#475467] border-[#98A2B3] pr-10 placeholder:text-[#98A2B3] placeholder:text-sm placeholder:font-normal"
                 {...register("email")}
               />
+              {errors.email && (
+                <span className="text-red-500 text-xs">{errors.email.message}</span>
+              )}
             </div>
 
             <div className="flex items-center justify-start text-xs sm:text-sm">
@@ -89,5 +94,5 @@ export default function ForgotPassword() {
         </div>
       </div>
     </div>
-  )
+  );
 }

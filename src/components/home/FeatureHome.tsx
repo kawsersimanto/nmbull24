@@ -26,10 +26,10 @@ export const FeatureHome = () => {
                       className="lg:w-12 lg:h-12 h-9 w-9"
                     />
                   </div>
-                  <h3 className="lg:text-[21px] text-[18px] font-[600] text-gray-800 ">
+                  <h3 className="lg:text-[21px] text-[18px] font-[600] text-gray-800 font-sans">
                     {feature.title}
                   </h3>
-                  <p className="text-muted-foreground lg:text-[17px] text-[16px] font-[400]">
+                  <p className="text-muted-foreground lg:text-[17px] text-[16px] font-sans font-[400]">
                     {feature.description}
                   </p>
                 </CardContent>
