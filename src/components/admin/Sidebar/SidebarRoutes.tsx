@@ -2,19 +2,26 @@
 import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
+import { adminSidebarRoutesType } from "@/types/sidebarItemsType";
 
-const SidebarRoutes = ({ routes }: {routes:any}) => {
+interface props {
+  routes: adminSidebarRoutesType;
+  expand?: boolean;
+  setExpand?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SidebarRoutes = ({ routes, expand, setExpand }: props) => {
   const pathname = usePathname();
 
   // Check if this route or any of its subItems is active
   const isActive =
     pathname === routes.link ||
-    routes.subItems?.some((subItem:any) => pathname.startsWith(subItem.link));
+    routes.subItems?.some((subItem: any) => pathname.startsWith(subItem.link));
 
   return (
     <Link
       href={routes.link}
-      className={`w-full py-2 pl-6 border-l-4 ${
+      className={`w-full py-2 md:pl-6 pl-1 border-l-4 ${
         isActive
           ? "border-l-[#0076EF] bg-[linear-gradient(90deg,_rgba(0,_118,_239,_0.27)_0%,_rgba(0,_118,_239,_0.06)_100%)]"
           : ""
@@ -22,10 +29,10 @@ const SidebarRoutes = ({ routes }: {routes:any}) => {
       style={{}}
       key={routes.link}
     >
-      <p className="flex items-center gap-2">
+      <div className="flex max-md:text-4xl items-center gap-2">
         <routes.icon />
-        {routes.label}
-      </p>
+        <p className="md:flex hidden md:text-lg text-sm">{!expand && routes.label}</p>
+      </div>
     </Link>
   );
 };

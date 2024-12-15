@@ -16,6 +16,7 @@ interface UpdateDataDialogProps {
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -27,11 +28,9 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { LiaPlusSolid } from "react-icons/lia";
 import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
-const UpdateDataDialog = ({
-  isOpen,
-  onClose,
-}: UpdateDataDialogProps) => {
+const UpdateDataDialog = ({ isOpen, onClose }: UpdateDataDialogProps) => {
   const {
     control,
     handleSubmit,
@@ -45,7 +44,7 @@ const UpdateDataDialog = ({
   });
 
   const onFormSubmit = (data: Data) => {
-    console.log(data)
+    console.log(data);
     onClose();
   };
 
@@ -53,13 +52,16 @@ const UpdateDataDialog = ({
     <Dialog open={isOpen}>
       <DialogTrigger>Update</DialogTrigger>
       <DialogContent>
+        <div className="absolute top-3 right-3" onClick={onClose}>
+          <X className="h-4 w-4" />
+        </div>
         <DialogHeader>
           <DialogTitle>Membership Plan Creation</DialogTitle>
-          <DialogDescription>
-            <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-5">
+          <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-5">
+            <DialogDescription>
               {/* Title Field */}
-              <div className="flex flex-col gap-1">
-                <h2>Title</h2>
+              <span className="flex flex-col gap-1">
+                <span>Title</span>
                 <Controller
                   name="title"
                   control={control}
@@ -72,20 +74,22 @@ const UpdateDataDialog = ({
                   )}
                 />
                 {errors.title && (
-                  <p className="text-red-500 text-sm">{errors.title.message}</p>
+                  <span className="text-red-500 text-sm">
+                    {errors.title.message}
+                  </span>
                 )}
-              </div>
+              </span>
 
               {/* Plane Touch Point Section */}
-              <div className="flex flex-col gap-1 pt-5">
-                <p>Plane touch point</p>
-                <div className="border p-3">
-                  <div className="flex items-center gap-1">
-                    <div className="flex items-center justify-center bg-[#D9D9D9] rounded-full p-[2px]">
+              <span className="flex flex-col gap-1 pt-5">
+                <span>Plane touch point</span>
+                <span className="border p-3">
+                  <span className="flex items-center gap-1">
+                    <span className="flex items-center justify-center bg-[#D9D9D9] rounded-full p-[2px]">
                       <MdOutlineDone className="text-sm" />
-                    </div>
-                    <p>Access to our searchable directory</p>
-                  </div>
+                    </span>
+                    <span>Access to our searchable directory</span>
+                  </span>
 
                   {/* Add New Membership Plan Link */}
                   <Link
@@ -94,31 +98,33 @@ const UpdateDataDialog = ({
                   >
                     <LiaPlusSolid /> Add new membership plan
                   </Link>
-                </div>
-              </div>
+                </span>
+              </span>
 
               {/* Price Field */}
-              <div className="flex flex-col gap-1 mt-3">
-                <h2>Price</h2>
+              <span className="flex flex-col gap-1 mt-3">
+                <span>Price</span>
                 <Controller
                   name="price"
                   control={control}
                   render={({ field }) => (
                     <Input
                       {...field}
-                      value={''}
+                      value={""}
                       placeholder="Enter price"
                       className="border p-2 rounded"
                     />
                   )}
                 />
                 {errors.price && (
-                  <p className="text-red-500 text-sm">{errors.price.message}</p>
+                  <span className="text-red-500 text-sm">
+                    {errors.price.message}
+                  </span>
                 )}
-              </div>
+              </span>
 
               {/* Submit and Cancel Buttons */}
-              <div className="flex justify-center items-center gap-4 mt-5">
+              <span className="flex justify-center items-center gap-4 mt-5">
                 <Button
                   type="button"
                   onClick={onClose}
@@ -132,9 +138,9 @@ const UpdateDataDialog = ({
                 >
                   Submit
                 </Button>
-              </div>
-            </form>
-          </DialogDescription>
+              </span>
+            </DialogDescription>
+          </form>
         </DialogHeader>
       </DialogContent>
     </Dialog>

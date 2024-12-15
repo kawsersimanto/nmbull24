@@ -13,7 +13,7 @@ const MobileNavbar = () => {
 
   return (
     <div className="flex">
-      <CiMenuFries className="md:hidden" onClick={()=>setOpen(true)}/>
+      {/* <CiMenuFries className="md:hidden" onClick={()=>setOpen(true)}/> */}
 
       {open && (
         <div className=" w-[300px] md:block hidden  fixed top-0 left-0 h-[calc(100vh-20px)] overflow-hidden shrink-0 z-30">

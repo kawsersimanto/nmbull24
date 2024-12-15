@@ -81,7 +81,7 @@ const Header = () => {
   // const isSubPath = basePath.startsWith(pathnam);
 
   return (
-    <div className=" flex items-center gap-2 h-[81px] flex-shrink-0 md:pl-0 pl-3">
+    <div className=" flex items-center gap-2 h-[81px] flex-shrink-0 md:pl-0 pl-3 sticky top-0 z-40 md:ml-[300px] bg-[#f6f6f6]">
       {subitems.map((item, index) => (
         <Link
           href={item.link}
