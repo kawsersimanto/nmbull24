@@ -41,8 +41,10 @@ export default function ForgotPassword() {
         {/* Form */}
         <div className="space-y-4">
           <div className="space-y-1 text-center">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-sans font-semibold">Forget Password!</h1>
-            <p className="text-xs sm:text-sm md:text-base text-gray-500">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-outfit font-semibold">
+              Forget Password!
+            </h1>
+            <p className="text-xs sm:text-sm md:text-base font-outfit text-gray-500">
               Enter Your Registered Email Below.
             </p>
           </div>
@@ -51,7 +53,7 @@ export default function ForgotPassword() {
             <div className="space-y-2">
               <Label
                 htmlFor="email"
-                className="text-base sm:text-lg md:text-[18px] font-normal text-[#475467]"
+                className="text-base sm:text-lg md:text-[18px] font-normal font-outfit text-[#475467]"
               >
                 Email address
               </Label>
@@ -63,13 +65,18 @@ export default function ForgotPassword() {
                 {...register("email")} // Register the input with validation
               />
               {errors.email && (
-                <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
+                <p className="text-xs text-red-500 mt-1">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
             <div className="flex items-center justify-start text-xs sm:text-sm">
               <span className="text-gray-600">Remember the password?</span>
-              <Link href="/login" className="ml-1 text-blue-600 hover:underline">
+              <Link
+                href="/login"
+                className="ml-1 underline text-[#00008B] font-medium font-inter hover:underline"
+              >
                 Sign in
               </Link>
             </div>

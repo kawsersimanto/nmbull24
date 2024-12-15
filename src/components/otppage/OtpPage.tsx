@@ -4,8 +4,10 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { Button } from "@/components/ui/button";
-import { Check } from 'lucide-react';
+import Image from "next/image";
+import logo from "@/assets/expat-logo.png";
+import success from "@/assets/login/Success.png";
+
 
 // Define the validation schema for the OTP field using zod
 const otpSchema = z.object({
@@ -38,36 +40,34 @@ export default function OTPVerification() {
 
   return (
     <div className="flex min-h-screen items-center font-sans justify-center bg-white p-4">
-      <div className="w-full border border-primary max-w-[454px] space-y-8 rounded">
+      <div className="w-full max-w-[454px] space-y-8 rounded">
         {/* Logo */}
-        <div className="flex justify-center">
-          <div className="flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-6 w-6 text-primary"
-            >
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-            <span className="text-xl font-sans font-bold text-blue-600">EXPAT</span>
-            <span className="text-xl font-sans font-light">Global System</span>
+        <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center">
+            <Image
+              src={logo}
+              alt="Expat Logo"
+              className="w-24 h-auto object-contain lg:w-28"
+            />
           </div>
         </div>
 
         {/* Success Icon */}
         <div className="flex flex-col items-center space-y-4">
           <div className="rounded-full bg-primary p-3">
-            <Check className="h-6 w-6 text-white" />
+            <div className="flex justify-center w-[82.949px] h-auto items-center">
+              <Image
+                src={success}
+                alt="success"
+                className="w-[82.949px] object-contain"
+              />
+            </div>
           </div>
-          <h1 className="text-2xl font-semibold">Success</h1>
-          <p className="text-center text-sm text-gray-500">
-            Please Check Your Email For Create A New Password
+          <h1 className="font-semibold font-outfit text-4xl text-[#1D2939]">
+            Success
+          </h1>
+          <p className="text-center font-inter text-sm text-gray-500">
+            Please Check Your Email For Creating A New Password
           </p>
         </div>
 
@@ -101,7 +101,7 @@ export default function OTPVerification() {
           )}
 
           {/* Submit Button */}
-          <Button type="submit" className="w-full bg-primary hover:bg-blue-700">
+          <button type="submit" className="w-full flex justify-center rounded-lg items-center font-outfit text-white text-[18px] font-medium py-[27px] bg-primary hover:bg-blue-700">
             Submit
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +117,7 @@ export default function OTPVerification() {
             >
               <polyline points="9 18 15 12 9 6" />
             </svg>
-          </Button>
+          </button>
         </form>
       </div>
     </div>

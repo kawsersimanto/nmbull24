@@ -18,31 +18,37 @@ export default function ChangePassword() {
         {/* Logo */}
         <div className="flex justify-center">
           <div className="flex items-center gap-2">
-          <Image
-                src={logo}
-                alt="Expat Girls logo"
-                className="lg:w-[108px] w-[142.045px] h-[100px] object-contain"
-              />
+            <Image
+              src={logo}
+              alt="Expat Girls logo"
+              className="lg:w-[108px] w-[142.045px] h-[100px] object-contain"
+            />
           </div>
         </div>
 
         {/* Form */}
         <div className="">
           <div className="space-y-1 mt-6 mb-8 text-center">
-            <h1 className="text-2xl font-semibold">Change New Password!</h1>
-            <p className="text-[16px] font-normal text-gray-500">
+            <h1 className="text-2xl font-outfit font-semibold">
+              Change New Password!
+            </h1>
+            <p className="text-[16px] font-normal font-inter text-gray-500">
               Enter A Different Password With The Previous
             </p>
           </div>
 
           <form className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="new-password" className="text-[18px] text-gray-600">
+              <Label
+                htmlFor="new-password"
+                className="text-[18px] font-outfit text-gray-600"
+              >
                 New Password
               </Label>
               <div className="relative">
                 <Input
                   id="new-password"
+                  placeholder="BFiofgvsb***JJ"
                   type={showPassword ? "text" : "password"}
                   required
                   className="w-full border-gray-200 pr-10"
@@ -64,12 +70,16 @@ export default function ChangePassword() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirm-password" className="text-[18px] text-[#475467]">
+              <Label
+                htmlFor="confirm-password"
+                className="text-[18px] font-outfit text-[#475467]"
+              >
                 Confirm Password
               </Label>
               <div className="relative">
                 <Input
                   id="confirm-password"
+                  placeholder="BFiofgvsb***JJ"
                   type={showConfirmPassword ? "text" : "password"}
                   required
                   className="w-full text-[18px] text-[#475467] border-[#98A2B3] pr-10 placeholder:text-[#98A2B3] placeholder:text-sm placeholder:font-normal"
@@ -90,12 +100,15 @@ export default function ChangePassword() {
               </div>
             </div>
 
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+            <button
+              type="submit"
+              className="w-full flex justify-center rounded-lg items-center font-outfit text-white text-[18px] font-medium py-[10px] bg-primary hover:bg-blue-700"
+            >
               Reset Password
-            </Button>
+            </button>
           </form>
         </div>
       </div>
     </div>
-  )
+  );
 }

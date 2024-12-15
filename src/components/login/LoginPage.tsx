@@ -2,20 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoginSchema, { LoginFormData } from "@/schema/LoginSchema";
-import loginimg from '@/assets/login/Rectangle 10333.png';
+import loginimg from "@/assets/login/Rectangle 10333.png";
 import logo from "@/assets/expat-logo.png";
 import { useState } from "react";
 
 export default function LoginPage() {
-  const [check,setCheck] = useState(false)
- 
+  const [check, setCheck] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -25,8 +24,8 @@ export default function LoginPage() {
   });
 
   const onSubmit = (data: LoginFormData) => {
-    console.log("Form Data: ", data)
-  }
+    console.log("Form Data: ", data);
+  };
 
   return (
     <div className="flex flex-col lg:flex-row bg-white min-h-screen">
@@ -56,8 +55,13 @@ export default function LoginPage() {
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Email Input */}
-            <div className="space-y-2">
-              <Label className="text-[18px] font-semibold" htmlFor="email">Email address</Label>
+            <div className="space-y-2 ">
+              <Label
+                className="text-[18px] text-[#101828] font-sans font-semibold"
+                htmlFor="email"
+              >
+                Email address
+              </Label>
               <Input
                 id="email"
                 placeholder="Enter your email"
@@ -74,7 +78,12 @@ export default function LoginPage() {
 
             {/* Password Input */}
             <div className="space-y-2">
-              <Label className="text-[18px] font-semibold" htmlFor="password">Password</Label>
+              <Label
+                className="text-[18px] text-[#101828] font-sans font-semibold"
+                htmlFor="password"
+              >
+                Password
+              </Label>
               <Input
                 id="password"
                 placeholder="Enter your password"
@@ -92,10 +101,10 @@ export default function LoginPage() {
             {/* Remember Me and Forgot Password */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
               <div className="flex items-center space-x-2">
-                <Checkbox id="remember" onChange={()=>setCheck(!check)} />
+                <Checkbox id="remember" onChange={() => setCheck(!check)} />
                 <label
                   htmlFor="remember"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-sm text-[#767676] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   Remember Me
                 </label>
@@ -103,16 +112,16 @@ export default function LoginPage() {
 
               <Link
                 href="/forgot-password"
-                className="text-sm text-blue-600 hover:text-blue-500"
+                className="text-sm text-[#E75A4E] font-inter hover:text-red-500"
               >
                 Forgot Password?
               </Link>
             </div>
 
             {/* Submit Button */}
-            <Button 
-              type="submit" 
-              className="w-full bg-primary hover:bg-blue-500"
+            <button
+              type="submit"
+              className="w-full flex justify-center rounded-lg items-center font-outfit text-white text-[18px] font-medium py-[10px] bg-primary hover:bg-blue-700"
             >
               Log in
               <svg
@@ -129,7 +138,7 @@ export default function LoginPage() {
               >
                 <polyline points="9 18 15 12 9 6" />
               </svg>
-            </Button>
+            </button>
           </form>
         </div>
       </div>
