@@ -75,8 +75,8 @@ const TravelBody = () => {
       <div className="font-sans text-5xl font-semibold mt-2 text-[#1D2939]">
         <h1>Some of our verified members</h1>
         <p className="font-sans text-xl font-medium mt-4 text-[#344054]">
-          You&#39;re not just finding a housemate - you&#39;re building a support system. The women you meet here share your passion for exploring new cultures, experiencing life abroad, and making the most of every opportunity. Plus, by teaming up with someone on the same journey, you&apos;ll find a sense of safety, security, and camaraderie that helps you stay motivated and focused on your goals.
-        </p>
+        you&apos;re not just finding a housemate - you&apos;re building a support system. The women you meet here share your passion for exploring new cultures, experiencing life abroad, and making the most of every opportunity. Plus, by teaming up with someone on the same journey, you&apos;ll find a sense of safety, security, and camaraderie that helps you stay motivated and focused on your goals.
+</p>
       </div>
 
       <div className="mx-auto p-4">
@@ -94,8 +94,8 @@ const TravelBody = () => {
         Feelings of our traveler
         </h1>
         <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-sans">
-        Find the perfect room to share with travelers heading to the same destination.
-        </p>
+  Find the perfect room to share with travelers heading to the same destination.
+</p>
       </div>
     </div>
   );
