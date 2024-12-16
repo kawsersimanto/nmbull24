@@ -1,6 +1,7 @@
 import React from 'react';
 import TravelCard from '../travelCard/TravelCard';
 import { Testimonial } from '../home/testimonial/Testimonial';
+import TestimonialCard from '../home/testimonial/TestimonialCard';
 
 interface SearchResult {
   id: string;
@@ -97,7 +98,7 @@ const TravelBody = () => {
         <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-sans">
   Find the perfect room to share with travelers heading to the same destination.
         </p>   
-        <Testimonial></Testimonial>
+        <TestimonialCard/>
       </div>
     </div>
   );

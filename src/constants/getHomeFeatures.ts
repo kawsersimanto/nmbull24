@@ -1,7 +1,8 @@
 import { homeFeature } from "@/types/homeFeature";
-import image1 from '@/assets/home/feature/feature1.jpg';
-import image2 from '@/assets/home/feature/feature2.jpg';
-import image3 from '@/assets/home/feature/feature3.jpg';
+import image1 from '@/assets/feature/feature1.jpg';
+import image2 from '@/assets/feature/feature2.jpg';
+import image3 from '@/assets/feature/feature3.jpg';
+
 
 const getHomeFeatures: homeFeature[] = [
   {
