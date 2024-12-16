@@ -8,16 +8,16 @@ import { Form } from "@/components/ui/form";
 import { InputField } from "../form/InputField";
 import { SelectField } from "../form/SelectField";
 import { CheckboxField } from "../form/CheckboxField";
-import { FileUploadField } from "../form/FileUploadField";
 import avtarImage from '@/assets/form/prof.png'
+import { useEffect, useState } from "react";
+import { FileUploadField } from "../form/FileUploadField";
 
 const formSchema = z.object({
   firstName: z.string().min(2),
   lastName: z.string().min(2),
   summitMemberId: z.string().optional(),
-  month: z.string().min(1), // Ensure month is selected
-  day: z.string().min(1), // Ensure day is selected
-  year: z.string().min(1), // Ensure year is selected
+  month: z.string().min(1), 
+  year: z.string().min(1), 
   zodiacSign: z.string(),
   country: z.string(),
   province: z.string(),
@@ -35,6 +35,15 @@ const formSchema = z.object({
 });
 
 export default function ProfileForm() {
+
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  useEffect(() => {
+    return () => {
+      if (avatarPreview) {
+        URL.revokeObjectURL(avatarPreview); // Cleanup old preview URL
+      }
+    };
+  }, [avatarPreview]);
 
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,26 +64,26 @@ export default function ProfileForm() {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-4">
-          {/* Avatar Section */}
-          <div className="flex lg:flex-row gap-4 flex-col items-center">
-            <div className="mb-4">
-
-<Image
-  src={avtarImage.src} // Default avatar
+         
+        <div className="flex lg:flex-row gap-4 flex-col items-center">
+  <div className="mb-4 h-[68px] w-[68px] rounded-full">
+  <Image
+  src={avatarPreview || avtarImage.src}
   alt="Avatar"
-  width={68}  // Specify width
-  height={68} // Specify height
-  className="rounded-full object-cover border-2 border-gray-300"
+  width={68}
+  height={68}
+  className="rounded-full object-cover border-2 h-[68px] w-[68px] border-gray-300"
 />
 
-            </div>
-            <FileUploadField
-              name="avatar"
-              label=""
-              placeholder="You can upload images up to 256×256. Your avatar shows up in your public profile and your team notifications."
-              form={form}
-            />
-          </div>
+  </div>
+  <FileUploadField
+    name="avatar"
+    label=""
+    setPreview={setAvatarPreview} 
+    placeholder="You can upload images up to 256×256. Your avatar shows up in your public profile and your team notifications."
+    form={form}
+  />
+</div>
 
           {/* Form Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

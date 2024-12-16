@@ -16,8 +16,9 @@ export const FileUploadField = ({
   label,
   placeholder,
   form,
-  accept = "image/*", // Default accept is for images
-}: FileUploadFieldProps) => {
+  accept = "image/*",
+  setPreview,
+}: FileUploadFieldProps & { setPreview?: (url: string | null) => void }) => {
   const [fileName, setFileName] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,8 +26,14 @@ export const FileUploadField = ({
     if (file) {
       setFileName(file.name);
       form.setValue(name, file); // This sets the file value in the form
+  
+      // Generate preview URL
+      const previewURL = URL.createObjectURL(file);
+      console.log("Preview URL:", previewURL); // Debugging log
+      if (setPreview) setPreview(previewURL);
     }
   };
+  
 
   return (
     <FormField
@@ -53,11 +60,7 @@ export const FileUploadField = ({
                 className="hidden"
                 onChange={handleFileChange}
               />
-              {fileName && (
-                <p className="text-sm text-gray-600 text-center lg:text-left mt-2">
-                  {fileName} is selected.
-                </p>
-              )}
+           
               <p className="text-sm text-gray-600 text-center lg:text-left mt-2">
                 {placeholder}
               </p>
