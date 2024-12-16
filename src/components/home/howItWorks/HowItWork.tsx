@@ -19,24 +19,24 @@ export default function HowItWork() {
               {index == 1|| index==3 ? (
                 <>
                   <div className="flex justify-center">
-                    <div className="lg:w-32 lg:h-32 h-24 w-24 hidden lg:block">
+                    <div className="lg:w-[200px] lg:h-[200px] h-24 w-24 hidden lg:block">
                       <Image
                         src={step.icon}
                         alt={step.title}
-                        className="lg:w-32 lg:h-32 h-24 w-24"
+                        className="lg:w-[200px] lg:h-[200px] h-24 w-24"
                       />
                     </div>
                   </div>
-                  <div>
+                  <div className="">
                     <h3 className="text-2xl font-semibold text-gray-800 mb-2">{step.title}</h3>
                     <p className="lg:text-[18px] text-[16px] text-gray-600 ">{step.description}</p>
                   </div>
                   <div className="flex justify-center">
-                    <div className="lg:w-32 lg:h-32 h-24 w-24 block lg:hidden">
+                    <div className="lg:w-[200px] lg:h-[200px] h-24 w-24 block lg:hidden">
                       <Image
                         src={step.icon}
                         alt={step.title}
-                        className="lg:w-32 lg:h-32 h-24 w-24"
+                        className="lg:w-[200px] lg:h-[200px] h-24 w-24"
                       />
                     </div>
                   </div>
