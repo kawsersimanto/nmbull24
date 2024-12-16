@@ -1,11 +1,12 @@
 "use client"
-import ProfileForm from "@/components/profileform/ProfileForm";
+
+import Destination from "@/components/destination/Destination";
 
 const page = () => {
   return (
     <div className="">
                
-          <ProfileForm/>
+            <Destination/>
 
     
     </div>

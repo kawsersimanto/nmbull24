@@ -20,38 +20,38 @@ export default function TestimonialCard() {
           className="w-12 h-7 flex items-center justify-center rounded border border-gray-200 text-[#0872BA] hover:text-gray-600 hover:border-gray-300 transition-colors custom-button-prev"
           aria-label="Previous testimonial"
         >
-             <ArrowRightIcon />
-        
+          <ArrowRightIcon />
+
         </button>
         <button
           className="w-12 h-7 flex items-center justify-center rounded border border-gray-200 text-[#0872BA] hover:text-gray-600 hover:border-gray-300 transition-colors custom-button-next"
           aria-label="Next testimonial"
         >
-            <ArrowLeftIcon width={16} height={17} stroke={"#0872BA"}/>
-       
+          <ArrowLeftIcon width={16} height={17} stroke={"#0872BA"} />
+
         </button>
       </div>
 
       {/* Swiper Slider */}
       <Swiper
-  modules={[Navigation]}
-  navigation={{
-    nextEl: ".custom-button-next", // Custom navigation class
-    prevEl: ".custom-button-prev",
-  }}
-  loop={true} // Enable looping
-  spaceBetween={50}
-  slidesPerView={1}
-  className="!overflow-visible"
->
+        modules={[Navigation]}
+        navigation={{
+          nextEl: ".custom-button-next", // Custom navigation class
+          prevEl: ".custom-button-prev",
+        }}
+        loop={true} // Enable looping
+        spaceBetween={50}
+        slidesPerView={1}
+        className="!overflow-visible"
+      >
         {testimonialsData.map((testimonial, index) => (
           <SwiperSlide key={index}>
-              <div key={index} className={`flex flex-col md:flex-row `}>
-    
-    <div className={` p-0 rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none ${style.perspectiveCustom }`}>
-      <div className="transform" style={{ transform: 'rotateY(30deg)' }}>
-      <div className="bg-[#0872BA] shadow-xl rounded-lg px-12 py-3 min-h-[295px] lg:min-w-[444px] flex justify-center items-center">
-    <div>
+            <div key={index} className={`flex flex-col md:flex-row `}>
+
+              <div className={` p-0 rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none ${style.perspectiveCustom}`}>
+                <div className="transform" style={{ transform: 'rotateY(30deg)' }}>
+                  <div className="bg-[#0872BA] shadow-xl rounded-lg px-12 py-3 min-h-[295px] lg:min-w-[444px] flex justify-center items-center">
+                    <div>
                       <div className="relative w-[88px] h-[88px] mx-auto md:mx-0 mb-4">
                         <Image
                           src={testimonial.image}

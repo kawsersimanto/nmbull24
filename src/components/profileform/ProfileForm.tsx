@@ -17,6 +17,7 @@ const formSchema = z.object({
   lastName: z.string().min(2),
   summitMemberId: z.string().optional(),
   month: z.string().min(1), 
+  day:z.string().min(1),
   year: z.string().min(1), 
   zodiacSign: z.string(),
   country: z.string(),

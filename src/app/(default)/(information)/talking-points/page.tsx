@@ -1,11 +1,13 @@
 "use client"
-import ProfileForm from "@/components/profileform/ProfileForm";
+
+import TalkingPoints from "@/components/talkingPoints/TalkingPoints";
+
+
 
 const page = () => {
   return (
     <div className="">
-               
-          <ProfileForm/>
+        <TalkingPoints/>
 
     
     </div>
