@@ -33,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} ${outfit.variable}`}>
+      <body className={`${montserrat.variable} ${outfit.variable} ${inter.variable}`}>
         {children}
       </body>
     </html>

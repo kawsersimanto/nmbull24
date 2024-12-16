@@ -99,7 +99,7 @@ export default function LoginPage() {
             </div>
 
             {/* Remember Me and Forgot Password */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+            <div className="flex flex-row md:items-center justify-between gap-2 sm:gap-0">
               <div className="flex items-center space-x-2">
                 <Checkbox id="remember" onChange={() => setCheck(!check)} />
                 <label

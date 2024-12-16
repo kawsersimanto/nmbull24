@@ -118,7 +118,7 @@ export function Footer() {
   </div>
 
   {/* Copyright Section */}
-  <div className="mt-12 bg-blue-50 container border-t pt-8 text-center md:text-right">
+  <div className="mt-12  container border-t pt-8 text-center md:text-right">
     <p className="text-sm text-gray-600">
       ©[ {new Date().getFullYear()} ] Ash and Fire. All Rights Reserved.
     </p>

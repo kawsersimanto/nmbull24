@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
@@ -33,24 +32,24 @@ export default function ForgotPassword() {
             <Image
               src={logo}
               alt="Expat Girls logo"
-              className="w-[142.045px] h-[100px] object-contain"
+              className="w-[80px] h-[80px] md:w-[108px] md:h-[108px] lg:w-[142px] lg:h-[100px] object-contain"
             />
           </div>
         </div>
 
         {/* Form */}
-        <div className="space-y-4">
-          <div className="space-y-1 text-center">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-outfit font-semibold">
+        <div className="">
+          <div className=" text-center">
+            <h1 className="text-2xl text-[#1D2939] sm:text-3xl md:text-4xl font-sans font-semibold">
               Forget Password!
             </h1>
-            <p className="text-xs sm:text-sm md:text-base font-outfit text-gray-500">
+            <p className="text-xs sm:text-sm md:text-base mt-4 font-outfit text-gray-500">
               Enter Your Registered Email Below.
             </p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="space-y-2">
+            <div className="mt-7">
               <Label
                 htmlFor="email"
                 className="text-base sm:text-lg md:text-[18px] font-normal font-outfit text-[#475467]"
@@ -81,9 +80,9 @@ export default function ForgotPassword() {
               </Link>
             </div>
 
-            <Button
+            <button
               type="submit"
-              className="w-full bg-primary hover:bg-blue-700"
+              className="w-full mt-2 flex justify-center rounded-lg items-center font-outfit text-white text-[18px] font-medium py-[10px] bg-primary hover:bg-blue-700"
             >
               Send Code
               <svg
@@ -100,7 +99,7 @@ export default function ForgotPassword() {
               >
                 <polyline points="9 18 15 12 9 6" />
               </svg>
-            </Button>
+            </button>
           </form>
         </div>
       </div>

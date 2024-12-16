@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { EyeIcon, EyeOffIcon } from 'lucide-react'
-import Image from "next/image"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
+import Image from "next/image";
 import logo from "@/assets/expat-logo.png";
 
 export default function ChangePassword() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-white p-4">
@@ -21,19 +21,19 @@ export default function ChangePassword() {
             <Image
               src={logo}
               alt="Expat Girls logo"
-              className="lg:w-[108px] w-[142.045px] h-[100px] object-contain"
+              className="w-[80px] h-[80px] md:w-[108px] md:h-[108px] lg:w-[142px] lg:h-[100px] object-contain"
             />
           </div>
         </div>
 
         {/* Form */}
-        <div className="">
-          <div className="space-y-1 mt-6 mb-8 text-center">
-            <h1 className="text-2xl font-outfit font-semibold">
+        <div>
+          <div className="space-y-2 mt-6 mb-8 text-center">
+            <h1 className="text-xl md:text-2xl font-outfit font-semibold">
               Change New Password!
             </h1>
-            <p className="text-[16px] font-normal font-inter text-gray-500">
-              Enter A Different Password With The Previous
+            <p className="text-sm md:text-base font-normal font-inter text-gray-500">
+              Enter a different password than the previous one
             </p>
           </div>
 
@@ -41,7 +41,7 @@ export default function ChangePassword() {
             <div className="space-y-2">
               <Label
                 htmlFor="new-password"
-                className="text-[18px] font-outfit text-gray-600"
+                className="text-sm md:text-[18px] font-outfit text-gray-600"
               >
                 New Password
               </Label>
@@ -51,7 +51,7 @@ export default function ChangePassword() {
                   placeholder="BFiofgvsb***JJ"
                   type={showPassword ? "text" : "password"}
                   required
-                  className="w-full border-gray-200 pr-10"
+                  className="w-full border-[#98A2B3] pr-10"
                 />
                 <Button
                   type="button"
@@ -72,7 +72,7 @@ export default function ChangePassword() {
             <div className="space-y-2">
               <Label
                 htmlFor="confirm-password"
-                className="text-[18px] font-outfit text-[#475467]"
+                className="text-sm md:text-[18px] font-outfit text-[#475467]"
               >
                 Confirm Password
               </Label>
@@ -82,7 +82,7 @@ export default function ChangePassword() {
                   placeholder="BFiofgvsb***JJ"
                   type={showConfirmPassword ? "text" : "password"}
                   required
-                  className="w-full text-[18px] text-[#475467] border-[#98A2B3] pr-10 placeholder:text-[#98A2B3] placeholder:text-sm placeholder:font-normal"
+                  className="w-full border-[#98A2B3] pr-10"
                 />
                 <Button
                   type="button"
@@ -102,7 +102,7 @@ export default function ChangePassword() {
 
             <button
               type="submit"
-              className="w-full flex justify-center rounded-lg items-center font-outfit text-white text-[18px] font-medium py-[10px] bg-primary hover:bg-blue-700"
+              className="w-full flex justify-center rounded-lg items-center font-outfit text-white text-sm md:text-[18px] font-medium py-3 md:py-[10px] bg-primary hover:bg-blue-700"
             >
               Reset Password
             </button>
