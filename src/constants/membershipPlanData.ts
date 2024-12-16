@@ -1,11 +1,13 @@
 export const membershipData = [
   {
+    id: 1,
     title: "Basic Membership",
     price: 9.99,
     features: ["Access to Basic Content", "Email Support"],
   },
 
   {
+    id: 2,
     title: "Standard Membership",
     price: 19.99,
     features: [
@@ -14,7 +16,9 @@ export const membershipData = [
       "Free Monthly Downloadable Resources",
     ],
   },
+
   {
+    id: 3,
     title: "Premium Membership",
     price: 39.99,
     features: [
@@ -26,6 +30,7 @@ export const membershipData = [
   },
 
   {
+    id: 4,
     title: "Gold Membership",
     price: 59.99,
     features: [
@@ -36,7 +41,9 @@ export const membershipData = [
       "Exclusive Networking Opportunities",
     ],
   },
+
   {
+    id: 5,
     title: "Elite Membership",
     price: 99.99,
     features: [

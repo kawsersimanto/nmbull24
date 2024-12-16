@@ -29,9 +29,11 @@ const SidebarRoutes = ({ routes, expand, setExpand }: props) => {
       style={{}}
       key={routes.link}
     >
-      <div className="flex max-md:text-4xl items-center gap-2">
+      <div className="flex max-md:text-xl  items-center gap-2">
         <routes.icon />
-        <p className="md:flex hidden md:text-lg text-sm">{!expand && routes.label}</p>
+        <p className={`md:text-lg text-sm ${expand ? "md:flex block" : "md:flex hidden"}`}>
+          {routes.label}
+        </p>
       </div>
     </Link>
   );

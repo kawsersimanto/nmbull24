@@ -16,7 +16,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   return (
     <div className="flex md:flex-row flex-col">
       {/* Sidebar */}
-      <Sidebar expand={expand} setExpand={setExpand}/>
+      <Sidebar expand={expand} setExpand={setExpand} />
 
       <div className="w-full ">
         {/* Header */}
@@ -24,7 +24,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
         {/* Main Content Area */}
         <main
-          className={`bg-[#efefef] md:px-10 px-1 py-5 min-h-screen ${ !expand ? "ml-[300px]" : "ml-[60px]"}`}
+          className={`bg-[#efefef] md:px-10 px-1 py-5 min-h-screen ${
+            !expand ? "md:ml-[300px] ml-[60px]" : "md:ml-[300px] ml-[100px]"
+          }`}
         >
           {children}
         </main>

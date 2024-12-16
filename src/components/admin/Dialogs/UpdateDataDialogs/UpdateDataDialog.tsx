@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 
@@ -31,6 +33,7 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
 const UpdateDataDialog = ({ isOpen, onClose }: UpdateDataDialogProps) => {
+
   const {
     control,
     handleSubmit,
@@ -45,12 +48,11 @@ const UpdateDataDialog = ({ isOpen, onClose }: UpdateDataDialogProps) => {
 
   const onFormSubmit = (data: Data) => {
     console.log(data);
-    onClose();
+    
   };
 
   return (
     <Dialog open={isOpen}>
-      <DialogTrigger>Update</DialogTrigger>
       <DialogContent>
         <div className="absolute top-3 right-3" onClick={onClose}>
           <X className="h-4 w-4" />
@@ -92,12 +94,12 @@ const UpdateDataDialog = ({ isOpen, onClose }: UpdateDataDialogProps) => {
                   </span>
 
                   {/* Add New Membership Plan Link */}
-                  <Link
-                    href=""
+                  <Button
+                    variant={"ghost"}
                     className="flex items-center gap-2 mt-5 text-[#0872BA]"
                   >
                     <LiaPlusSolid /> Add new membership plan
-                  </Link>
+                  </Button>
                 </span>
               </span>
 

@@ -21,13 +21,15 @@ const Sidebar = ({ expand, setExpand }: props) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 z-50 transition border h-[calc(100vh-20px)] ${expand?"w-[300px]":"w-[60px]"}`}
+      className={`fixed top-0 left-0 z-50 transition border h-[calc(100vh-20px)] ${
+        expand ? "md:w-[300px] w-[100px]" : "md:w-[300px] w-[60px]"
+      }`}
       id="adminSidebar"
     >
       <div className="relative md:pt-0 pt-20">
         {/* Admin  */}
-        <div className="absolute top-9 text-3xl  left-2 md:hidden">
-          <CiMenuFries onClick={()=> setExpand((e)=> !e)} />
+        <div className="absolute top-9 text-xl  left-2 md:hidden">
+          <CiMenuFries onClick={() => setExpand((e) => !e)} />
         </div>
       </div>
       <div className="logo py-5 md:flex hidden">
@@ -60,7 +62,12 @@ const Sidebar = ({ expand, setExpand }: props) => {
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
         <Button className="flex items-center gap-2" variant={"link"}>
-          <AiOutlineLogout /> Logout
+          <AiOutlineLogout />
+          {
+            <p className={`${expand ? "md:flex block" : "md:flex hidden"}`}>
+              Logout
+            </p>
+          }
         </Button>
       </div>
     </div>
