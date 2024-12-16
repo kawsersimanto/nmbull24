@@ -84,12 +84,14 @@ const StatisticsChart = () => {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between w-full">
-        <CardTitle className="md:text-2xl text-sm">Statistics</CardTitle>
-        <Select  defaultValue="this-year" >
-          <SelectTrigger className="md:w-[80px] w-[70px] !py-0">
+        <CardTitle className="md:text-[18px] font-semibold text-sm">
+          Statistics
+        </CardTitle>
+        <Select defaultValue="this-year">
+          <SelectTrigger className="md:w-[94px] w-[70px] !p-[8px] text-[12px]">
             <SelectValue placeholder="Select period" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="text-[12px]">
             <SelectItem value="this-year">This Year</SelectItem>
             <SelectItem value="last-year">Last Year</SelectItem>
           </SelectContent>
@@ -97,11 +99,7 @@ const StatisticsChart = () => {
       </CardHeader>
       <CardContent className="flex items-center justify-center w-full">
         <div className="w-full md:px-4 px-1">
-          <Bar
-            className="!w-full"
-            options={responsiveOptions}
-            data={data}
-          />
+          <Bar className="!w-full" options={responsiveOptions} data={data} />
         </div>
       </CardContent>
     </Card>

@@ -13,9 +13,11 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Montserrat", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
       },
       colors: {
         primary: "#0872BA",
+        textColor: "#263238",
         background: "var(--background)",
         foreground: "var(--foreground)",
         "off-white": "#f6f6f6",
@@ -29,6 +31,9 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      fontSize: {
+        ts: "16px",
       },
       container: {
         padding: "20px",

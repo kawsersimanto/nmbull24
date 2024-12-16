@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 const FilterHomeData = () => {
   const [searchBoxOpen, setSearchBoxOpen] = useState<boolean>(false);
@@ -140,19 +141,19 @@ const FilterHomeData = () => {
   return (
     <>
       <div className="flex justify-between items-center flex-shrink-0">
-        <h4 className="md:text-2xl text-xl">Membership</h4>
+        <h4 className="md:text-2xl text-xl">Member list</h4>
 
-        <div className="flex gap-2 md:gap-4 items-center">
+        <div className="flex gap-2 md:gap-2 items-center">
           <LiaSearchSolid
-            className="cursor-pointer md:text-xl"
+            className="cursor-pointer md:text-[24px] text-[#48535B]"
             onClick={() => setSearchBoxOpen(true)} // Open the search dialog
           />
           <LiaFilterSolid
-            className="cursor-pointer md:text-xl"
+            className="cursor-pointer md:text-[24px] text-[#48535B]"
             onClick={() => setFilterBoxOpen(true)} // Open the filter dialog
           />
           <SlRefresh
-            className="cursor-pointer md:text-xl"
+            className="cursor-pointer md:text-[24px] text-[#48535B]"
             onClick={() => {
               setSearchQuery("");
               setActiveFilters({ country: [], membership: [] });
@@ -165,19 +166,13 @@ const FilterHomeData = () => {
 
           {/* Pagination Selection */}
           <Select onValueChange={handleItemsPerPageChange}>
-            <SelectTrigger className="md:w-[100px] w-[50px]">
-              <SelectValue placeholder={`${itemsPerPage}`} />
+            <SelectTrigger className="md:w-[100px] w-[50px] rounded-[12px] text-[#667085]">
+              <SelectValue placeholder={`Page size`} />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={itemsPerPage.toString()}>
-                {itemsPerPage}
-              </SelectItem>
-              <SelectItem value={(itemsPerPage * 2).toString()}>
-                {itemsPerPage * 2}
-              </SelectItem>
-              <SelectItem value={(itemsPerPage * 3).toString()}>
-                {itemsPerPage * 3}
-              </SelectItem>
+            <SelectContent className="text-[#667085]">
+              <SelectItem value="3">3</SelectItem>
+              <SelectItem value="6">6</SelectItem>
+              <SelectItem value={"9"}>9</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -196,7 +191,7 @@ const FilterHomeData = () => {
       )}
 
       {/* Filtered Members Table */}
-      <div className="">
+      <div className="py-5">
         <Table>
           <TableBody>
             {paginatedData.length > 0 ? (
@@ -213,9 +208,9 @@ const FilterHomeData = () => {
       </div>
 
       {/* Pagination Controls */}
-      <div className="flex justify-center items-center py-4">
+      <div className="flex  items-center py-4">
         <button
-          className="md:px-4 px-2 text-xs md:text-lg py-2 text-white bg-gray-600 rounded disabled:opacity-50"
+          className=" text-[16px]  text-white bg-gray-600 rounded disabled:opacity-50 px-[12px] py-[6px]"
           disabled={currentPage === 1}
           onClick={() => setCurrentPage(currentPage - 1)}
         >
@@ -230,7 +225,7 @@ const FilterHomeData = () => {
             ) : (
               <button
                 key={idx}
-                className={`md:px-4 px-2 text-xs md:text-lg py-2 rounded ${
+                className={`text-xs md:text-lg w-[60px] h-[36px] rounded ${
                   page === currentPage
                     ? "bg-blue-600 text-white"
                     : "bg-gray-200"
@@ -243,7 +238,7 @@ const FilterHomeData = () => {
           )}
         </div>
         <button
-          className="md:px-4 px-2 text-xs md:text-lg py-2 text-white bg-gray-600 rounded disabled:opacity-50"
+          className=" text-[16px]   text-white bg-gray-600 rounded disabled:opacity-50 px-[12px] py-[6px]"
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage(currentPage + 1)}
         >

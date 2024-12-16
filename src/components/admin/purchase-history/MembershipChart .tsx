@@ -48,19 +48,25 @@ const responsiveOptions = {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between flex-shrink-0 overflow-hidden">
-        <CardTitle className="text-sm md:text-2xl">Order review status</CardTitle>
+        <CardTitle className="md:text-[18px] font-semibold text-sm">
+          Order review status
+        </CardTitle>
         <Select defaultValue="this-month">
-          <SelectTrigger className="md:w-[130px] w-[70px]">
+          <SelectTrigger className="md:w-[131px] w-[70px] !p-[8px] text-[12px] ">
             <SelectValue placeholder="Select period" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="text-[12px]">
             <SelectItem value="this-month">This month</SelectItem>
             <SelectItem value="last-month">Last month</SelectItem>
           </SelectContent>
         </Select>
       </CardHeader>
-      <CardContent className='flex items-center justify-center'>
-        <Doughnut className="md:min-h-[200px] h-[200px] sm:w-auto !w-full" data={data} options={responsiveOptions} />
+      <CardContent className="flex items-center justify-center">
+        <Doughnut
+          className="md:min-h-[200px] h-[200px] sm:w-auto !w-full"
+          data={data}
+          options={responsiveOptions}
+        />
       </CardContent>
     </Card>
   );

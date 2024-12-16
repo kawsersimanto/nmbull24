@@ -19,10 +19,12 @@ const MetricCard = ({ title, value, change, subtitle }: MetricCardProps) => {
       <CardContent className="pt-6 relative overflow-hidden">
         <div className=" items-center flex-shrink-0 ">
           <div className="">
-            <p className="text-sm text-muted-foreground">{title}</p>
-            <h3 className="text-2xl font-bold mt-2">{value}</h3>
+            <p className="text-ts text-muted-foreground">{title}</p>
+            <h3 className="text-[42.5px]  font-bold mt-2">{value}</h3>
             {subtitle && (
-              <p className="pt-4 text-xs text-muted-foreground mt-1">{subtitle}</p>
+              <p className="pt-4 text-ts text-[#475467] text-muted-foreground mt-1">
+                {subtitle}
+              </p>
             )}
           </div>
           {change && (
@@ -45,7 +47,7 @@ const MetricCard = ({ title, value, change, subtitle }: MetricCardProps) => {
 
         {/* Side deign */}
         <div className="absolute bg-[#0872BAA6] -top-1 -right-1 p-2 rounded-full">
-            <LiaArrowUpSolid className="text-white"/>
+          <LiaArrowUpSolid className="text-white" />
         </div>
       </CardContent>
     </Card>

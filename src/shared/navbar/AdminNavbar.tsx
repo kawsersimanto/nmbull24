@@ -1,49 +1,3 @@
-// "use client";
-
-// import Image from "next/image";
-// import React from "react";
-// import logo from "@/assets/expat-logo.png";
-// import Link from "next/link";
-// import { usePathname } from "next/navigation";
-// import { purachaseSubItems } from "@/constants/subitems";
-
-// const AdminNavbar = () => {
-// //   const location = usePathname();
-// //   const pathExist = location.startsWith("/dashboard/admin/purchase");
-
-//   const pathname = usePathname();
-//   const isAdmin = pathname.startsWith("/dashboard/admin");
-
-//   return (
-//     <div className=" min-h-[4rem] py-2 content-center">
-//       <div className="flex justify-between items-center">
-//         <div className="flex gap-5">
-//           <Link href="/dashboard/admin">
-//             <Image
-//               src={logo}
-//               alt=""
-//               className="lg:w-[108px] w-[65px] h-[auto] lg:h-[60px] object-contain ml-[100px]"
-//             />
-//           </Link>
-//           <div className={`subitems flex items-center gap-2`}>
-//             {pathname === "/dashboard/admin/purchase" &&
-//              purachaseSubItems.map(item=>(
-//                 <Link href={item.link} className="" key={item.link}>
-//                         {
-//                             item.label
-//                         }
-//                 </Link>
-//              ))
-//             }
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AdminNavbar;
-
 "use client";
 import React, { useEffect, useState } from "react";
 
@@ -52,7 +6,11 @@ import { usePathname } from "next/navigation";
 import { adminSidebarRoutes } from "@/constants/adminSidebarItems";
 import { subItems } from "@/types/sidebarItemsType";
 
-const Header = () => {
+interface props{
+  expand:boolean
+}
+
+const Header = ({expand}:props) => {
   const [subitems, setSubitems] = useState<subItems[]>([]);
   const [activeRoute] = useState("dashboard/admin/purchase");
   const pathname = usePathname(); // Use usePathname for dynamic routing
@@ -74,14 +32,12 @@ const Header = () => {
     }
   }, [pathname]);
 
-  // const basePath = "/admin/category/"; // Define the base path
-  // const pathnam = "/admin/category/allroutes"; // Current path
-
-  // // Ensure pathname starts with basePath
-  // const isSubPath = basePath.startsWith(pathnam);
-
   return (
-    <div className=" flex items-center gap-2 h-[81px] flex-shrink-0 md:pl-0 pl-3 sticky top-0 z-40 md:ml-[300px] bg-[#f6f6f6]">
+    <div
+      className={`flex items-center gap-2 h-[81px] flex-shrink-0  sticky top-0 z-40  bg-[#f6f6f6] ${
+        expand ? " ml-[120px] md:ml-[300px]" : "md:ml-[300px] ml-[80px]"
+      }`}
+    >
       {subitems.map((item, index) => (
         <Link
           href={item.link}
@@ -92,7 +48,7 @@ const Header = () => {
           }`}
           key={index}
         >
-          {item.label} {/* Ensure label is correct */}
+          {item.label}
         </Link>
       ))}
     </div>

@@ -1,3 +1,5 @@
+
+
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -22,7 +24,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable}`}>{children}</body>
+      <body className={`${montserrat.variable} `}>{children}</body>
+     
     </html>
   );
 }

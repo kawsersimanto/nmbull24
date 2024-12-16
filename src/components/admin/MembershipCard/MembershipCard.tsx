@@ -33,7 +33,7 @@ const MembershipCard = ({ membership }: props) => {
           onClick={openDialog}
         >
           <LiaEdit />
-          Edit
+          Update
         </Button>
       </div>
 
@@ -61,6 +61,7 @@ const MembershipCard = ({ membership }: props) => {
         onClose={closeDialog}
         onSubmit={handleUpdateSubmit}
         initialData={{
+          id:membership.id,
           title: membership.title,
           features: membership.features,
           price: membership.price,

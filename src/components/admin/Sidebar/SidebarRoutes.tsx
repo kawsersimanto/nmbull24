@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
 import { adminSidebarRoutesType } from "@/types/sidebarItemsType";
+import Image from "next/image";
 
 interface props {
   routes: adminSidebarRoutesType;
@@ -29,9 +30,13 @@ const SidebarRoutes = ({ routes, expand, setExpand }: props) => {
       style={{}}
       key={routes.link}
     >
-      <div className="flex max-md:text-xl  items-center gap-2">
-        <routes.icon />
-        <p className={`md:text-lg text-sm ${expand ? "md:flex block" : "md:flex hidden"}`}>
+      <div className="flex max-md:text-xl  items-center gap-2 relative">
+        <Image src={routes.icon} height={24} width={24} alt="" className="size-6" />
+        <p
+          className={`md:text-[18px] text-sm ${
+            expand ? "md:flex block" : "md:flex hidden"
+          }`}
+        >
           {routes.label}
         </p>
       </div>
