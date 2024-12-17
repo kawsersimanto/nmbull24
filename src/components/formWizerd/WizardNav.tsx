@@ -16,12 +16,13 @@ interface WizardNavProps {
   className?: string;
 }
 
-export function WizardNav({ steps = [], currentStep, className }: WizardNavProps) {
+export function WizardNav({ steps = [], className }: WizardNavProps) {
+  const pathName = usePathname();
   if (!steps || steps.length === 0) {
     return null;
   }
 
-  const pathName = usePathname();
+
 
   return (
     <nav className={cn("relative flex flex-col items-center text-center gap-4", className)}>
