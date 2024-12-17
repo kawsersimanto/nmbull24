@@ -1,6 +1,7 @@
 "use client";
 
 import Wizard from "@/components/formWizerd/Wizard";
+import WizardSmall from "@/components/formWizerd/WizardSmall";
 
 import { ReactNode } from "react";
 
@@ -14,21 +15,33 @@ const Layout = ({ children }: children) => {
   return (
     <>
     
-    <div className="container mt-[188px]">
+    <div className="container mt-[137px]">
         
           
-         <div className="grid grid-cols-12 gap-4">
+        <div className="md:block hidden">
+        <div className="grid grid-cols-12 gap-4">
           
-           <div className="col-span-12 md:col-span-10">
-          
-           {children}
-           </div>
-   
-           {/* Second section (3 columns wide) */}
-           <div className="col-span-12 md:col-span-2">
-           <Wizard/>
-           </div>
-         </div>
+          <div className=" md:col-span-10">
+         
+          {children}
+          </div>
+  
+          {/* Second section (3 columns wide) */}
+          <div className=" md:col-span-2">
+          <Wizard/>
+          </div>
+        </div>
+        </div>
+        <div className="md:hidden block">
+          <div>
+          <WizardSmall/>
+          </div>
+          <div>
+          {children}
+          </div>
+
+
+        </div>
        </div>
 
     </>

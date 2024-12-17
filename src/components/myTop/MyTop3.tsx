@@ -69,7 +69,7 @@ const dispatch=useDispatch()
   return (
     <div className="mx-auto p-4 lg:p-8 font-sans">
       <div className="border-b-2 pb-4 mb-6">
-        <h2 className="text-[#1D2939] text-2xl lg:text-[48px] font-semibold">My Top 3's</h2>
+        <h2 className="text-[#1D2939] text-2xl lg:text-[48px] font-semibold">My Top 3&aposs</h2>
       </div>
 
       <Form {...form}>

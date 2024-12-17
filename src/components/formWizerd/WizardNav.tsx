@@ -26,8 +26,8 @@ export function WizardNav({ steps = [], currentStep, className }: WizardNavProps
   return (
     <nav className={cn("relative flex flex-col items-center text-center gap-4", className)}>
       {steps.map((step, index) => {
-        const isCurrent = step.route === pathName; 
-        const isClickable = step.isCompleted; 
+        const isCurrent = step.route === pathName; // Highlight if step's route matches current path
+        const isClickable = step.isCompleted; // Only completed steps should be clickable
 
         return (
           <div

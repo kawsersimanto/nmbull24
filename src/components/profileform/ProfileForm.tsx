@@ -62,9 +62,9 @@ export default function ProfileForm() {
     router.push("/destination"); 
   };
   return (
-    <div className="mx-auto p-4 lg:p-8 font-sans">
+    <div className="mx-auto p-4  font-sans">
         <div className=" grid grid-cols-12">
-           <h2 className="lg:text-[48px] text-24 font-[600] border-b-2 py-2 col-span-9 text-[#1D2939]"> My Profile</h2>
+           <h2 className="lg:text-[48px] text-[24px] font-[600] border-b-2 py-2 col-span-12 text-[#1D2939]"> My Profile</h2>
          </div>
   
 

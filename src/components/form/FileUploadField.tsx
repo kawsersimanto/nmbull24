@@ -41,7 +41,7 @@ export const FileUploadField = ({
       name={name}
       render={() => (
         <FormItem>
-          <FormLabel className="text-[#263238] font-semibold">{label}</FormLabel>
+          <FormLabel className="text-[#263238] font-semibold text-[16px">{label}</FormLabel>
           <FormControl>
             <div className="flex flex-col items-center lg:items-start gap-2 lg:w-[458px]">
               <Button
