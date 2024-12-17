@@ -64,7 +64,7 @@ export function Footer() {
     ),
   };
   return (
-    <footer className="bg-white px-6 pb-10 mt-[115px]">
+    <footer className="bg-white w-full px-6 pb-10 mt-[115px]">
   <div className="container pt-10 flex flex-col md:flex-row justify-between items-center">
     {/* Logo and Description */}
     <div className="text-center md:text-left">

@@ -26,6 +26,7 @@ const inter = Inter({
   weight: ["300", "400", "500", "700"], // Adjust the weights as needed
   variable: "--font-inter",
 });
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -33,7 +34,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} ${outfit.variable} ${inter.variable}`}>
+      <body
+        className={`${montserrat.variable} ${outfit.variable} ${inter.variable}`}
+      >
         {children}
       </body>
     </html>
