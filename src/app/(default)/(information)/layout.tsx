@@ -18,7 +18,7 @@ const Layout = ({ children }: children) => {
         
           
          <div className="grid grid-cols-12 gap-4">
-           {/* First section (9 columns wide) */}
+          
            <div className="col-span-12 md:col-span-10">
           
            {children}

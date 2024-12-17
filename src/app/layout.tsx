@@ -3,6 +3,7 @@ import "./globals.css";
 
 import { Inter, Montserrat } from "next/font/google";
 import { Outfit } from "next/font/google"; // Import Outfit font
+import ReduxProvider from "@/redux/ReduxProvider";
 
 export const metadata: Metadata = {
   title: "Expat Global Girls | Stay with local and meet travel partner",
@@ -34,7 +35,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.variable} ${outfit.variable}`}>
-        {children}
+      <ReduxProvider>
+          {
+            children
+          }
+        </ReduxProvider>
       </body>
     </html>
   );

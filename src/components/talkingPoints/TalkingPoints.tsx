@@ -9,6 +9,9 @@ import { SelectField } from "../form/SelectField";
 import { TextareaField } from "../form/TextAreaField";
 import talkingPointsSchema from "@/schema/talkingPointsSchema";
 import { talkingPointsData } from "@/constants/talkingPointsData";
+import { useDispatch } from "react-redux";
+import { saveStep5Data } from "@/redux/formSlice";
+import { useRouter } from "next/navigation";
 
 
 
@@ -16,9 +19,18 @@ export default function TalkingPoints() {
   const form = useForm<z.infer<typeof talkingPointsSchema>>({
     resolver: zodResolver(talkingPointsSchema),
   });
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+
+
+
+
 
   const onSubmit = (values: z.infer<typeof talkingPointsSchema>) => {
-    console.log(values);
+    dispatch(saveStep5Data({ ...values, completed: true })); 
+    router.push("/"); 
+
   };
 
   return (

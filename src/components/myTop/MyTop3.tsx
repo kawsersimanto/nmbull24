@@ -7,6 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { SelectField } from "../form/SelectField";
 import { InfoIcon } from 'lucide-react';
+import { saveStep4Data } from "@/redux/formSlice";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+
 
 const formSchema = z.object({
   personality_1: z.string().min(1, "Please select a personality trait"),
@@ -32,14 +36,20 @@ const formSchema = z.object({
   music_tastes_3: z.string().min(1, "Please select a music taste"),
 });
 
-export default function MyTopThrees() {
+
+export default function MyTop3(){
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    
   });
-
+    const router = useRouter();
+const dispatch=useDispatch()
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-  };
+  dispatch(saveStep4Data({ ...values, completed: true })); 
+    router.push("/talking-points"); 
+   
+   };
+
 
   const renderSelectFields = (name: string, options: string[]) => (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

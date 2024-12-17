@@ -11,6 +11,9 @@ import { CheckboxField } from "../form/CheckboxField";
 import avtarImage from '@/assets/form/prof.png'
 import { useEffect, useState } from "react";
 import { FileUploadField } from "../form/FileUploadField";
+import { useDispatch } from "react-redux";
+import { saveStep1Data } from "@/redux/formSlice";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   firstName: z.string().min(2),
@@ -35,27 +38,29 @@ const formSchema = z.object({
     .optional(),
 });
 
+
 export default function ProfileForm() {
 
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   useEffect(() => {
     return () => {
       if (avatarPreview) {
-        URL.revokeObjectURL(avatarPreview); // Cleanup old preview URL
+        URL.revokeObjectURL(avatarPreview); 
       }
     };
   }, [avatarPreview]);
-
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
   const onSubmit = (values: any) => {
-    console.log(values);
-    
+    dispatch(saveStep1Data({ ...values, completed: true })); 
+    router.push("/destination"); 
   };
-
   return (
     <div className="mx-auto p-4 lg:p-8 font-sans">
         <div className=" grid grid-cols-12">

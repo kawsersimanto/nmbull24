@@ -11,6 +11,10 @@ import { CheckboxField } from "../form/CheckboxField";
 import { Plus, Trash2 } from 'lucide-react';
 import { TextareaField } from "../form/TextAreaField";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { saveStep3Data } from "@/redux/formSlice";
+import { useRouter } from "next/navigation";
+
 
 const formSchema = z.object({
   maximum_monthly_rent: z.string().min(1, "Maximum monthly rent is required"),
@@ -25,23 +29,29 @@ const formSchema = z.object({
   industry: z.string().optional(),
   company_name: z.string().optional(),
   description_of_services: z.string().optional(),
-  facebook: z.string().url().optional().or(z.literal("")),
-  instagram: z.string().url().optional().or(z.literal("")),
-  youtube: z.string().url().optional().or(z.literal("")),
-  website: z.string().url().optional().or(z.literal("")),
-  linkedin: z.string().url().optional().or(z.literal("")),
+  facebook: z.string().optional().or(z.literal("")),
+  instagram: z.string().optional().or(z.literal("")),
+  youtube: z.string().optional().or(z.literal("")),
+  website: z.string().optional().or(z.literal("")),
+  linkedin: z.string().optional().or(z.literal("")),
 });
 
-export default function LifeStyle() {
+
+export default function LifeStyle(){
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       has_business: false,
     }
   });
+  const router = useRouter();
+
+  const dispatch=useDispatch()
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    dispatch(saveStep3Data({ ...values, completed: true })); 
+       router.push("/mytop"); 
+
   };
   const [socialLinks, setSocialLinks] = useState<{
     facebook: boolean;
@@ -56,6 +66,7 @@ export default function LifeStyle() {
     linkedin: false,
     youtube: false,
   });
+ 
   const toggleLinkVisibility = (link: keyof typeof socialLinks) => {
     setSocialLinks(prev => ({ ...prev, [link]: !prev[link] }));
   };

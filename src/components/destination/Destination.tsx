@@ -3,13 +3,17 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { InputField } from "../form/InputField";
+
 import { SelectField } from "../form/SelectField";
 import MinusIcon from "../icon/MinusIcon";
+import { useDispatch } from "react-redux";
+import { saveStep2Data } from "@/redux/formSlice";
+import { useRouter } from "next/navigation";
+
 
 const formSchema = z.object({
   destinations: z.array(
@@ -22,6 +26,8 @@ const formSchema = z.object({
     })
   ),
 });
+
+
 
 export default function Destination() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -38,14 +44,28 @@ export default function Destination() {
       ],
     },
   });
+  const router = useRouter();
+
+
+  
 
   const { fields, append, remove } = useFieldArray({
     name: "destinations",
     control: form.control,
   });
 
+  const dispatch = useDispatch();
+
+  
+
+
+
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    dispatch(saveStep2Data({ ...values, completed: true })); 
+    router.push("/lifestyle"); 
+
+
   };
 
   return (
