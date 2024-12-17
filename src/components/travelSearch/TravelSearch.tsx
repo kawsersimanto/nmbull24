@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Link from "next/link";
 
 export default function TravelSearch() {
   return (
@@ -22,9 +23,13 @@ export default function TravelSearch() {
               Quick search your travel partner
             </h1>
           </div>
-          <div className="max-w-[532px] w-full mx-auto"> {/* Ensure it takes full width of max 532px */}
+          <div className="max-w-[532px] w-full mx-auto">
+            {" "}
+            {/* Ensure it takes full width of max 532px */}
             <div className="rounded-lg bg-white/10 backdrop-blur-md p-6 space-y-6">
-              <div className="text-white text-xl sm:text-2xl mb-5 text-center">Search for</div>
+              <div className="text-white text-xl sm:text-2xl mb-5 text-center">
+                Search for
+              </div>
               <div className="grid gap-6">
                 {/* Travel Type */}
                 <div className="grid grid-cols-1 sm:grid-cols-2">
@@ -77,7 +82,9 @@ export default function TravelSearch() {
                       <SelectContent>
                         {Array.from({ length: 12 }, (_, i) => (
                           <SelectItem key={i + 1} value={String(i + 1)}>
-                            {new Date(0, i).toLocaleString('default', { month: 'long' })}
+                            {new Date(0, i).toLocaleString("default", {
+                              month: "long",
+                            })}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -100,9 +107,7 @@ export default function TravelSearch() {
 
                 {/* Age Range */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-white">
-                    Age
-                  </label>
+                  <label className="text-sm font-medium text-white">Age</label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Select>
                       <SelectTrigger className="bg-transparent border-white text-white">
@@ -149,23 +154,25 @@ export default function TravelSearch() {
                 </div>
               </div>
 
-              <Button className="w-full bg-primary hover:bg-blue-700 mt-6">
-                Let&apos;s find a member
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="ml-2 h-4 w-4"
-                >
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </Button>
+              <Link href={'/search-filter'}>
+                <Button className="w-full bg-primary hover:bg-blue-700 mt-6">
+                  Let&apos;s find a member
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="ml-2 h-4 w-4"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,13 +1,16 @@
-"use client"
+"use client";
 
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import Image from "next/image";
 import logo from "@/assets/expat-logo.png";
-import success from "@/assets/login/Success.png";
-
+import success from "@/assets/login/Vector.png";
 
 // Define the validation schema for the OTP field using zod
 const otpSchema = z.object({
@@ -36,7 +39,7 @@ export default function OTPVerification() {
 
   const onSubmit = (data: OTPFormData) => {
     console.log("OTP Submitted:", data); // Handle the OTP submission
-  }
+  };
 
   return (
     <div className="flex min-h-screen items-center font-sans justify-center bg-white p-4">
@@ -54,14 +57,8 @@ export default function OTPVerification() {
 
         {/* Success Icon */}
         <div className="flex flex-col items-center space-y-4">
-          <div className="rounded-full bg-primary p-3">
-            <div className="flex justify-center w-[82.949px] h-auto items-center">
-              <Image
-                src={success}
-                alt="success"
-                className="w-[82.949px] object-contain"
-              />
-            </div>
+          <div className="bg-primary md:w-[82.9px] md:h-[82.9px] w-[72.9px] h-[72.9px] items-center justify-center flex rounded-full">
+            <Image src={success} alt="success" className="" />
           </div>
           <h1 className="font-semibold font-outfit text-4xl text-[#1D2939]">
             Success
@@ -78,13 +75,13 @@ export default function OTPVerification() {
               name="otp"
               control={control}
               render={({ field }) => (
-                <InputOTP {...field} maxLength={6} className="w-full">
-                  <InputOTPGroup className="w-full">
+                <InputOTP {...field} maxLength={6}>
+                  <InputOTPGroup className="flex gap-6">
                     {[...Array(6)].map((_, index) => (
                       <InputOTPSlot
                         key={index}
                         index={index}
-                        className="h-[56px] w-[55.67px] rounded-[8px] border border-[#98A2B3] mx-2"
+                        className="md:h-[56px] md:w-[55.67px] h-[36px] w-[35.67px] rounded-[8px] border border-[#98A2B3]"
                       />
                     ))}
                   </InputOTPGroup>
@@ -101,7 +98,10 @@ export default function OTPVerification() {
           )}
 
           {/* Submit Button */}
-          <button type="submit" className="w-full flex justify-center rounded-lg items-center font-outfit text-white text-[18px] font-medium py-[27px] bg-primary hover:bg-blue-700">
+          <button
+            type="submit"
+            className="w-full flex justify-center rounded-lg items-center font-outfit text-white text-[18px] font-medium py-[10px] bg-primary hover:bg-blue-700"
+          >
             Submit
             <svg
               xmlns="http://www.w3.org/2000/svg"

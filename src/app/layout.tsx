@@ -27,6 +27,7 @@ const inter = Inter({
   weight: ["300", "400", "500", "700"], // Adjust the weights as needed
   variable: "--font-inter",
 });
+
 export default function RootLayout({
   children,
 }: Readonly<{

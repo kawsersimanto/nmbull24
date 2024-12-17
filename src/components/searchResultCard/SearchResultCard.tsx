@@ -24,7 +24,7 @@ export default function SearchResultCard({
   imageUrl,
 }: SearchResultCardProps) {
   return (
-    <div className="flex flex-col md:flex-row gap-7 rounded-2xl w-[350px] md:w-[752px] bg-white px-4 py-5 mb-6 shadow-sm">
+    <div className="flex flex-col md:flex-row gap-7 rounded-2xl max-w-w-[752px] bg-white px-4 py-5 mb-6 shadow-sm">
       <div className="relative h-[200px] md:h-[257px] w-full md:w-[342px] flex-shrink-0">
         <Image
           src={imageUrl}

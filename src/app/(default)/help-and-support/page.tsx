@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Page = () => {
   return (
@@ -42,7 +42,7 @@ const Page = () => {
         If you need further assistance, don&apos;t hesitate to contact us.
         We&apos;re dedicated to ensuring your experience is safe, enjoyable, and
         stress-free. <br />
-        <div className='flex flex-col'>
+        <div className="flex flex-col">
           <span className="text-primary underline mt-3 block sm:inline-block">
             Contact Us
           </span>{" "}
@@ -51,15 +51,18 @@ const Page = () => {
           </span>
         </div>
       </p>
+
       <h2 className="font-sans mt-[40px] sm:mt-[64px] font-bold text-2xl">
         Booking and Payments
       </h2>
       <p className="text-[16px] sm:text-[18px] font-sans font-normal mt-[16px] sm:mt-[26px]">
-        Once you've selected a listing, you can initiate the booking process.
-        Follow the prompts to confirm your travel dates, review the details, and
-        proceed with secure payment options. All transactions are processed
-        securely through the platform to ensure your privacy and peace of mind.
+        Once you&apos;ve selected a listing, you can initiate the booking
+        process. Follow the prompts to confirm your travel dates, review the
+        details, and proceed with secure payment options. All transactions are
+        processed securely through the platform to ensure your privacy and peace
+        of mind.
       </p>
+
       <h2 className="font-sans mt-[40px] sm:mt-[64px] font-bold text-2xl">
         Getting Started
       </h2>
@@ -68,6 +71,7 @@ const Page = () => {
         you can easily search for shared accommodations and roommates, browse
         available listings, and save your favorite profiles for easy access.
       </p>
+
       <h2 className="font-sans mt-[40px] sm:mt-[64px] font-bold text-2xl">
         Search and Filters
       </h2>
@@ -77,31 +81,35 @@ const Page = () => {
         various filters, such as room type, price range, and number of
         travelers, to narrow down your options and find the perfect match.
       </p>
+
       <h2 className="font-sans mt-[40px] sm:mt-[64px] font-bold text-2xl">
         Saving Profiles and Listings
       </h2>
       <p className="text-[16px] sm:text-[18px] font-sans font-normal mt-[16px] sm:mt-[26px]">
         You can save profiles and listings that interest you for future
-        reference. Once saved, you can view them at any time in your "Saved
-        Profiles" section, making it easy to compare your options and make a
-        decision when you're ready.
+        reference. Once saved, you can view them at any time in your &quot;Saved
+        Profiles&quot; section, making it easy to compare your options and make
+        a decision when you&apos;re ready.
       </p>
+
       <h2 className="font-sans mt-[40px] sm:mt-[64px] font-bold text-2xl">
         Booking and Payments
       </h2>
       <p className="text-[16px] sm:text-[18px] font-sans font-normal mt-[16px] sm:mt-[26px]">
-        Once you've selected a listing, you can initiate the booking process.
-        Follow the prompts to confirm your travel dates, review the details, and
-        proceed with secure payment options. All transactions are processed
-        securely through the platform to ensure your privacy and peace of mind.
+        Once you&apos;ve selected a listing, you can initiate the booking
+        process. Follow the prompts to confirm your travel dates, review the
+        details, and proceed with secure payment options. All transactions are
+        processed securely through the platform to ensure your privacy and peace
+        of mind.
       </p>
+
       <h2 className="font-sans mt-[40px] sm:mt-[64px] font-bold text-2xl">
         Managing Your Profile
       </h2>
       <p className="text-[16px] sm:text-[18px] font-sans font-normal mt-[16px] sm:mt-[26px]">
         Keep your profile up to date with your latest preferences, bio, and
         pictures to make your profile more appealing to potential roommates. You
-        can easily edit your profile from the "My Profile" section.
+        can easily edit your profile from the &quot;My Profile&quot; section.
       </p>
     </div>
   );

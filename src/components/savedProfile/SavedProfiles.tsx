@@ -61,6 +61,11 @@ export default function SavedProfiles() {
           <ProfileCard key={profile.id} profile={profile} />
         ))}
       </div>
+      <div className="flex items-center justify-center">
+        <button className="mt-[68px] text-white hover:text-gray-400 px-[68px] py-4 bg-primary rounded-xl font-sans font-semibold">
+          Load more
+        </button>
+      </div>
     </div>
   );
 }

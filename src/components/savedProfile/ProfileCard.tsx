@@ -22,7 +22,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
     <div className="bg-white mt-7 rounded-lg shadow-sm border border-gray-100 p-6">
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 items-center">
         {/* Image Section */}
-        <div className="relative w-full h-64 sm:h-72 md:h-80 lg:w-[479px] lg:h-[351px]">
+        <div className="relative w-full h-72 sm:h-96 md:h-96 lg:w-[479px] lg:h-[351px]">
           <Image
             src={profile.image}
             alt={profile.name}

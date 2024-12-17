@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import FilterPanel from "./FilterPanel";
@@ -140,10 +139,10 @@ export default function SearchHeader() {
               <div className="w-full h-full bg-white rounded-[16px] border border-[#D0D5DD] p-4 flex flex-col justify-center cursor-pointer">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-[#263238] text-sm font-sans mb-1 font-normal">
+                    <div className="text-[#263238] md:text-[10px] lg:text-sm text-sm font-sans mb-1 font-normal">
                       Search by country
                     </div>
-                    <div className="text-[#1D2939] text-[18px] font-normal font-sans">
+                    <div className="text-[#1D2939] text-[18px] lg:text-[18px] md:text-[12px] font-normal lg:font-normal font-sans">
                       {selectedCountry}
                     </div>
                   </div>
@@ -192,7 +191,7 @@ export default function SearchHeader() {
               <div className="w-full h-full bg-white rounded-[16px] border border-[#D0D5DD] p-4 flex flex-col justify-center cursor-pointer">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-[#263238] text-sm font-sans mb-1 font-normal flex items-center gap-1">
+                    <div className="text-[#263238] md:text-[10px] lg:text-sm text-sm font-sans mb-1 font-normal flex items-center gap-1">
                       State{" "}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -211,7 +210,7 @@ export default function SearchHeader() {
                         />
                       </svg>
                     </div>
-                    <div className="text-[#1D2939] text-[18px] font-normal font-sans">
+                    <div className="text-[#1D2939] text-[18px] lg:text-[18px] md:text-[12px] font-normal font-sans">
                       {selectedState}
                     </div>
                   </div>
@@ -264,10 +263,10 @@ export default function SearchHeader() {
               <div className="w-full h-full bg-white rounded-[16px] border border-[#D0D5DD] p-4 flex flex-col justify-center cursor-pointer">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-[#263238] text-sm font-sans mb-1 font-normal">
+                    <div className="text-[#263238] md:text-[10px] lg:text-sm text-sm font-sans mb-1 font-normal">
                       Business
                     </div>
-                    <div className="text-[#1D2939] text-[18px] font-normal font-sans">
+                    <div className="text-[#1D2939] text-[18px] lg:text-[18px] md:text-[12px] font-normal font-sans">
                       {selectedBusiness}
                     </div>
                   </div>
@@ -392,7 +391,7 @@ export default function SearchHeader() {
         </div>
       </div>
 
-      <div className="flex md:flex-row flex-col justify-center md:justify-between items-center md:items-start">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2">
         <FilterPanel />
         <SearchCard />
       </div>
