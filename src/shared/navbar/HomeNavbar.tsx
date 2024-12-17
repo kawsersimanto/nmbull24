@@ -1,10 +1,14 @@
+"use client"
 import logo from "@/assets/expat-logo.png";
 import { menuItems } from "@/constants/menuItems";
 import Image from "next/image";
 import Link from "next/link";
 import { SideDrawer } from "../side-drawer/SideDrawer";
+import { usePathname } from "next/navigation";
 
 const HomeNavbar = () => {
+  const path=usePathname()
+  const isBlack = path.startsWith('/basic') ;
   return (
     <div className="fixed top-6 left-0 right-0 z-[999]">
       <div className="container">
@@ -22,7 +26,7 @@ const HomeNavbar = () => {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="font-medium transition-colors duration-300 text-white hover:text-primary"
+                    className={`font-medium transition-colors duration-300 ${isBlack ? "text-gray-700" : "text-white"}  hover:text-primary`}
                   >
                     {item.label}
                   </Link>
