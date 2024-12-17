@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { LiaEdit } from "react-icons/lia";
 import { MdOutlineDone } from "react-icons/md";
 import UpdateDataDialog from "../Dialogs/UpdateDataDialogs/UpdateDataDialog";
+import NewMembershipPlanDialog from "../Dialogs/UpdateDataDialogs/NewMembershipPlanDialog";
 
 interface props {
   membership: MembershipPlanType;
@@ -22,6 +23,10 @@ const MembershipCard = ({ membership }: props) => {
     console.log("Updated Data:", updatedData);
     closeDialog();
   };
+
+
+
+
 
   return (
     <div className="card border rounded-lg mt-4 p-3">
@@ -55,18 +60,20 @@ const MembershipCard = ({ membership }: props) => {
         <span className="text-[16px] content-center"> /month</span>
       </p>
 
-      {/* Update Dialog */}
+      {/* Update Membership Plan Dialog */}
       <UpdateDataDialog
         isOpen={isDialogOpen}
         onClose={closeDialog}
         onSubmit={handleUpdateSubmit}
         initialData={{
-          id:membership.id,
+          id: membership.id,
           title: membership.title,
           features: membership.features,
           price: membership.price,
         }}
       />
+
+    
     </div>
   );
 };

@@ -34,7 +34,7 @@ const Header = ({expand}:props) => {
 
   return (
     <div
-      className={`flex items-center gap-2 h-[81px] flex-shrink-0  sticky top-0 z-40  bg-[#f6f6f6] ${
+      className={`flex items-center gap-10 pl-2 h-[81px] flex-shrink-0  sticky top-0 z-40  bg-[#f6f6f6] ${
         expand ? " ml-[120px] md:ml-[300px]" : "md:ml-[300px] ml-[80px]"
       }`}
     >
@@ -43,8 +43,8 @@ const Header = ({expand}:props) => {
           href={item.link}
           className={`${
             pathname == item.link || activeRoute == item.link
-              ? "font-extrabold"
-              : "font-thin"
+              ? "font-inter font-normal text-[18px]"
+              : "font-sans font-normal text-[16px]"
           }`}
           key={index}
         >

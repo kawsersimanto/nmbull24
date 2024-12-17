@@ -1,93 +1,82 @@
-"use client";
-
-import React, { useState } from "react";
-import {
-  useForm,
-  Controller,
-  useFieldArray,
-  SubmitHandler,
-} from "react-hook-form";
-
-interface UpdateDataDialogProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSubmit: (data: MembershipPlanType) => void;
-  initialData: MembershipPlanType;
-}
-
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { MdOutlineDone } from "react-icons/md";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import { LiaPlusSolid } from "react-icons/lia";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import { MembershipPlanType } from "@/types/MembershipPlanType";
 import { membershipSchema } from "@/schema/MembershipPlanSchema";
+import { MembershipPlanType } from "@/types/MembershipPlanType";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { X } from "lucide-react";
+import React, { useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { LiaPlusSolid } from "react-icons/lia";
+import { MdOutlineDone } from "react-icons/md";
 import { toast } from "sonner";
 
-const UpdateDataDialog = ({
-  isOpen,
-  onClose,
-  initialData,
-  onSubmit,
-}: UpdateDataDialogProps) => {
+interface props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const NewMembershipPlanDialog = ({ isOpen, onClose }: props) => {
+  const [featuresList, setFeaturesList] = useState<string[]>([]); // Local state to trigger re-render
   const {
     control,
     handleSubmit,
-    register,
+    setValue,
+    getValues,
+    reset,
     formState: { errors },
   } = useForm<MembershipPlanType>({
-    defaultValues: initialData,
     resolver: zodResolver(membershipSchema),
+    defaultValues: {
+      title: "",
+      price: "",
+      features: [], // Features managed by react-hook-form
+    },
   });
-
-  const [features, setfeatures] = useState(initialData.features);
-  const [show, setShow] = useState(false);
-
-  // console.log(features);
 
   const handleAddFeatures = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
     const inputElement = document.getElementById(
-      "featureInput"
+      "newFeatureInput"
     ) as HTMLInputElement | null;
 
     if (inputElement) {
-      const data = inputElement.value;
-      if (data.length <= 5) {
-        return toast.error("At least 5 charcters");
+      const newFeature = inputElement.value.trim();
+      if (newFeature.length <= 5) {
+        return toast.error("Feature must have at least 5 characters");
       }
-      setfeatures([data,...features]);
-      inputElement.value = "";
+
+      // Get current features from form state
+      const currentFeatures = getValues("features");
+
+      // Update both form state and local state
+      const updatedFeatures = [newFeature, ...currentFeatures];
+      setValue("features", updatedFeatures); // Update react-hook-form state
+      setFeaturesList(updatedFeatures); // Update local state for re-render
+
+      inputElement.value = ""; // Clear the input field
     }
   };
 
-  const handleShow = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    setShow(true);
-  };
-
   const onsubmit: SubmitHandler<MembershipPlanType> = (data) => {
-    const mPandata = {
+    const membershipPlanData = {
       title: data.title,
       price: data.price,
-      features: features,
+      features: data.features,
     };
 
-    console.log(mPandata);
-    onClose();
+    console.log("Submitted Data:", membershipPlanData);
+
+    reset(); // Reset the form, including features
+    setFeaturesList([]); // Clear local state for features
+    onClose(); // Close the modal
   };
 
   return (
@@ -98,7 +87,7 @@ const UpdateDataDialog = ({
         </div>
         <DialogHeader>
           <DialogTitle className="text-[30px] font-semibold mb-[18.5px]">
-            Update Membership Plan
+            Create new Membership Plan
           </DialogTitle>
           <form onSubmit={handleSubmit(onsubmit)} className="space-y-5">
             {/* Title Field */}
@@ -123,9 +112,8 @@ const UpdateDataDialog = ({
             </div>
 
             {/* Features Section */}
-            {/* Features */}
             <div className="flex flex-col gap-2 md:mt-0 mt-5">
-              {features.map((feature, idx) => (
+              {featuresList.map((feature, idx) => (
                 <div className="flex items-center gap-1" key={idx}>
                   <div className="flex items-center justify-center bg-[#D9D9D9] rounded-full p-[2px]">
                     <MdOutlineDone className="text-sm" />
@@ -135,29 +123,12 @@ const UpdateDataDialog = ({
               ))}
             </div>
 
-            {/* Add New Membership Plan Link */}
-            {show && (
-              <div className={`flex gap-2 items-center `}>
-                <Input
-                  className=""
-                  placeholder="Add new feature"
-                  id="featureInput"
-                />
-                <Button
-                  onClick={(e) => handleAddFeatures(e)}
-                  className="px-[12px] py-[6px]"
-                >
-                  <LiaPlusSolid/>
-                </Button>
-              </div>
-            )}
-            <Button
-              variant={"ghost"}
-              className="flex items-center gap-2 mt-5 text-[#0872BA]"
-              onClick={(e) => handleShow(e)}
-            >
-              <LiaPlusSolid className="" /> Add new membership plan
-            </Button>
+            <div className="flex gap-2 items-center">
+              <Input placeholder="Add new feature" id="newFeatureInput" />
+              <Button onClick={handleAddFeatures}>
+                <LiaPlusSolid />
+              </Button>
+            </div>
 
             {/* Price Field */}
             <div className="flex flex-col gap-1 mt-3">
@@ -204,4 +175,4 @@ const UpdateDataDialog = ({
   );
 };
 
-export default UpdateDataDialog;
+export default NewMembershipPlanDialog;

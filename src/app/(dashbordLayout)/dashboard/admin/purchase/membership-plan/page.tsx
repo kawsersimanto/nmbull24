@@ -7,8 +7,9 @@ import { LiaEdit, LiaPlusSolid } from "react-icons/lia";
 import { MdOutlineDone } from "react-icons/md";
 import { membershipData } from "@/constants/membershipPlanData";
 import MembershipCard from "@/components/admin/MembershipCard/MembershipCard";
+import MemberShipPlan from "@/components/admin/MembershipCard/MemberShipPlan";
 
-const MemberShipPlan = () => {
+const MemberShipPlanPage = () => {
   return (
     <div className="bg-white rounded-lg p-3">
       <p className="md:text-[24px] text-lg pb-5">
@@ -24,11 +25,9 @@ const MemberShipPlan = () => {
 
 
       {/*  */}
-      <Link href={""} className="flex items-center gap-2 mt-5 text-[#0872BA] ">
-        <LiaPlusSolid /> Add new membership plane
-      </Link>
+      <MemberShipPlan/>
     </div>
   );
 };
 
-export default MemberShipPlan;
+export default MemberShipPlanPage;

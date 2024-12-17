@@ -2,14 +2,14 @@ export const membershipData = [
   {
     id: 1,
     title: "Basic Membership",
-    price: 9.99,
+    price: "9.99",
     features: ["Access to Basic Content", "Email Support"],
   },
 
   {
     id: 2,
     title: "Standard Membership",
-    price: 19.99,
+    price: "19.99",
     features: [
       "Access to All Content",
       "Priority Email Support",
@@ -20,7 +20,7 @@ export const membershipData = [
   {
     id: 3,
     title: "Premium Membership",
-    price: 39.99,
+    price: "39.99",
     features: [
       "Unlimited Content Access",
       "24/7 Live Chat Support",
@@ -32,7 +32,7 @@ export const membershipData = [
   {
     id: 4,
     title: "Gold Membership",
-    price: 59.99,
+    price: "59.99",
     features: [
       "Premium Content Access",
       "One-on-One Coaching Sessions",
@@ -45,7 +45,7 @@ export const membershipData = [
   {
     id: 5,
     title: "Elite Membership",
-    price: 99.99,
+    price: "99.99",
     features: [
       "Full Access to All Platforms",
       "Personalized Learning and Development Plan",

@@ -3,7 +3,7 @@
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from "react-responsive";
 
 import {
   Select,
@@ -12,38 +12,59 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useEffect, useState } from "react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const data = {
+// Dummy data for "This month" and "Last month"
+const dataThisMonth = {
   labels: ["Business membership", "Standard membership"],
   datasets: [
     {
-      data: [2, 31],
+      data: [2, 31], // Data for this month
       backgroundColor: ["#2563eb", "#f97316"],
     },
   ],
 };
 
+const dataLastMonth = {
+  labels: ["Business membership", "Standard membership"],
+  datasets: [
+    {
+      data: [4, 28], // Data for last month
+      backgroundColor: ["#2563eb", "#f97316"],
+    },
+  ],
+};
 
 const options = {
   plugins: {
     legend: {
-      position: 'bottom' as const,
+      position: "bottom" as const,
     },
   },
-}
-
-
+};
 
 const MembershipChart = () => {
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1024px)' })
+  const [selectedPeriod, setSelectedPeriod] = useState("this-month");
+  const [chartData, setChartData] = useState(dataThisMonth); // Default to "this-month"
 
-const responsiveOptions = {
-  ...options,
-  maintainAspectRatio: false,
-  aspectRatio: isTabletOrMobile ? 1 : 2,
-}
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1024px)" });
+
+  const responsiveOptions = {
+    ...options,
+    maintainAspectRatio: false,
+    aspectRatio: isTabletOrMobile ? 1 : 2,
+  };
+
+  // Update the chart data based on the selected period
+  useEffect(() => {
+    if (selectedPeriod === "this-month") {
+      setChartData(dataThisMonth);
+    } else if (selectedPeriod === "last-month") {
+      setChartData(dataLastMonth);
+    }
+  }, [selectedPeriod]);
 
   return (
     <Card>
@@ -51,7 +72,7 @@ const responsiveOptions = {
         <CardTitle className="md:text-[18px] font-semibold text-sm">
           Order review status
         </CardTitle>
-        <Select defaultValue="this-month">
+        <Select defaultValue="this-month" onValueChange={setSelectedPeriod}>
           <SelectTrigger className="md:w-[131px] w-[70px] !p-[8px] text-[12px] ">
             <SelectValue placeholder="Select period" />
           </SelectTrigger>
@@ -64,7 +85,7 @@ const responsiveOptions = {
       <CardContent className="flex items-center justify-center">
         <Doughnut
           className="md:min-h-[200px] h-[200px] sm:w-auto !w-full"
-          data={data}
+          data={chartData}
           options={responsiveOptions}
         />
       </CardContent>

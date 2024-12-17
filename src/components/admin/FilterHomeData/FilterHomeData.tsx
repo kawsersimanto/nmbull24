@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { FaArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const FilterHomeData = () => {
   const [searchBoxOpen, setSearchBoxOpen] = useState<boolean>(false);
@@ -191,8 +192,8 @@ const FilterHomeData = () => {
       )}
 
       {/* Filtered Members Table */}
-      <div className="py-5">
-        <Table>
+      <div className="py-5 ">
+        <Table className="!overflow-x-auto">
           <TableBody>
             {paginatedData.length > 0 ? (
               paginatedData.map((member, idx) => (
@@ -210,11 +211,11 @@ const FilterHomeData = () => {
       {/* Pagination Controls */}
       <div className="flex  items-center py-4">
         <button
-          className=" text-[16px]  text-white bg-gray-600 rounded disabled:opacity-50 px-[12px] py-[6px]"
+          className=" text-[16px]  text-white bg-gray-600  disabled:opacity-50  w-8 h-8 rounded-full flex justify-center items-center"
           disabled={currentPage === 1}
           onClick={() => setCurrentPage(currentPage - 1)}
         >
-          Prev
+          <FaArrowLeft />
         </button>
         <div className="flex gap-2 mx-4">
           {getPaginationNumbers().map((page, idx) =>
@@ -225,7 +226,7 @@ const FilterHomeData = () => {
             ) : (
               <button
                 key={idx}
-                className={`text-xs md:text-lg w-[60px] h-[36px] rounded ${
+                className={`text-xs md:text-lg disabled:opacity-50 w-8 h-8 rounded-full flex justify-center items-center ${
                   page === currentPage
                     ? "bg-blue-600 text-white"
                     : "bg-gray-200"
@@ -238,11 +239,11 @@ const FilterHomeData = () => {
           )}
         </div>
         <button
-          className=" text-[16px]   text-white bg-gray-600 rounded disabled:opacity-50 px-[12px] py-[6px]"
+          className=" text-[16px]   text-white bg-gray-600 disabled:opacity-50 w-8 h-8 rounded-full flex justify-center items-center"
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage(currentPage + 1)}
         >
-          Next
+          <FaArrowRight/>
         </button>
       </div>
 

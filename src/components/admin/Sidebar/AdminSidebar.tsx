@@ -10,6 +10,7 @@ import { useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { AiOutlineLogout } from "react-icons/ai";
 import Promotiom from "@/assets/Promotiom.png";
+import Link from "next/link";
 
 interface props {
   expand: boolean;
@@ -22,7 +23,7 @@ const Sidebar = ({ expand, setExpand }: props) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 z-50 transition border h-[calc(100vh-20px)] ${
+      className={`fixed top-0 left-0 z-50 transition  h-[calc(100vh-20px)] ${
         expand ? "md:w-[300px] w-[100px]" : "md:w-[300px] w-[60px]"
       }`}
       id="adminSidebar"
@@ -33,15 +34,17 @@ const Sidebar = ({ expand, setExpand }: props) => {
           <CiMenuFries onClick={() => setExpand((e) => !e)} />
         </div>
       </div>
-      <div className="logo py-5 md:flex hidden">
-        <Image
-          className="h-[68px] w-[92px] mx-auto object-fill "
-          src={logo}
-          alt="Image Description"
-          width={150}
-          height={150}
-          unoptimized
-        />
+      <div className="logo py-5 md:flex justify-center hidden">
+        <Link href={"/dashboard/admin"}>
+          <Image
+            className="h-[68px] w-[92px] mx-auto object-fill "
+            src={logo}
+            alt="Image Description"
+            width={150}
+            height={150}
+            unoptimized
+          />
+        </Link>
       </div>
 
       {/* border */}
@@ -68,7 +71,8 @@ const Sidebar = ({ expand, setExpand }: props) => {
             height={24}
             width={24}
             alt=""
-            className="size-6"
+            className={`size-6 ${expand?"flex":"flex"}`}
+            unoptimized
           />
           {
             <p

@@ -31,7 +31,6 @@ const Purchase = () => {
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-ts font-semibold">Payment History</h2>
         <PaymentTable />
       </div>
     </div>

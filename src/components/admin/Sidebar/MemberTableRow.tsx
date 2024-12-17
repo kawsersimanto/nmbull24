@@ -30,9 +30,9 @@ const MemberTableRow = ({ member }: props) => {
     <>
       <TableRow
         key={member.name}
-        className="h-full  flex justify-between items-end"
+        className="h-full  flex justify-between items-end flex-shrink-0 overflow-x-auto"
       >
-        <TableCell className="flex-1">
+        <TableCell className="flex-1 shrink-0">
           <div className="flex flex-shrink-0 items-center gap-2 relative">
             <Image
               src={profileImage || ""}
@@ -46,7 +46,7 @@ const MemberTableRow = ({ member }: props) => {
               <p className="text-[16px] text-[#263238] my-[12px] font-medium">
                 Country: <span className="font-light">{member.country}</span>
               </p>
-              <div className="flex items-center gap-2 text-sm">
+              <div className="flex items-center gap-2 text-sm flex-shrink-0">
                 <div className="flex items-center gap-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +86,7 @@ const MemberTableRow = ({ member }: props) => {
                   </svg>
                   <p>{member.age}</p>
                 </div>
-                <div className="flex flex-shrink-0 items-center gap-2">
+                <div className="flex flex-shrink-0 items-center gap-2 ">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="17"
@@ -126,7 +126,7 @@ const MemberTableRow = ({ member }: props) => {
           </div>
         </TableCell>
 
-        <TableCell className="flex-1">
+        <TableCell className="flex-1 shrink-0">
           <p className="text-[16px] text-[#263238]  font-medium">
             Membership: <span className="font-light">{member.membership}</span>
           </p>
