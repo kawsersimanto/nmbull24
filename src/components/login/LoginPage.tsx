@@ -16,6 +16,8 @@ import { useRouter } from 'next/navigation'
 import { toast, Toaster } from "sonner";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/ReduxFunction";
+import Cookies from "js-cookie"
+
 
 
 
@@ -38,6 +40,7 @@ export default function LoginPage() {
     try {
         const response = await loginUser(data).unwrap();
        
+        Cookies.set("token", response?.data?.token)
 
       
         dispatch(setUser({

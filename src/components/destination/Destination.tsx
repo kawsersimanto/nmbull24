@@ -11,9 +11,8 @@ import { Form } from "@/components/ui/form";
 import { SelectField } from "../form/SelectField";
 import MinusIcon from "../icon/MinusIcon";
 import { useDispatch } from "react-redux";
-// import { saveStep2Data } from "@/redux/Api/copy/formSliceprev";
 import { useRouter } from "next/navigation";
-
+import { useDestinationAddMutation } from "@/redux/Api/destinationApi";
 
 const formSchema = z.object({
   destinations: z.array(
@@ -27,9 +26,9 @@ const formSchema = z.object({
   ),
 });
 
-
-
 export default function Destination() {
+  const [addDestination, { isLoading, isError, error }] =
+    useDestinationAddMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,27 +45,38 @@ export default function Destination() {
   });
   const router = useRouter();
 
-
-  
-
   const { fields, append, remove } = useFieldArray({
     name: "destinations",
     control: form.control,
   });
 
-  const dispatch = useDispatch();
-
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    // Transform the data
+    const transformedDestinations = values.destinations.map((destination) => {
+      const { month, year, ...rest } = destination;
   
-
-
-
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // dispatch(saveStep2Data({ ...values, completed: true })); 
-    router.push("/lifestyle"); 
-
-
+      // Concatenate month and year to create TravelBegins
+      const TravelBegins = new Date(`${year}-${month.padStart(2, "0")}-01T00:00:00.000Z`).toISOString();
+  
+      return {
+        ...rest,
+        TravelBegins, // Match the API's expected key
+      };
+    });
+  
+    console.log("Transformed Destinations:", transformedDestinations);
+  
+    try {
+      // Push to RTK with correct payload
+      await addDestination(transformedDestinations).unwrap();
+  
+      // Navigate on success
+      router.push("/lifestyle");
+    } catch (err) {
+      console.error("Error adding destination:", err);
+    }
   };
+  
 
   return (
     <div className="mx-auto p-4 lg:p-8 font-sans">
