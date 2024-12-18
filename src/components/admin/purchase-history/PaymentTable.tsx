@@ -48,7 +48,8 @@ const PaymentTable = () => {
     (t) =>
       t.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       t.customerEmail.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.id.toLowerCase().includes(searchQuery.toLowerCase())
+      t.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t.membership.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Pagination Logic

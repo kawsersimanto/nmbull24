@@ -9,7 +9,7 @@ import { LogOut } from "lucide-react";
 import { useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { AiOutlineLogout } from "react-icons/ai";
-import Promotiom from "@/assets/Promotiom.png";
+import logoutSvg from "@/assets/dashboard/logout.svg";
 import Link from "next/link";
 
 interface props {
@@ -64,26 +64,28 @@ const Sidebar = ({ expand, setExpand }: props) => {
         {/* Admin  */}
       </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
-        <Button className="flex items-center gap-2" variant={"link"}>
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2  w-full">
+        <div className="flex items-center justify-center md:gap-2 gap-1">
           <Image
-            src={Promotiom}
+            src={logoutSvg}
             height={24}
             width={24}
             alt=""
-            className={`size-6 ${expand?"flex":"flex"}`}
+            className={`size-6 ${expand ? "flex" : "flex"}`}
             unoptimized
           />
           {
             <p
               className={`${
-                expand ? "md:flex block" : "md:flex hidden"
+                expand
+                  ? "md:flex block md:text-[16px] text-sm"
+                  : "md:flex hidden "
               } text-[#0F0F0F]`}
             >
               Logout
             </p>
           }
-        </Button>
+        </div>
       </div>
     </div>
   );

@@ -27,7 +27,7 @@ import {
 import { MdOutlineDone } from "react-icons/md";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { LiaPlusSolid } from "react-icons/lia";
+import { LiaPlusSolid, LiaTimesSolid } from "react-icons/lia";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { MembershipPlanType } from "@/types/MembershipPlanType";
@@ -69,7 +69,7 @@ const UpdateDataDialog = ({
       if (data.length <= 5) {
         return toast.error("At least 5 charcters");
       }
-      setfeatures([data,...features]);
+      setfeatures([data, ...features]);
       inputElement.value = "";
     }
   };
@@ -90,14 +90,26 @@ const UpdateDataDialog = ({
     onClose();
   };
 
+  //
+
+  const handleFeatureRemove = (e: React.MouseEvent, featureData: string) => {
+    e.preventDefault();
+    const updatedFeatures = features.filter((f) => f !== featureData);
+    setfeatures(updatedFeatures);
+
+    toast.success("deleted");
+  };
   return (
     <Dialog open={isOpen}>
       <DialogContent>
-        <div className="absolute top-3 right-3" onClick={onClose}>
-          <X className="h-4 w-4 cursor-pointer" />
+        <div
+          onClick={onClose}
+          className="absolute  -top-3 cursor-pointer -right-3 text-[#0076ef]"
+        >
+          <X size={24} />
         </div>
         <DialogHeader>
-          <DialogTitle className="text-[30px] font-semibold mb-[18.5px]">
+          <DialogTitle className="text-[24px] font-semibold mb-[18.5px]">
             Update Membership Plan
           </DialogTitle>
           <form onSubmit={handleSubmit(onsubmit)} className="space-y-5">
@@ -130,7 +142,15 @@ const UpdateDataDialog = ({
                   <div className="flex items-center justify-center bg-[#D9D9D9] rounded-full p-[2px]">
                     <MdOutlineDone className="text-sm" />
                   </div>
-                  <p className="md:text-sm text-xs">{feature}</p>
+                  <p className="md:text-sm text-xs flex items-center gap-3">
+                    {feature}{" "}
+                    <span className="text-red-500">
+                      <LiaTimesSolid
+                        className="text-[14px] cursor-pointer "
+                        onClick={(e) => handleFeatureRemove(e, feature)}
+                      />
+                    </span>
+                  </p>
                 </div>
               ))}
             </div>
@@ -147,7 +167,7 @@ const UpdateDataDialog = ({
                   onClick={(e) => handleAddFeatures(e)}
                   className="px-[12px] py-[6px]"
                 >
-                  <LiaPlusSolid/>
+                  <LiaPlusSolid />
                 </Button>
               </div>
             )}
@@ -182,19 +202,12 @@ const UpdateDataDialog = ({
             </div>
 
             {/* Submit and Cancel Buttons */}
-            <div className="flex justify-center items-center gap-4 mt-5">
-              <Button
-                type="button"
-                onClick={onClose}
-                className="bg-gray-500 text-white px-6 py-2 rounded-full"
-              >
-                Cancel
-              </Button>
+            <div className="flex justify-end items-center gap-4 mt-5">
               <Button
                 type="submit"
                 className="bg-blue-500 text-white px-6 py-2 rounded-full"
               >
-                Submit
+                Update
               </Button>
             </div>
           </form>

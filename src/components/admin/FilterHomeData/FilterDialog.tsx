@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Member } from "@/types/Member";
+import { X } from "lucide-react";
 
 interface FilterDialogProps {
   isOpen: boolean;
@@ -66,6 +67,12 @@ const FilterDialog: React.FC<FilterDialogProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
+        <div
+          onClick={onClose}
+          className="absolute  top-4 cursor-pointer right-3"
+        >
+          <X size={24} />
+        </div>
         <DialogHeader>
           <DialogTitle>Filter Members</DialogTitle>
         </DialogHeader>
@@ -78,7 +85,11 @@ const FilterDialog: React.FC<FilterDialogProps> = ({
                 <Checkbox
                   id={country}
                   onCheckedChange={() =>
-                    handleCheckboxChange(selectedCountries, setSelectedCountries, country)
+                    handleCheckboxChange(
+                      selectedCountries,
+                      setSelectedCountries,
+                      country
+                    )
                   }
                   checked={selectedCountries.includes(country)}
                 />
@@ -113,10 +124,7 @@ const FilterDialog: React.FC<FilterDialogProps> = ({
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button onClick={handleApply}>Apply Filters</Button>
+          <Button onClick={handleApply} className="bg-[#efefef] text-black">Apply Filters</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

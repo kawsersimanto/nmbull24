@@ -1,4 +1,13 @@
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { X } from "lucide-react";
 import React, { useState } from "react";
 
 interface SearchDialogProps {
@@ -7,27 +16,36 @@ interface SearchDialogProps {
   onSearch: (query: string) => void;
 }
 
-const SearchBox: React.FC<SearchDialogProps> = ({ isOpen, onClose, onSearch }) => {
+const SearchBox: React.FC<SearchDialogProps> = ({
+  isOpen,
+  onClose,
+  onSearch,
+}) => {
   const [query, setQuery] = useState("");
 
   const handleSearch = () => {
     onSearch(query);
-    onClose();  // Close dialog after search
+    onClose(); // Close dialog after search
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       {/* DialogTrigger can be handled externally, here we do not need an extra button */}
-     
-     
+
       <DialogTrigger />
-      
+
       <DialogContent>
+        <div
+          onClick={onClose}
+          className="absolute  top-4 cursor-pointer right-3"
+        >
+          <X size={24} />
+        </div>
         <DialogHeader>
           <DialogTitle>Search</DialogTitle>
           <DialogDescription>Enter your search query</DialogDescription>
         </DialogHeader>
-        
+
         <div className="flex flex-col gap-2">
           <input
             type="text"
@@ -36,20 +54,14 @@ const SearchBox: React.FC<SearchDialogProps> = ({ isOpen, onClose, onSearch }) =
             placeholder="Search for members"
             className="border p-2"
           />
-          
+
           <div className="flex justify-end gap-2">
-            <button
-              className="btn btn-primary"
+            <Button
+              className="bg-gray-500 text-white px-6 py-2 rounded-full"
               onClick={handleSearch}
             >
               Search
-            </button>
-            <button
-              className="btn btn-secondary"
-              onClick={onClose}
-            >
-              Cancel
-            </button>
+            </Button>
           </div>
         </div>
       </DialogContent>

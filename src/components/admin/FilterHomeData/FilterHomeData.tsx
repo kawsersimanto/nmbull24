@@ -166,8 +166,8 @@ const FilterHomeData = () => {
           <div className="h-[30px] border-r "></div>
 
           {/* Pagination Selection */}
-          <Select onValueChange={handleItemsPerPageChange}>
-            <SelectTrigger className="md:w-[100px] w-[50px] rounded-[12px] text-[#667085]">
+          <Select  onValueChange={handleItemsPerPageChange}>
+            <SelectTrigger className="px-3 py-2 rounded-[12px] text-[#667085]">
               <SelectValue placeholder={`Page size`} />
             </SelectTrigger>
             <SelectContent className="text-[#667085]">
@@ -200,9 +200,15 @@ const FilterHomeData = () => {
                 <MemberTableRow key={idx} member={member} />
               ))
             ) : (
-              <div className="">
-                <p className="text-red-500">Oops! No member available</p>
-              </div>
+              <tr>
+                <td className="col-span-full">
+                  {" "}
+                  {/* Span across all columns */}
+                  <p className="text-red-500 text-center">
+                    Oops! No member available
+                  </p>
+                </td>
+              </tr>
             )}
           </TableBody>
         </Table>
@@ -243,7 +249,7 @@ const FilterHomeData = () => {
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage(currentPage + 1)}
         >
-          <FaArrowRight/>
+          <FaArrowRight />
         </button>
       </div>
 

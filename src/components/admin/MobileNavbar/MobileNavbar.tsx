@@ -40,7 +40,7 @@ const MobileNavbar = () => {
 
           <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
             <Button className="flex items-center gap-2" variant={"link"}>
-              <LogOut /> Logout
+              <LogOut /> 
             </Button>
           </div>
         </div>

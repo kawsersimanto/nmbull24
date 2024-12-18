@@ -82,11 +82,15 @@ const NewMembershipPlanDialog = ({ isOpen, onClose }: props) => {
   return (
     <Dialog open={isOpen}>
       <DialogContent>
-        <div className="absolute top-3 right-3" onClick={onClose}>
-          <X className="h-4 w-4 cursor-pointer" />
+        <div
+          onClick={onClose}
+          className="absolute  top-8 cursor-pointer right-3 text-[#0076ef] font-bold"
+        >
+          <X size={24} />
         </div>
+
         <DialogHeader>
-          <DialogTitle className="text-[30px] font-semibold mb-[18.5px]">
+          <DialogTitle className="text-[24px] font-semibold mb-[18.5px]">
             Create new Membership Plan
           </DialogTitle>
           <form onSubmit={handleSubmit(onsubmit)} className="space-y-5">
@@ -153,19 +157,12 @@ const NewMembershipPlanDialog = ({ isOpen, onClose }: props) => {
             </div>
 
             {/* Submit and Cancel Buttons */}
-            <div className="flex justify-center items-center gap-4 mt-5">
-              <Button
-                type="button"
-                onClick={onClose}
-                className="bg-gray-500 text-white px-6 py-2 rounded-full"
-              >
-                Cancel
-              </Button>
+            <div className="flex justify-end items-center gap-4 mt-5">
               <Button
                 type="submit"
                 className="bg-blue-500 text-white px-6 py-2 rounded-full"
               >
-                Submit
+                Add new
               </Button>
             </div>
           </form>

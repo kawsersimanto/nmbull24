@@ -32,18 +32,18 @@ const MemberTableRow = ({ member }: props) => {
         key={member.name}
         className="h-full  flex justify-between items-end flex-shrink-0 overflow-x-auto"
       >
-        <TableCell className="flex-1 shrink-0">
-          <div className="flex flex-shrink-0 items-center gap-2 relative">
+        <TableCell className="flex-1 shrink-0 min-w-[300px] ">
+          <div className="flex flex-shrink-0 items-end gap-2 relative">
             <Image
               src={profileImage || ""}
               alt="Image"
-              className="size-[88px] rounded-full "
+              className="md:size-[88px] size-11 rounded-full "
             />
             <div className="">
               <p className="text-lg text-[#263238] font-bold">
                 <span className=" ">{member.name}</span>
               </p>
-              <p className="text-[16px] text-[#263238] my-[12px] font-medium">
+              <p className="md:text-[16px]  text-[#263238] my-[12px] font-medium">
                 Country: <span className="font-light">{member.country}</span>
               </p>
               <div className="flex items-center gap-2 text-sm flex-shrink-0">
@@ -84,7 +84,9 @@ const MemberTableRow = ({ member }: props) => {
                       </clipPath>
                     </defs>
                   </svg>
-                  <p>{member.age}</p>
+                  <p className="font-sans font-[16px] text-secondery">
+                    {member.age}
+                  </p>
                 </div>
                 <div className="flex flex-shrink-0 items-center gap-2 ">
                   <svg
@@ -93,6 +95,7 @@ const MemberTableRow = ({ member }: props) => {
                     height="17"
                     viewBox="0 0 17 17"
                     fill="none"
+                    className="text-[16px]"
                   >
                     <g clipPath="url(#clip0_950_4752)">
                       <path
@@ -119,14 +122,16 @@ const MemberTableRow = ({ member }: props) => {
                       </clipPath>
                     </defs>
                   </svg>
-                  <p>{member.capital}</p>
+                  <p className="font-sans font-[16px] text-secondery">
+                    {member.capital}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </TableCell>
 
-        <TableCell className="flex-1 shrink-0">
+        <TableCell className="flex-1 shrink-0 min-w-[180px]">
           <p className="text-[16px] text-[#263238]  font-medium">
             Membership: <span className="font-light">{member.membership}</span>
           </p>
@@ -135,11 +140,11 @@ const MemberTableRow = ({ member }: props) => {
           </p>
         </TableCell>
 
-        <TableCell className="flex-1 mt-[12px] flex-shrink-0 gap-2  ">
+        <TableCell className="flex-1 mt-[12px] flex-shrink-0 gap-2  min-w-[200px] text-wrap">
           <p>Exodus summit member?</p>
           <p className="font-light mt-[12px]">{member.summit_member}</p>
         </TableCell>
-        <TableCell className="flex flex-shrink-0 gap-2 justify-end flex-1">
+        <TableCell className="flex flex-shrink-0 gap-2 justify-end flex-1 min-w-[250px]">
           <button className="bg-[rgba(0,229,8,0.32)] border rounded px-3 py-[6px]">
             <svg
               xmlns="http://www.w3.org/2000/svg"

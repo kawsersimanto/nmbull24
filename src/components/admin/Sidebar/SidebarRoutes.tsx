@@ -31,7 +31,7 @@ const SidebarRoutes = ({ routes, expand, setExpand }: props) => {
       key={routes.link}
     >
       <div className="flex max-md:text-xl  items-center gap-2 relative">
-        <Image src={routes.icon} height={24} width={24} alt="" className="size-6" />
+        <Image src={routes.icon} height={24} width={24} alt="" className="md:size-6 size-3" />
         <p
           className={`md:text-[18px] text-sm ${
             expand ? "md:flex block" : "md:flex hidden"
