@@ -12,7 +12,7 @@ import { Plus, Trash2 } from 'lucide-react';
 import { TextareaField } from "../form/TextAreaField";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { saveStep3Data } from "@/redux/formSlice";
+// import { saveStep3Data } from "@/redux/Api/copy/formSliceprev";
 import { useRouter } from "next/navigation";
 import PlusIcon from "../icon/PlusIcon";
 
@@ -50,7 +50,7 @@ export default function LifeStyle(){
   const dispatch=useDispatch()
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    dispatch(saveStep3Data({ ...values, completed: true })); 
+    // dispatch(saveStep3Data({ ...values, completed: true })); 
        router.push("/mytop"); 
 
   };

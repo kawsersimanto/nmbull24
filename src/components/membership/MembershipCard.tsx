@@ -8,7 +8,7 @@ type MembershipCardProps = {
 
 export default function MembershipCard({ plan }: MembershipCardProps) {
   return (
-    <div className="border rounded-xl p-6">
+    <div className="bg-[#fff] border-1 border rounded-xl p-6">
       <h2 className="text-[28px] text-[#000] font-bold mb-4">{plan.title}</h2>
 
       {/* Content Section */}

@@ -4,7 +4,8 @@ import { Stepper } from "./Stepper";
 
 export default function HowItWork() {
   return (
-    <div className="container bg-white mt-[100px] mx-auto p-4 lg:p-[40px]">
+    <div className="bg-white mt-[100px] mx-auto p-4 lg:p-[40px]">
+      <div className="container">
       <h2 className="lg:text-5xl font-bold text-center text-[#263238]  text-[32px] mb-5">How It Works</h2>
       <p className="text-center text-[#344054]  text-[20px] mb-12  mx-auto">
         Search and find other travelers heading to the same destination.
@@ -48,12 +49,12 @@ export default function HowItWork() {
                     <p className="text-muted-foreground">{step.description}</p>
                   </div>
                   <div className="flex justify-center">
-                    <div                         className="lg:w-32 lg:h-32 h-24 w-24"
+                    <div                         className="lg:w-[200px] lg:h-[200px] h-24 w-24"
                     >
                       <Image
                         src={step.icon}
                         alt={step.title}
-                        className="lg:w-32 lg:h-32 h-24 w-24"
+                        className="lg:w-[200px] lg:h-[200px] h-24 w-24"
                       />
                     </div>
                   </div>
@@ -63,6 +64,8 @@ export default function HowItWork() {
           </div>
         ))}
       </div>
+      </div>
+     
     </div>
   );
 }

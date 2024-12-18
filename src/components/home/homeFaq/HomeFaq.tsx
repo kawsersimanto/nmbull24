@@ -64,13 +64,13 @@ export default function HomeFaq() {
             <AccordionItem
               key={index}
               value={itemValue} // Set the value of the item to control its state
-              className="rounded-lg border border-gray-200 px-6 py-4"
+              className="rounded-lg  bg-[#fff] px-6 py-4"
             >
-              <AccordionTrigger className="flex items-center justify-between">
+              <AccordionTrigger className="flex items-center  justify-between">
                 <span className="text-left text-lg font-[500] text-[#212121]">
                   {faq.question}
                 </span>
-                <div className="shrink-0 flex items-center justify-center w-6 h-6 rounded-full border border-gray-500">
+                <div className="shrink-0 flex items-center justify-center w-6 h-6 rounded-full">
                   {/* Show + icon when collapsed */}
                   {expandedItem !== itemValue && (
                     <Plus className="transition-all duration-200" size={16} />

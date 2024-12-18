@@ -11,7 +11,7 @@ import { Form } from "@/components/ui/form";
 import { SelectField } from "../form/SelectField";
 import MinusIcon from "../icon/MinusIcon";
 import { useDispatch } from "react-redux";
-import { saveStep2Data } from "@/redux/formSlice";
+// import { saveStep2Data } from "@/redux/Api/copy/formSliceprev";
 import { useRouter } from "next/navigation";
 
 
@@ -62,7 +62,7 @@ export default function Destination() {
 
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    dispatch(saveStep2Data({ ...values, completed: true })); 
+    // dispatch(saveStep2Data({ ...values, completed: true })); 
     router.push("/lifestyle"); 
 
 

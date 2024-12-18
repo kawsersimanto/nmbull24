@@ -1,22 +1,17 @@
-'use client';
-import React, { ReactNode, useEffect, useState } from 'react';
+'use client'
+import React, { ReactNode } from 'react';
 import { Provider } from 'react-redux';
-import { store } from './store';
+import { persistor, store } from './store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const ReduxProvider = ({ children }: { children: ReactNode }) => {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) return null; // Avoid SSR hydration issues
-
-  return (
-    <Provider store={store}>
-      {children}
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <PersistGate persistor={persistor}>
+                {children}
+            </PersistGate>
+        </Provider>
+    );
 };
 
 export default ReduxProvider;
