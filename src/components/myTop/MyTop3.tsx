@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { SelectField } from "../form/SelectField";
 import { InfoIcon } from 'lucide-react';
-import { saveStep4Data } from "@/redux/formSlice";
-import { useDispatch } from "react-redux";
+
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 
 const formSchema = z.object({
@@ -45,8 +45,8 @@ export default function MyTop3(){
     const router = useRouter();
 const dispatch=useDispatch()
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-  dispatch(saveStep4Data({ ...values, completed: true })); 
-    router.push("/talking-points"); 
+  // dispatch(saveStep4Data({ ...values, completed: true })); 
+  //   router.push("/talking-points"); 
    
    };
 

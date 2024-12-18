@@ -7,18 +7,39 @@ import { Label } from "../ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SignupSchema, { RegistrationFormData } from "@/schema/SignupSchema";
 import { useForm } from "react-hook-form";
+import { useRegisterUserMutation } from "@/redux/Api/userApi";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const RegisterForm = () => {
+    const [registerUser, { isLoading, isError, error }] = useRegisterUserMutation(); // Hook usage
+    const router=useRouter()
+  
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors },reset
   } = useForm<RegistrationFormData>({
     resolver: zodResolver(SignupSchema),
   });
-  const onSubmit = (data: RegistrationFormData) => {
-    console.log("Form data", data);
-  };
+  const onSubmit = async (data: RegistrationFormData) => {
+    try {
+        const response = await registerUser(data).unwrap();
+       
+
+     
+reset()
+
+        
+        router.push("/");
+        toast.success("Register successful");
+      
+    } catch (err) {
+        toast.error( "Register failed! Please try again.");
+    }
+};
+ 
   return (
     <div className="pt-5 pb-6 px-6 bg-[rgba(56,56,56,0.20)] backdrop-blur-[12px] rounded-xl">
       <Card className="w-full bg-transparent border-none p-0">
@@ -101,7 +122,7 @@ const RegisterForm = () => {
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white"
             >
-              Sign up
+              {isLoading?"Sign Up...":"Sign up"}
             </Button>
             <div className="text-center text-sm text-zinc-400">
               You are already member{" "}

@@ -12,7 +12,7 @@ import avtarImage from '@/assets/form/prof.png'
 import { useEffect, useState } from "react";
 import { FileUploadField } from "../form/FileUploadField";
 import { useDispatch } from "react-redux";
-import { saveStep1Data } from "@/redux/formSlice";
+// import { saveStep1Data } from "@/redux/Api/copy/formSliceprev";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
@@ -58,7 +58,7 @@ export default function ProfileForm() {
   });
 
   const onSubmit = (values: any) => {
-    dispatch(saveStep1Data({ ...values, completed: true })); 
+    // dispatch(saveStep1Data({ ...values, completed: true })); 
     router.push("/destination"); 
   };
   return (

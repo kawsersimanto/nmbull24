@@ -10,7 +10,7 @@ import { TextareaField } from "../form/TextAreaField";
 import talkingPointsSchema from "@/schema/talkingPointsSchema";
 import { talkingPointsData } from "@/constants/talkingPointsData";
 import { useDispatch } from "react-redux";
-import { saveStep5Data } from "@/redux/formSlice";
+// import { saveStep5Data } from "@/redux/Api/copy/formSliceprev";
 import { useRouter } from "next/navigation";
 
 
@@ -28,7 +28,7 @@ export default function TalkingPoints() {
 
 
   const onSubmit = (values: z.infer<typeof talkingPointsSchema>) => {
-    dispatch(saveStep5Data({ ...values, completed: true })); 
+    // dispatch(saveStep5Data({ ...values, completed: true })); 
     router.push("/"); 
 
   };

@@ -38,7 +38,7 @@ export const WhyChooseCard = () => {
   // Render the cards individually
   return (
     <div className='mt-16 font-sans '>
-      <div className="grid md:grid-cols-2 lg:gap-24 gap-16 mx-auto relative">
+      <div className="grid md:grid-cols-2 lg:gap-[85px] gap-16 mx-auto relative">
         <Card key="affordable-housing" className="md:rounded-br-[50px] border shadow-sm">
           <CardContent className="pt-6">
             <div className=" items-start">
@@ -110,7 +110,7 @@ export const WhyChooseCard = () => {
             alt="Expat Global Girls Logo"
             width={80}
             height={80}
-            className="lg:w-full lg:h-full  object-contain"
+            className="lg:w-[119px] lg:h-[87px]  object-contain"
           />
         </div>
       </div>

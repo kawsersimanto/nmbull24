@@ -1,10 +1,10 @@
 import { howWorks } from "@/types/howWorks";
-import Plan from '@/assets/home/howitworks/plan.png';
-import Explore from '@/assets/home/howitworks/explore.png';
+import Plan from '@/assets/home/howitworks/plan.svg';
+import Explore from '@/assets/home/howitworks/explore.svg';
 
-import ConnectBuild from '@/assets/home/howitworks/connect.png';
+import ConnectBuild from '@/assets/home/howitworks/connect.svg';
 
-import Secqure from '@/assets/home/howitworks/secqure.png';
+import Secqure from '@/assets/home/howitworks/secqure.svg';
 
 
  

@@ -1,5 +1,5 @@
 import { homeCommuntiyItem } from "@/types/homeComunityItem";
-import image1 from '@/assets/home/homeCommuntiy.jpg';
+import image1 from '@/assets/home/homeCommuntiy.svg';
 
 
 
