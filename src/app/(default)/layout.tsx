@@ -6,6 +6,8 @@ import Navbar from "@/shared/navbar/Navbar";
 import { usePathname } from "next/navigation";
 
 import { ReactNode } from "react";
+import { Toaster } from "sonner";
+
 
 interface children {
   children: ReactNode;
@@ -19,6 +21,8 @@ const Layout = ({ children }: children) => {
     <>
       {path === "/" ? <HomeNavbar /> : <Navbar />}
       {children}
+      
+     
       <Footer></Footer>
     </>
   );

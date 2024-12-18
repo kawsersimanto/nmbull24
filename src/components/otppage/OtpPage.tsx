@@ -11,12 +11,17 @@ import {
 import Image from "next/image";
 import logo from "@/assets/expat-logo.png";
 import success from "@/assets/login/Vector.png";
+import { useOtpUserMutation } from "@/redux/Api/userApi";
+import { useRouter } from "next/navigation";
+import {  useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { toast } from "sonner";
 
 // Define the validation schema for the OTP field using zod
 const otpSchema = z.object({
   otp: z
     .string()
-    .length(6, "OTP must be exactly 6 digits")
+    .length(4, "OTP must be exactly 4 digits")
     .regex(/^[0-9]+$/, "OTP must contain only numbers"),
 });
 
@@ -24,21 +29,35 @@ const otpSchema = z.object({
 type OTPFormData = z.infer<typeof otpSchema>;
 
 export default function OTPVerification() {
+  const [otpUser, { isLoading, isError, error }] = useOtpUserMutation(); // Hook usage
+  const router = useRouter()
+  const getEmail = useSelector((state: RootState) => state.forgotPass.email);
+
   // Use react-hook-form with the zodResolver
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors },reset
   } = useForm<OTPFormData>({
-    resolver: zodResolver(otpSchema),
-    defaultValues: {
-      otp: "", // Initialize the otp value as an empty string
-    },
-    mode: "onSubmit", // Validate only on submit
-  });
+    resolver: zodResolver(otpSchema), });
 
-  const onSubmit = (data: OTPFormData) => {
-    console.log("OTP Submitted:", data); // Handle the OTP submission
+  const onSubmit = async (data: OTPFormData) => {
+    
+    try {
+    const otp=Number(data.otp)
+    const response = await otpUser({ email: getEmail, otp }).unwrap();
+       
+
+     
+    reset()
+    
+            
+            router.push("/change-password");
+            toast.success("Register successful");
+          } catch (err) {
+            toast.error("Your Given is not Correct");
+          }
+
   };
 
   return (
@@ -77,7 +96,7 @@ export default function OTPVerification() {
               render={({ field }) => (
                 <InputOTP {...field} maxLength={6}>
                   <InputOTPGroup className="flex gap-6">
-                    {[...Array(6)].map((_, index) => (
+                    {[...Array(4)].map((_, index) => (
                       <InputOTPSlot
                         key={index}
                         index={index}
@@ -97,7 +116,7 @@ export default function OTPVerification() {
             </p>
           )}
 
-          {/* Submit Button */}
+         
           <button
             type="submit"
             className="w-full flex justify-center rounded-lg items-center font-outfit text-white text-[18px] font-medium py-[10px] bg-primary hover:bg-blue-700"

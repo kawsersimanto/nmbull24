@@ -6,6 +6,7 @@ import "./globals.css";
 import { Inter, Montserrat } from "next/font/google";
 import { Outfit } from "next/font/google"; // Import Outfit font
 import ReduxProvider from "@/redux/ReduxProvider";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Expat Global Girls | Stay with local and meet travel partner",
@@ -43,6 +44,7 @@ export default function RootLayout({
             children
           }
         </ReduxProvider>
+        <Toaster position="top-right" />
       </body>
     </html>
   );

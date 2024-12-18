@@ -8,19 +8,48 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ForgotPasswordSchema, { ForgotPasswordData } from "@/schema/ForgotPasswordSchema";
 import Image from "next/image";
 import logo from "@/assets/expat-logo.png";
+import { useForgotUserMutation } from "@/redux/Api/userApi";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { setEmail } from "@/redux/allSlice/otpSlice";
 
 export default function ForgotPassword() {
-  // Use the correct type for the form data
+  const [forgotPas, { isLoading, isError, error }] = useForgotUserMutation(); // Hook usage
+  const router = useRouter()
+  const dispatch = useDispatch();
+
+
+
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }, reset
   } = useForm<ForgotPasswordData>({
     resolver: zodResolver(ForgotPasswordSchema),
   });
 
-  const onSubmit = (data: ForgotPasswordData) => {
-    console.log(data);
+  const onSubmit = async (data: ForgotPasswordData) => {
+    try {
+      const response = await forgotPas(data).unwrap();
+      console.log(response)
+      dispatch(setEmail({
+       
+        email:data?.email
+      }));
+
+
+
+      reset()
+
+
+      router.push("/otp");
+      toast.success("Enter Your recciving Otp");
+
+    } catch (err) {
+      toast.error("Your Given is not Correct");
+    }
   };
 
   return (

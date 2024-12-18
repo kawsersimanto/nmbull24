@@ -11,21 +11,53 @@ import LoginSchema, { LoginFormData } from "@/schema/LoginSchema";
 import loginimg from "@/assets/login/Rectangle 10333.png";
 import logo from "@/assets/expat-logo.png";
 import { useState } from "react";
+import { useLoginUserMutation } from "@/redux/Api/userApi";
+import { useRouter } from 'next/navigation'
+import { toast, Toaster } from "sonner";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/ReduxFunction";
+
+
+
 
 export default function LoginPage() {
   const [check, setCheck] = useState(false);
+  const [loginUser, { isLoading, isError, error }] = useLoginUserMutation(); // Hook usage
+  const router=useRouter()
+  const dispatch=useDispatch()
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors },reset
   } = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema), // Use the imported schema
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log("Form Data: ", data);
-  };
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+        const response = await loginUser(data).unwrap();
+       
+
+      
+        dispatch(setUser({
+         
+            role: response?.data?.role,
+            token: response?.data?.token,
+        }));
+        reset()
+
+        // Show success toast
+        
+        router.push("/");
+        toast.success("Login successful");
+    } catch (err) {
+        console.error("Login Error:", err);
+        toast.error( "Login failed! Please try again.");
+    }
+};
+
+
 
   return (
     <div className="flex flex-col lg:flex-row bg-white min-h-screen">
@@ -123,7 +155,8 @@ export default function LoginPage() {
               type="submit"
               className="w-full flex justify-center rounded-lg items-center font-outfit text-white text-[18px] font-medium py-[10px] bg-primary hover:bg-blue-700"
             >
-              Log in
+                   {isLoading ? "Login..." : "Login"}
+
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
