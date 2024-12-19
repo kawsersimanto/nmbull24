@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 import adminAuth from './ReduxFunction'
 import baseApi from './Api/baseApi'
 import forgotEmailReducer from './allSlice/otpSlice'
+import memberReducer from './allSlice/memberSlice'
 
 
 const persistConfig = {
@@ -14,19 +15,20 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, adminAuth)
 
 export const store = configureStore({
-    reducer: {
-        forgotPass:forgotEmailReducer,
-        Auth: persistedReducer,
-        [baseApi.reducerPath]: baseApi.reducer, 
-    },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
-                ignoredPaths: ['Auth.somePathWithNonSerializableValues'],
-            },
-        }).concat(baseApi.middleware),
-})
+  reducer: {
+    forgotPass: forgotEmailReducer,
+    member: memberReducer,
+    Auth: persistedReducer,
+    [baseApi.reducerPath]: baseApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+        ignoredPaths: ["Auth.somePathWithNonSerializableValues"],
+      },
+    }).concat(baseApi.middleware),
+});
 
 
 export const persistor = persistStore(store)

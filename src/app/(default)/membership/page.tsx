@@ -18,7 +18,7 @@ export default function Membership() {
 
       <div className="space-y-6 ">
         {membershipPlans.map((plan) => (
-          <MembershipCard key={plan.title} plan={plan} />
+          <MembershipCard key={plan.name} plan={plan} />
         ))}
       </div>
       </div>

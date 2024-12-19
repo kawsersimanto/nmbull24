@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,13 +17,14 @@ import { LiaPlusSolid } from "react-icons/lia";
 import { MdOutlineDone } from "react-icons/md";
 import { toast } from "sonner";
 
-interface props {
+interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const NewMembershipPlanDialog = ({ isOpen, onClose }: props) => {
-  const [featuresList, setFeaturesList] = useState<string[]>([]); // Local state to trigger re-render
+const NewMembershipPlanDialog = ({ isOpen, onClose }: Props) => {
+  const [featuresList, setFeaturesList] = useState<string[]>([]);
+
   const {
     control,
     handleSubmit,
@@ -33,9 +35,9 @@ const NewMembershipPlanDialog = ({ isOpen, onClose }: props) => {
   } = useForm<MembershipPlanType>({
     resolver: zodResolver(membershipSchema),
     defaultValues: {
-      title: "",
-      price: "",
-      features: [], // Features managed by react-hook-form
+      name: "",
+      amount: "",
+      list: [],
     },
   });
 
@@ -47,70 +49,72 @@ const NewMembershipPlanDialog = ({ isOpen, onClose }: props) => {
       "newFeatureInput"
     ) as HTMLInputElement | null;
 
+
+
     if (inputElement) {
       const newFeature = inputElement.value.trim();
-      if (newFeature.length <= 5) {
+      if (newFeature.length < 5) {
         return toast.error("Feature must have at least 5 characters");
       }
 
       // Get current features from form state
-      const currentFeatures = getValues("features");
+      const currentFeatures = getValues("list");
 
       // Update both form state and local state
-      const updatedFeatures = [newFeature, ...currentFeatures];
-      setValue("features", updatedFeatures); // Update react-hook-form state
-      setFeaturesList(updatedFeatures); // Update local state for re-render
+      const updatedFeatures = [
+        ...currentFeatures,
+        { title: newFeature }, // Align with MembershipPlanType's `list` field
+      ];
+      setValue("list", updatedFeatures); // Update react-hook-form state
+      setFeaturesList(updatedFeatures.map((f) => f.title)); // Update local state for re-render
 
-      inputElement.value = ""; // Clear the input field
+      inputElement.value = ""; 
+      
     }
   };
 
   const onsubmit: SubmitHandler<MembershipPlanType> = (data) => {
     const membershipPlanData = {
-      title: data.title,
-      price: data.price,
-      features: data.features,
+      name: data.name,
+      amount: data.amount,
+      features: featuresList,
     };
 
     console.log("Submitted Data:", membershipPlanData);
 
-    reset(); // Reset the form, including features
-    setFeaturesList([]); // Clear local state for features
-    onClose(); // Close the modal
+    reset();
+    setFeaturesList([]);
+    onClose();
   };
 
   return (
     <Dialog open={isOpen}>
       <DialogContent>
-        <div
-          onClick={onClose}
-          className="absolute  top-8 cursor-pointer right-3 text-[#0076ef] font-bold"
-        >
-          <X size={24} />
+        <div className="absolute top-3 right-3" onClick={onClose}>
+          <X className="h-4 w-4 cursor-pointer" />
         </div>
-
         <DialogHeader>
-          <DialogTitle className="text-[24px] font-semibold mb-[18.5px]">
+          <DialogTitle className="text-[30px] font-semibold mb-[18.5px]">
             Create new Membership Plan
           </DialogTitle>
           <form onSubmit={handleSubmit(onsubmit)} className="space-y-5">
             {/* Title Field */}
             <div className="flex flex-col gap-1">
-              <label>Title</label>
+              <label>Name</label>
               <Controller
-                name="title"
+                name="name"
                 control={control}
                 render={({ field }) => (
                   <Input
                     {...field}
-                    placeholder="Enter title"
+                    placeholder="Enter name"
                     className="border p-2 rounded"
                   />
                 )}
               />
-              {errors.title && (
+              {errors.name && (
                 <span className="text-red-500 text-sm">
-                  {errors.title.message}
+                  {errors.name.message}
                 </span>
               )}
             </div>
@@ -136,33 +140,40 @@ const NewMembershipPlanDialog = ({ isOpen, onClose }: props) => {
 
             {/* Price Field */}
             <div className="flex flex-col gap-1 mt-3">
-              <label>Price</label>
+              <label>Amount</label>
               <Controller
-                name="price"
+                name="amount"
                 control={control}
                 render={({ field }) => (
                   <Input
                     {...field}
                     type="number"
-                    placeholder="Enter price"
+                    placeholder="Enter amount"
                     className="border p-2 rounded"
                   />
                 )}
               />
-              {errors.price && (
+              {errors.amount && (
                 <span className="text-red-500 text-sm">
-                  {errors.price.message}
+                  {errors.amount.message}
                 </span>
               )}
             </div>
 
             {/* Submit and Cancel Buttons */}
-            <div className="flex justify-end items-center gap-4 mt-5">
+            <div className="flex justify-center items-center gap-4 mt-5">
+              <Button
+                type="button"
+                onClick={onClose}
+                className="bg-gray-500 text-white px-6 py-2 rounded-full"
+              >
+                Cancel
+              </Button>
               <Button
                 type="submit"
                 className="bg-blue-500 text-white px-6 py-2 rounded-full"
               >
-                Add new
+                Submit
               </Button>
             </div>
           </form>

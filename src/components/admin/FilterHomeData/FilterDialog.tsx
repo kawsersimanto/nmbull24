@@ -18,7 +18,7 @@ import { X } from "lucide-react";
 interface FilterDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onApplyFilters: (filters: { country: string[]; membership: string[] }) => void;
+  onApplyFilters: (filters: { country: string[]; planName: string[] }) => void;
   countries: string[];
   memberships: string[];
 }
@@ -56,7 +56,7 @@ const FilterDialog: React.FC<FilterDialogProps> = ({
   const handleApply = () => {
     onApplyFilters({
       country: selectedCountries,
-      membership: selectedMemberships,
+      planName: selectedMemberships,
     });
     // Reset form immediately after applying filters
     setSelectedCountries([]);
@@ -124,7 +124,9 @@ const FilterDialog: React.FC<FilterDialogProps> = ({
         </div>
 
         <DialogFooter>
-          <Button onClick={handleApply} className="bg-[#efefef] text-black">Apply Filters</Button>
+          <Button onClick={handleApply} className="bg-[#efefef] text-black">
+            Apply Filters
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

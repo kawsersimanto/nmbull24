@@ -13,23 +13,64 @@ import DeleteMemberDialog from "../Dialogs/DeleteMemberDialog";
 import profileImage from "@/assets/profile.png";
 import ageImage from "@/assets/age.png";
 import stateImage from "@/assets/logout.png";
+import { useDispatch } from "react-redux";
+
+import { string } from "zod";
+import { verfyMember } from "@/redux/allSlice/memberSlice";
+import {
+  useSummitVerifyMemberMutation,
+  useHideUnhideMemberMutation,
+  useDeleteMemberMutation,
+} from "@/redux/Api/memberApi";
+import { toast } from "sonner";
 
 interface props {
   member: Member;
 }
 
 const MemberTableRow = ({ member }: props) => {
+  const [updateSummit, { isLoading: isUpdatingSummit }] =
+    useSummitVerifyMemberMutation();
+  const [hideUnhide, { isLoading: isHideUnhiding }] =
+    useHideUnhideMemberMutation();
+  const [deleteMember, { isLoading: isDeleting }] = useDeleteMemberMutation();
+
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
-  const handleDelete = () => {
-    // onDelete(member.name); // Call the delete callback
-    setIsDeleteOpen(false);
+  const handleDelete = async () => {
+    try {
+      const res = await deleteMember(member).unwrap();
+      toast.success("Deleted");
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
   };
+
+  const handleVerifyMember = async () => {
+    try {
+      const res = await updateSummit(member).unwrap();
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+
+  const hideUnhideMember = async () => {
+    try {
+      const res = await hideUnhide(member).unwrap();
+      toast.success("Update");
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+
   return (
     <>
       <TableRow
-        key={member.name}
+        key={member.id}
         className="h-full  flex justify-between items-end flex-shrink-0 overflow-x-auto"
       >
         <TableCell className="flex-1 shrink-0 min-w-[300px] ">
@@ -41,7 +82,9 @@ const MemberTableRow = ({ member }: props) => {
             />
             <div className="">
               <p className="text-lg text-[#263238] font-bold">
-                <span className=" ">{member.name}</span>
+                <span className=" ">
+                  {member.firstName + " " + member.lastName}
+                </span>
               </p>
               <p className="md:text-[16px]  text-[#263238] my-[12px] font-medium">
                 Country: <span className="font-light">{member.country}</span>
@@ -123,7 +166,7 @@ const MemberTableRow = ({ member }: props) => {
                     </defs>
                   </svg>
                   <p className="font-sans font-[16px] text-secondery">
-                    {member.capital}
+                    {member.state}
                   </p>
                 </div>
               </div>
@@ -133,7 +176,7 @@ const MemberTableRow = ({ member }: props) => {
 
         <TableCell className="flex-1 shrink-0 min-w-[180px]">
           <p className="text-[16px] text-[#263238]  font-medium">
-            Membership: <span className="font-light">{member.membership}</span>
+            Membership: <span className="font-light">{member.planName}</span>
           </p>
           <p className="text-[16px] text-[#263238] mt-[12px] font-medium">
             Acooumendation: <span className="font-light">standard</span>
@@ -142,10 +185,13 @@ const MemberTableRow = ({ member }: props) => {
 
         <TableCell className="flex-1 mt-[12px] flex-shrink-0 gap-2  min-w-[200px] text-wrap">
           <p>Exodus summit member?</p>
-          <p className="font-light mt-[12px]">{member.summit_member}</p>
+          <p className="font-light mt-[12px]">{member.summitMember}</p>
         </TableCell>
         <TableCell className="flex flex-shrink-0 gap-2 justify-end flex-1 min-w-[250px]">
-          <button className="bg-[rgba(0,229,8,0.32)] border rounded px-3 py-[6px]">
+          <button
+            onClick={handleVerifyMember}
+            className={`bg-[rgba(0,229,8,0.32)] border rounded px-3 py-[6px]`}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="17"
@@ -162,7 +208,7 @@ const MemberTableRow = ({ member }: props) => {
 
           <button
             className=" border rounded px-3 py-[6px]"
-            onClick={() => setIsViewOpen(true)}
+            onClick={hideUnhideMember}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -187,19 +233,27 @@ const MemberTableRow = ({ member }: props) => {
               />
             </svg>
           </button>
-          <button className="border rounded px-3 py-[6px]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="17"
-              height="16"
-              viewBox="0 0 17 16"
-              fill="none"
-            >
-              <path
-                d="M7.0306 3.33236H9.69726C9.69726 2.97873 9.55679 2.6396 9.30674 2.38955C9.05669 2.1395 8.71755 1.99902 8.36393 1.99902C8.01031 1.99902 7.67117 2.1395 7.42112 2.38955C7.17107 2.6396 7.0306 2.97873 7.0306 3.33236ZM6.0306 3.33236C6.0306 3.02594 6.09095 2.72252 6.20821 2.43943C6.32547 2.15634 6.49735 1.89911 6.71402 1.68244C6.93069 1.46577 7.18791 1.2939 7.471 1.17664C7.7541 1.05938 8.05751 0.999023 8.36393 0.999023C8.67035 0.999023 8.97377 1.05938 9.25686 1.17664C9.53995 1.2939 9.79718 1.46577 10.0138 1.68244C10.2305 1.89911 10.4024 2.15634 10.5196 2.43943C10.6369 2.72252 10.6973 3.02594 10.6973 3.33236H14.5306C14.6632 3.33236 14.7904 3.38503 14.8841 3.4788C14.9779 3.57257 15.0306 3.69975 15.0306 3.83236C15.0306 3.96496 14.9779 4.09214 14.8841 4.18591C14.7904 4.27968 14.6632 4.33236 14.5306 4.33236H13.6506L12.8706 12.4064C12.8108 13.025 12.5226 13.5992 12.0624 14.0169C11.6021 14.4346 11.0028 14.6659 10.3813 14.6657H6.3466C5.72517 14.6658 5.126 14.4344 4.6659 14.0167C4.2058 13.599 3.91775 13.0249 3.85793 12.4064L3.07727 4.33236H2.19727C2.06466 4.33236 1.93748 4.27968 1.84371 4.18591C1.74994 4.09214 1.69727 3.96496 1.69727 3.83236C1.69727 3.69975 1.74994 3.57257 1.84371 3.4788C1.93748 3.38503 2.06466 3.33236 2.19727 3.33236H6.0306ZM7.36393 6.49902C7.36393 6.36641 7.31125 6.23924 7.21748 6.14547C7.12372 6.0517 6.99654 5.99902 6.86393 5.99902C6.73132 5.99902 6.60415 6.0517 6.51038 6.14547C6.41661 6.23924 6.36393 6.36641 6.36393 6.49902V11.499C6.36393 11.6316 6.41661 11.7588 6.51038 11.8526C6.60415 11.9463 6.73132 11.999 6.86393 11.999C6.99654 11.999 7.12372 11.9463 7.21748 11.8526C7.31125 11.7588 7.36393 11.6316 7.36393 11.499V6.49902ZM9.86393 5.99902C9.99654 5.99902 10.1237 6.0517 10.2175 6.14547C10.3113 6.23924 10.3639 6.36641 10.3639 6.49902V11.499C10.3639 11.6316 10.3113 11.7588 10.2175 11.8526C10.1237 11.9463 9.99654 11.999 9.86393 11.999C9.73132 11.999 9.60415 11.9463 9.51038 11.8526C9.41661 11.7588 9.36393 11.6316 9.36393 11.499V6.49902C9.36393 6.36641 9.41661 6.23924 9.51038 6.14547C9.60415 6.0517 9.73132 5.99902 9.86393 5.99902ZM4.85327 12.3104C4.88922 12.6815 5.06209 13.0259 5.33818 13.2764C5.61426 13.527 5.97376 13.6658 6.3466 13.6657H10.3813C10.7541 13.6658 11.1136 13.527 11.3897 13.2764C11.6658 13.0259 11.8386 12.6815 11.8746 12.3104L12.6466 4.33236H4.08127L4.85327 12.3104Z"
-                fill="#FF0000"
-              />
-            </svg>
+
+          <button
+            onClick={handleDelete}
+            className="border rounded px-3 py-[6px]"
+          >
+            {isDeleting ? (
+              <div>Deleting ....</div>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="16"
+                viewBox="0 0 17 16"
+                fill="none"
+              >
+                <path
+                  d="M7.0306 3.33236H9.69726C9.69726 2.97873 9.55679 2.6396 9.30674 2.38955C9.05669 2.1395 8.71755 1.99902 8.36393 1.99902C8.01031 1.99902 7.67117 2.1395 7.42112 2.38955C7.17107 2.6396 7.0306 2.97873 7.0306 3.33236ZM6.0306 3.33236C6.0306 3.02594 6.09095 2.72252 6.20821 2.43943C6.32547 2.15634 6.49735 1.89911 6.71402 1.68244C6.93069 1.46577 7.18791 1.2939 7.471 1.17664C7.7541 1.05938 8.05751 0.999023 8.36393 0.999023C8.67035 0.999023 8.97377 1.05938 9.25686 1.17664C9.53995 1.2939 9.79718 1.46577 10.0138 1.68244C10.2305 1.89911 10.4024 2.15634 10.5196 2.43943C10.6369 2.72252 10.6973 3.02594 10.6973 3.33236H14.5306C14.6632 3.33236 14.7904 3.38503 14.8841 3.4788C14.9779 3.57257 15.0306 3.69975 15.0306 3.83236C15.0306 3.96496 14.9779 4.09214 14.8841 4.18591C14.7904 4.27968 14.6632 4.33236 14.5306 4.33236H13.6506L12.8706 12.4064C12.8108 13.025 12.5226 13.5992 12.0624 14.0169C11.6021 14.4346 11.0028 14.6659 10.3813 14.6657H6.3466C5.72517 14.6658 5.126 14.4344 4.6659 14.0167C4.2058 13.599 3.91775 13.0249 3.85793 12.4064L3.07727 4.33236H2.19727C2.06466 4.33236 1.93748 4.27968 1.84371 4.18591C1.74994 4.09214 1.69727 3.96496 1.69727 3.83236C1.69727 3.69975 1.74994 3.57257 1.84371 3.4788C1.93748 3.38503 2.06466 3.33236 2.19727 3.33236H6.0306ZM7.36393 6.49902C7.36393 6.36641 7.31125 6.23924 7.21748 6.14547C7.12372 6.0517 6.99654 5.99902 6.86393 5.99902C6.73132 5.99902 6.60415 6.0517 6.51038 6.14547C6.41661 6.23924 6.36393 6.36641 6.36393 6.49902V11.499C6.36393 11.6316 6.41661 11.7588 6.51038 11.8526C6.60415 11.9463 6.73132 11.999 6.86393 11.999C6.99654 11.999 7.12372 11.9463 7.21748 11.8526C7.31125 11.7588 7.36393 11.6316 7.36393 11.499V6.49902ZM9.86393 5.99902C9.99654 5.99902 10.1237 6.0517 10.2175 6.14547C10.3113 6.23924 10.3639 6.36641 10.3639 6.49902V11.499C10.3639 11.6316 10.3113 11.7588 10.2175 11.8526C10.1237 11.9463 9.99654 11.999 9.86393 11.999C9.73132 11.999 9.60415 11.9463 9.51038 11.8526C9.41661 11.7588 9.36393 11.6316 9.36393 11.499V6.49902C9.36393 6.36641 9.41661 6.23924 9.51038 6.14547C9.60415 6.0517 9.73132 5.99902 9.86393 5.99902ZM4.85327 12.3104C4.88922 12.6815 5.06209 13.0259 5.33818 13.2764C5.61426 13.527 5.97376 13.6658 6.3466 13.6657H10.3813C10.7541 13.6658 11.1136 13.527 11.3897 13.2764C11.6658 13.0259 11.8386 12.6815 11.8746 12.3104L12.6466 4.33236H4.08127L4.85327 12.3104Z"
+                  fill="#FF0000"
+                />
+              </svg>
+            )}
           </button>
         </TableCell>
       </TableRow>
@@ -215,7 +269,7 @@ const MemberTableRow = ({ member }: props) => {
         isOpen={isDeleteOpen}
         onClose={() => setIsDeleteOpen(false)}
         // onDelete={handleDelete}
-        memberName={member.name}
+        memberName={member.firstName + member.lastName}
       />
     </>
   );

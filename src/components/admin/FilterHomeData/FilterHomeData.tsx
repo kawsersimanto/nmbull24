@@ -3,16 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { Table, TableBody } from "@/components/ui/table";
 import MemberTableRow from "@/components/admin/Sidebar/MemberTableRow";
-import { Members } from "@/constants/members";
-
 import SearchBox from "./SearchBox";
-import { Member } from "@/types/Member";
-import { LiaSearchSolid, LiaFilterSolid } from "react-icons/lia";
 import FilterDialog from "./FilterDialog";
-import { SlRefresh } from "react-icons/sl";
-import searchSvg from "@/assets/dashboard/Search.svg"
-import refreshSvg from "@/assets/dashboard/Refresh.svg"
-import filterSvg from "@/assets/dashboard/Adjustments.svg"
+// Import the interface and enums
 import {
   Select,
   SelectContent,
@@ -21,90 +14,90 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { FaArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import Image from "next/image";
+import searchSvg from "@/assets/dashboard/Search.svg";
+import refreshSvg from "@/assets/dashboard/Refresh.svg";
+import filterSvg from "@/assets/dashboard/Adjustments.svg";
+import { useAllMemberQuery } from "@/redux/Api/memberApi";
+import { Member } from "@/types/Member";
 
-const FilterHomeData = () => {
-  const [searchBoxOpen, setSearchBoxOpen] = useState<boolean>(false);
+const FilterHomeData: React.FC = () => {
+  const { data: MemberData, isLoading, isError } = useAllMemberQuery(undefined);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchBoxOpen, setSearchBoxOpen] = useState<boolean>(false);
   const [filterBoxOpen, setFilterBoxOpen] = useState<boolean>(false);
-  const [filteredData, setFilteredData] = useState<Member[]>(Members);
-  const [activeFilters, setActiveFilters] = useState<{
-    country: string[];
-    membership: string[];
-  }>({
-    country: [],
-    membership: [],
-  });
-
-  // Pagination state
+  const [filteredData, setFilteredData] = useState<Member[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(3);
 
-  // Get unique countries and memberships from Members data
-  const uniqueCountries = Array.from(
-    new Set(Members.map((member) => member.country))
-  );
-  const uniqueMemberships = Array.from(
-    new Set(Members.map((member) => member.membership))
-  );
+  const [activeFilters, setActiveFilters] = useState<{
+    country: string[];
+    planName: string[];
+  }>({
+    country: [],
+    planName: [],
+  });
 
-  // Handle search query
+  const members: Member[] = MemberData?.data || [];
+  console.log(members);
+  const uniqueCountries = Array.from(
+    new Set(members.map((member) => member.country || ""))
+  ).filter((country) => country !== "");
+
+  const uniquePlanNames = Array.from(
+    new Set(members.map((member) => member.planName || ""))
+  ).filter((planName) => planName !== "");
+
   const handleSearch = (query: string) => {
-    setSearchQuery(query); // Update the search query
-    setSearchBoxOpen(false); // Close the search dialog after searching
-    setCurrentPage(1); // Reset to the first page
+    setSearchQuery(query);
+    setCurrentPage(1);
   };
 
-  // Handle filter application
   const handleFilters = (filters: {
     country: string[];
-    membership: string[];
+    planName: string[];
   }) => {
-    setActiveFilters(filters); // Update filters state
-    setCurrentPage(1); // Reset to the first page
+    setActiveFilters(filters);
+    setCurrentPage(1);
   };
 
-  // Combine search and filter logic
   useEffect(() => {
-    let data = Members;
+    let data = [...members];
 
-    // Apply search filter
     if (searchQuery) {
       data = data.filter(
         (member) =>
-          member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          member.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          member.membership.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          member.accumendation
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-          member.capital.toLowerCase().includes(searchQuery.toLowerCase())
+          member.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          member.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (member.country &&
+            member.country.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (member.state &&
+            member.state.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (member.planName &&
+            member.planName.toLowerCase().includes(searchQuery.toLowerCase()))
       );
     }
 
-    // Apply country and membership filters
     if (activeFilters.country.length > 0) {
-      data = data.filter((member) =>
-        activeFilters.country.includes(member.country)
+      data = data.filter(
+        (member) =>
+          member.country && activeFilters.country.includes(member.country)
       );
     }
-    if (activeFilters.membership.length > 0) {
-      data = data.filter((member) =>
-        activeFilters.membership.includes(member.membership)
+    if (activeFilters.planName.length > 0) {
+      data = data.filter(
+        (member) =>
+          member.planName && activeFilters.planName.includes(member.planName)
       );
     }
 
-    setFilteredData(data);
-  }, [searchQuery, activeFilters]);
+    // Avoid unnecessary state update
+    if (JSON.stringify(data) !== JSON.stringify(filteredData)) {
+      setFilteredData(data);
+    }
+  }, [searchQuery, activeFilters, members]);
 
-  // Handle changing items per page
-  const handleItemsPerPageChange = (value: string) => {
-    setItemsPerPage(Number(value));
-    setCurrentPage(1); // Reset to the first page
-  };
-
-  // Calculate pagination data
   const totalItems = filteredData.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const paginatedData = filteredData.slice(
@@ -112,115 +105,65 @@ const FilterHomeData = () => {
     currentPage * itemsPerPage
   );
 
-  // Generate pagination numbers
-  const getPaginationNumbers = () => {
-    const visiblePages = 4; // Number of visible pages before the ellipsis
-    const paginationNumbers: (number | string)[] = [];
-
-    // Show ellipsis if pages exceed the visible range
-    if (totalPages > visiblePages) {
-      if (currentPage > 3) {
-        paginationNumbers.push(1, 2, "...");
-      }
-
-      for (
-        let i = Math.max(1, currentPage - 1);
-        i <= Math.min(totalPages, currentPage + 1);
-        i++
-      ) {
-        paginationNumbers.push(i);
-      }
-
-      if (currentPage < totalPages - 2) {
-        paginationNumbers.push("...", totalPages);
-      }
-    } else {
-      for (let i = 1; i <= totalPages; i++) {
-        paginationNumbers.push(i);
-      }
-    }
-
-    return paginationNumbers;
+  const handleItemsPerPageChange = (value: string) => {
+    setItemsPerPage(Number(value));
+    setCurrentPage(1);
   };
 
   return (
     <>
-      <div className="flex justify-between items-center flex-shrink-0">
-        <h4 className="md:text-2xl text-xl">Member list</h4>
-
-        <div className="flex gap-2 md:gap-2 items-center relative">
+      <div className="flex justify-between items-center">
+        <h4 className="text-2xl">Member List</h4>
+        <div className="flex items-center gap-2">
           <Image
-            className="cursor-pointer"
-            onClick={() => setSearchBoxOpen(true)}
             src={searchSvg}
-            sizes=""
-            alt=""
-          />
-          <Image
-            className="cursor-pointer  text-[#48535B]"
-            onClick={() => setFilterBoxOpen(true)}
-            src={filterSvg}
-            sizes=""
-            alt=""
-          />
-          <Image
-            className="cursor-pointer  text-[#48535B]"
+            alt="Search"
             onClick={() => {
               setSearchQuery("");
-              setActiveFilters({ country: [], membership: [] });
+              setSearchBoxOpen(true);
+            }}
+            className="cursor-pointer"
+          />
+
+          <Image
+            src={filterSvg}
+            alt="Filter"
+            onClick={() => setFilterBoxOpen(true)}
+            className="cursor-pointer"
+          />
+          <Image
+            src={refreshSvg}
+            alt="Refresh"
+            onClick={() => {
+              setSearchQuery("");
+              setActiveFilters({ country: [], planName: [] });
               setCurrentPage(1);
             }}
-            src={refreshSvg}
-            sizes=""
-            alt=""
+            className="cursor-pointer"
           />
-      
-
-          {/* Border */}
-          <div className="h-[30px] border-r "></div>
-
-          {/* Pagination Selection */}
           <Select onValueChange={handleItemsPerPageChange}>
-            <SelectTrigger className="px-3 py-2 rounded-[12px] text-[#667085]">
-              <SelectValue placeholder={`Page size`} />
+            <SelectTrigger>
+              <SelectValue placeholder="Items per page" />
             </SelectTrigger>
-            <SelectContent className="text-[#667085]">
+            <SelectContent>
               <SelectItem value="3">3</SelectItem>
               <SelectItem value="6">6</SelectItem>
-              <SelectItem value={"9"}>9</SelectItem>
+              <SelectItem value="9">9</SelectItem>
             </SelectContent>
           </Select>
         </div>
       </div>
-
-      {/* Search Result Message */}
-      {searchQuery && (
-        <div className="">
-          <p className="text-lg py-3">
-            Search results for:{" "}
-            <span className="font-bold">
-              {searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1)}
-            </span>
-          </p>
-        </div>
-      )}
-
-      {/* Filtered Members Table */}
-      <div className="py-5 ">
-        <Table className="!overflow-x-auto">
+      <div className="py-5">
+        <Table>
           <TableBody>
             {paginatedData.length > 0 ? (
-              paginatedData.map((member, idx) => (
-                <MemberTableRow key={idx} member={member} />
+              paginatedData.map((member) => (
+                <MemberTableRow key={member.id} member={member} />
               ))
             ) : (
               <tr>
-                <td className="col-span-full">
-                  {" "}
-                  {/* Span across all columns */}
-                  <p className="text-red-500 text-center">
-                    Oops! No member available
-                  </p>
+                <td colSpan={100} className="text-center text-red-500">
+                  No members found.
                 </td>
               </tr>
             )}
@@ -228,38 +171,28 @@ const FilterHomeData = () => {
         </Table>
       </div>
 
-      {/* Pagination Controls */}
-      <div className="flex  items-center py-4">
+      {/* pagination */}
+      <div className="flex items-center  gap-2">
         <button
-          className=" text-[16px]  text-white bg-gray-600  disabled:opacity-50  w-8 h-8 rounded-full flex justify-center items-center"
           disabled={currentPage === 1}
           onClick={() => setCurrentPage(currentPage - 1)}
         >
           <FaArrowLeft />
         </button>
-        <div className="flex gap-2 mx-4">
-          {getPaginationNumbers().map((page, idx) =>
-            page === "..." ? (
-              <span key={idx} className="px-2">
-                ...
-              </span>
-            ) : (
-              <button
-                key={idx}
-                className={`text-xs md:text-lg disabled:opacity-50 w-8 h-8 rounded-full flex justify-center items-center ${
-                  page === currentPage
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-200"
-                }`}
-                onClick={() => setCurrentPage(Number(page))}
-              >
-                {page}
-              </button>
-            )
-          )}
-        </div>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`w-8 h-8 rounded-full ${
+              page === currentPage
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 text-black"
+            }`}
+          >
+            {page}
+          </button>
+        ))}
         <button
-          className=" text-[16px]   text-white bg-gray-600 disabled:opacity-50 w-8 h-8 rounded-full flex justify-center items-center"
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage(currentPage + 1)}
         >
@@ -267,13 +200,13 @@ const FilterHomeData = () => {
         </button>
       </div>
 
-      {/* Filter Dialog */}
+      {/* filter Dialog */}
       <FilterDialog
         isOpen={filterBoxOpen}
         onClose={() => setFilterBoxOpen(false)}
         onApplyFilters={handleFilters}
         countries={uniqueCountries}
-        memberships={uniqueMemberships}
+        memberships={uniquePlanNames}
       />
 
       {/* Search Dialog */}
