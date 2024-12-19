@@ -53,9 +53,19 @@ const userApi = baseApi.injectEndpoints({
                 }
             },
             
+        }),
+        updateByUser: build.mutation({
+            query: (data: any) => {
+                return {
+                    url: "/users/profile",
+                    method: "PUT",
+                    body: data
+                }
+            },
+            
         })
     }),
 })
 
 
-export const { useLoginUserMutation,useRegisterUserMutation,useForgotUserMutation,useOtpUserMutation,useResetPassMutation } = userApi
+export const { useLoginUserMutation,useRegisterUserMutation,useForgotUserMutation,useOtpUserMutation,useResetPassMutation,useUpdateByUserMutation } = userApi

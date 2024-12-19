@@ -13,6 +13,8 @@ import MinusIcon from "../icon/MinusIcon";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useDestinationAddMutation } from "@/redux/Api/destinationApi";
+import { saveDestinationData } from "@/redux/allSlice/formslice";
+import Loader from "../Loader";
 
 const formSchema = z.object({
   destinations: z.array(
@@ -43,6 +45,7 @@ export default function Destination() {
       ],
     },
   });
+  const dispatch=useDispatch()
   const router = useRouter();
 
   const { fields, append, remove } = useFieldArray({
@@ -51,35 +54,38 @@ export default function Destination() {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // Transform the data
     const transformedDestinations = values.destinations.map((destination) => {
       const { month, year, ...rest } = destination;
   
-      // Concatenate month and year to create TravelBegins
       const TravelBegins = new Date(`${year}-${month.padStart(2, "0")}-01T00:00:00.000Z`).toISOString();
   
       return {
         ...rest,
-        TravelBegins, // Match the API's expected key
+        TravelBegins,
       };
     });
   
-    console.log("Transformed Destinations:", transformedDestinations);
-  
     try {
-      // Push to RTK with correct payload
       await addDestination(transformedDestinations).unwrap();
   
-      // Navigate on success
+      // Dispatching the completed flag as part of the payload
+      dispatch(
+        saveDestinationData(true)
+      );
+  
       router.push("/lifestyle");
     } catch (err) {
       console.error("Error adding destination:", err);
     }
   };
   
+  
 
   return (
-    <div className="mx-auto p-4 lg:p-8 font-sans">
+    <>
+          <Loader isOpen={isLoading} message="Saving destinations..." />
+
+     <div className="mx-auto p-4 lg:p-8 font-sans">
       <div className="grid grid-cols-12">
         <h2 className="lg:text-[48px] text-[24px] font-[600] border-b-2 py-2 col-span-12 text-[#1D2939]">
           Destinations
@@ -90,7 +96,6 @@ export default function Destination() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-4">
           {fields.map((field, index) => (
             <div key={field.id} className="space-y-4 rounded-lg ">
-              {/* Travel Type Field */}
               <SelectField
                 name={`destinations.${index}.travelType`}
                 label="Travel Type (Lease Duration)"
@@ -202,5 +207,7 @@ export default function Destination() {
         </form>
       </Form>
     </div>
+    </>
+   
   );
 }

@@ -10,8 +10,30 @@ import {
 import { profileMenuItems } from "@/constants/profileMenuItems";
 import { ChevronRight, LogOut } from "lucide-react";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { logOut } from "@/redux/ReduxFunction"; // Import logOut action
+import Cookies from "js-cookie"; // To remove the cookie
+import { clearFormData } from "@/redux/allSlice/formslice";
+import { clearRegister } from "@/redux/allSlice/registerSlice";
+import { useRouter } from "next/navigation";
 
 export default function Profile() {
+  const dispatch = useDispatch();
+  const router=useRouter()
+
+  // Logout handler
+  const handleLogout = () => {
+    // Remove token from cookies
+    Cookies.remove("token");
+
+    // Dispatch the logOut action to update the Redux store
+    dispatch(logOut());
+    // Clear the registration and form data
+    dispatch(clearFormData());
+    dispatch(clearRegister());
+    router.push('/login')
+  };
+
   return (
     <div>
       <DropdownMenu>
@@ -45,7 +67,10 @@ export default function Profile() {
             </DropdownMenuItem>
           ))}
           <DropdownMenuItem>
-            <button className="flex items-center justify-between py-1 text-red-500 w-full">
+            <button
+              className="flex items-center justify-between py-1 text-red-500 w-full"
+              onClick={handleLogout} // Call logout on button click
+            >
               <span>Logout</span>
               <LogOut className="h-4 w-4" />
             </button>
