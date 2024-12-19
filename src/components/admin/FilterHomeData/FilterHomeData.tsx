@@ -10,6 +10,9 @@ import { Member } from "@/types/Member";
 import { LiaSearchSolid, LiaFilterSolid } from "react-icons/lia";
 import FilterDialog from "./FilterDialog";
 import { SlRefresh } from "react-icons/sl";
+import searchSvg from "@/assets/dashboard/Search.svg"
+import refreshSvg from "@/assets/dashboard/Refresh.svg"
+import filterSvg from "@/assets/dashboard/Adjustments.svg"
 import {
   Select,
   SelectContent,
@@ -19,6 +22,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { FaArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import Image from "next/image";
 
 const FilterHomeData = () => {
   const [searchBoxOpen, setSearchBoxOpen] = useState<boolean>(false);
@@ -144,29 +148,39 @@ const FilterHomeData = () => {
       <div className="flex justify-between items-center flex-shrink-0">
         <h4 className="md:text-2xl text-xl">Member list</h4>
 
-        <div className="flex gap-2 md:gap-2 items-center">
-          <LiaSearchSolid
-            className="cursor-pointer md:text-[24px] text-[#48535B]"
-            onClick={() => setSearchBoxOpen(true)} // Open the search dialog
+        <div className="flex gap-2 md:gap-2 items-center relative">
+          <Image
+            className="cursor-pointer"
+            onClick={() => setSearchBoxOpen(true)}
+            src={searchSvg}
+            sizes=""
+            alt=""
           />
-          <LiaFilterSolid
-            className="cursor-pointer md:text-[24px] text-[#48535B]"
-            onClick={() => setFilterBoxOpen(true)} // Open the filter dialog
+          <Image
+            className="cursor-pointer  text-[#48535B]"
+            onClick={() => setFilterBoxOpen(true)}
+            src={filterSvg}
+            sizes=""
+            alt=""
           />
-          <SlRefresh
-            className="cursor-pointer md:text-[24px] text-[#48535B]"
+          <Image
+            className="cursor-pointer  text-[#48535B]"
             onClick={() => {
               setSearchQuery("");
               setActiveFilters({ country: [], membership: [] });
               setCurrentPage(1);
             }}
+            src={refreshSvg}
+            sizes=""
+            alt=""
           />
+      
 
           {/* Border */}
           <div className="h-[30px] border-r "></div>
 
           {/* Pagination Selection */}
-          <Select  onValueChange={handleItemsPerPageChange}>
+          <Select onValueChange={handleItemsPerPageChange}>
             <SelectTrigger className="px-3 py-2 rounded-[12px] text-[#667085]">
               <SelectValue placeholder={`Page size`} />
             </SelectTrigger>

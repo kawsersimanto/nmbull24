@@ -104,7 +104,7 @@ const UpdateDataDialog = ({
       <DialogContent>
         <div
           onClick={onClose}
-          className="absolute  -top-3 cursor-pointer -right-3 text-[#0076ef]"
+          className="absolute  top-8 cursor-pointer right-3 text-[#0076ef] font-bold"
         >
           <X size={24} />
         </div>

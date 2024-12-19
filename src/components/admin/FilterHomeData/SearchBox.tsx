@@ -25,7 +25,11 @@ const SearchBox: React.FC<SearchDialogProps> = ({
 
   const handleSearch = () => {
     onSearch(query);
-    onClose(); // Close dialog after search
+    if (query.length > 5) {
+      setQuery("")
+      onClose(); 
+    }
+    // Close dialog after search
   };
 
   return (
