@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 import { RootState } from "@/redux/store";
 import { useUpdateByUserMutation } from "@/redux/Api/userApi";
 import { toast } from "sonner";
-import jsPDF from "jspdf";
+
 import { userUpd } from "@/redux/allSlice/formslice";
 import Loader from "../Loader";
 
@@ -80,23 +80,28 @@ export default function ProfileForm() {
 
   const onSubmit = async (values: z.infer<typeof profileSchema>) => {
     try {
-      // Construct dob from day, month, and year
+    
       const { day, month, year, ...restValues } = values;
   
       // Construct dob as a string
       const dob = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
   
-      // Create a new object with dob and without day, month, and year
+  
       const updatedValues = {
         ...restValues,
-        dob, // Add the dob field
+        dob, 
       };
   
-      // Create FormData and append updated values
+
       const formData = new FormData();
       formData.append("data", JSON.stringify(updatedValues));
-  
-      // Call the mutation
+      // Append the file if it exists
+    
+    // // Append the file if it exists
+    // if (profileImage) {
+    //   formData.append("profileImage", profileImage);
+    // }
+    console.log(profileUpUser);
       const res = await profileUpUser(formData).unwrap();
       dispatch(userUpd(true));
   
@@ -105,7 +110,7 @@ export default function ProfileForm() {
       console.log(res);
   
     } catch (error: any) {
-      console.log(error);
+ 
     }
   };
   

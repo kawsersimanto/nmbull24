@@ -18,7 +18,8 @@ export default function TravelSearch() {
           className="grid rounded-2xl pt-[40px] pb-[60px] px-[34px] lg:px-[134px] grid-cols-1 gap-10 text-white bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${travelimg.src})` }}
         >
-          <div className="">
+         <div>
+         <div className="">
             <h1 className="text-[30px] sm:text-[40px] md:text-[54px] text-center font-normal">
               Quick search your travel partner
             </h1>
@@ -175,6 +176,7 @@ export default function TravelSearch() {
               </Link>
             </div>
           </div>
+         </div>
         </div>
       </div>
     </div>

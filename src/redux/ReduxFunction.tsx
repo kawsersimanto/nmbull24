@@ -3,12 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 interface CounterState {
     token:string
     role: string,
+   email:string|null
 }
 
 // Define the initial state using that type
 const initialState: CounterState = {
     role: "",
     token:"",
+    email:null,
 }
 
 export const adminAuth = createSlice({
@@ -18,6 +20,7 @@ export const adminAuth = createSlice({
         setUser: (state, action) => {
             state.role = action.payload.role
             state.token = action.payload.token
+            state.email=action.payload.email
         },
         logOut: (state) => {
             state.role = ""

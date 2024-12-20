@@ -47,12 +47,13 @@ export default function LoginPage() {
          
             role: response?.data?.role,
             token: response?.data?.token,
+            email:data.email,
         }));
         reset()
 
         // Show success toast
         
-        router.push("/");
+        router.push("/travel-search");
         toast.success("Login successful");
     } catch (err) {
         console.error("Login Error:", err);

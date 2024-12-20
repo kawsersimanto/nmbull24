@@ -1,6 +1,8 @@
 export type membershipPlan = {
-    title: string;
-    features: string[];
-    price: number;
-  };
-  
+  id: string;
+  name: string;
+  amount: number;
+  list: { title: string }[];
+  interval: string;
+  priceId:string;
+};

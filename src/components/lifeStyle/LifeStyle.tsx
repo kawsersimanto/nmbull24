@@ -53,14 +53,14 @@ export default function LifeStyle() {
     
      const transformedValues = {
     ...values,
-    monthlyBudget: parseFloat(values.monthlyBudget), // Convert string to number
+    monthlyBudget: parseFloat(values.monthlyBudget), 
   };
 
   try {
+    console.log("trasformd",transformedValues);
     // Send the transformed values to the API
     await addLificicle(transformedValues).unwrap();
 
-        // Dispatching the completed flag as part of the payload
         dispatch(saveLifeCicleData(true));
     router.push("/mytop");
       } catch (err) {

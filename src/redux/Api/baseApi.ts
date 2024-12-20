@@ -5,12 +5,12 @@ import Cookies from 'js-cookie'; // Import js-cookie
 export const baseApi = createApi({
     reducerPath: 'baseApi', // The key for this API in the Redux store
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://nmbull.vercel.app/api/v1', // Replace with your API's base URL
+        baseUrl: 'https://nmbull.vercel.app/api/v1', 
         prepareHeaders: (headers) => {
-            const token = Cookies.get("token"); // Retrieve the token from cookies
-            console.log("Prepare Headers Called"); // Log when prepareHeaders is called
+            const token = Cookies.get("token"); 
+            console.log("Prepare Headers Called"); 
             if (token) {
-                console.log("Authorization header set with token:", token); // Log token
+                console.log("Authorization header set with token:", token); 
                 headers.set('Authorization', `${token}`);
             } else {
                 console.log("No token found");
@@ -19,7 +19,7 @@ export const baseApi = createApi({
         },
     }),
     endpoints: () => ({}),
-    tagTypes: ["logIn"],
+    tagTypes: ["logIn","membership"],
 });
 
 // Export hooks for usage in functional components

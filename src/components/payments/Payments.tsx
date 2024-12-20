@@ -1,91 +1,171 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
-import VisaCardIcon from '../icon/VisaCardIcon'
-import { CreditCard } from 'lucide-react'
-import BankCardIcon from '../icon/BankCardIcon'
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import VisaCardIcon from "../icon/VisaCardIcon";
+import { CreditCard } from "lucide-react";
+import BankCardIcon from "../icon/BankCardIcon";
+import { useCreatePaymentMethodMutation } from "@/redux/Api/stripeApi";
+import {  useSubscriptionPlanMutation } from "@/redux/Api/membershipApi";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import logoPayments from '@/assets/stripePayments.png'
+
+
+const paymentSchema = z.object({
+  number: z.string().min(15, "Card number must be 15 digits.").max(16, "Card number must be 16 digits."),
+  exp_month: z.string().min(2, "Month must be 2 digits.").max(2, "Month must be 2 digits."),
+  exp_year: z.string().min(4, "Year must be 2 digits.").max(4, "Year must be 2 digits."),
+  cvc: z.string().min(3, "CVC must be 3 digits.").max(3, "CVC must be 3 digits."),
+  type: z.string().min(1, "Card type is required."),
+});
 
 interface PaymentFormProps {
-  amount: number
-  isOpen: boolean
-  onClose: () => void
+  amount: number;
+  priceId: string;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export default function Payments({ amount, isOpen, onClose }: PaymentFormProps) {
+export default function Payments({ amount, priceId, isOpen, onClose }: PaymentFormProps) {
+    const router = useRouter();
+  const loginEmail = useSelector((state: RootState) => state.Auth);
+  
+  const [getPayId, { isLoading }] = useCreatePaymentMethodMutation();
+  const [subscription] = useSubscriptionPlanMutation();
+  const [paymentMethodId, setPaymentMethodId] = useState<string | null>(null);
+
+  
+  const form = useForm<z.infer<typeof paymentSchema>>({
+    resolver: zodResolver(paymentSchema),
+    defaultValues: {
+      number: "",
+      exp_month: "",
+      exp_year: "",
+      cvc: "",
+      type: "",
+    },
+  });
+ 
+
+  // State for loading and messages
+  const [loadingMessage, setLoadingMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const onSubmit = async (values: z.infer<typeof paymentSchema>) => {
+    const formData = new FormData();
+    formData.append("card[number]", values.number);
+    formData.append("card[exp_month]", values.exp_month);
+    formData.append("card[exp_year]", values.exp_year);
+    formData.append("card[cvc]", values.cvc);
+    formData.append("type", values.type);
+  
+    try {
+      setLoadingMessage("Processing payment...");
+      const response = await getPayId(formData).unwrap();
+  
+      const methodId = response.id; // Ensure this is the correct IDc
+  
+      // Check if paymentMethodId is valid
+      if (!methodId) {
+        setErrorMessage("Payment method ID is missing.");
+        setLoadingMessage(null);
+        return;
+      }
+  
+      setPaymentMethodId(paymentMethodId); // Store the payment method ID
+  
+      // Proceed with subscription
+      setLoadingMessage("Processing subscription...");
+      const subscriptionResponse = await subscription({
+        email: loginEmail.email,
+        priceId,
+        methodId,
+      }).unwrap();
+  
+      setSuccessMessage("Subscription successful!");
+      setLoadingMessage(null);
+      router.push("/basic");
+    } catch (err) {
+      setErrorMessage("Payment failed. Please try again.");
+      setLoadingMessage(null);
+      console.error("Payment error:", err);
+    }
+  };
+  
+
+ 
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[500px]">
         <div className="flex justify-center mb-6">
           <Image
-            src="/placeholder.svg"
+            src={logoPayments}
             alt="Expat Global Girls Logo"
             width={150}
             height={60}
             className="h-auto"
           />
         </div>
-        <Card>
-          <CardHeader>
-            <h2 className="text-2xl font-semibold">Payment Method</h2>
-          </CardHeader>
-          <CardContent>
-            <form className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Card Information</label>
-                <div className="relative">
-                  <Input 
-                    type="text" 
-                    placeholder="4242 4242 4242 4242"
-                    className="pr-12"
-                  />
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1">
-          <VisaCardIcon/>
-          <CreditCard/>
-          <BankCardIcon/>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <Input type="text" placeholder="MM/YY" />
-                  <Input type="text" placeholder="CVC" />
-                </div>
-              </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Name On Card</label>
-                <Input type="text" placeholder="Full name on card" />
-              </div>
+        {/* Display messages */}
+        {loadingMessage && <div className="text-center text-blue-600">{loadingMessage}</div>}
+        {successMessage && <div className="text-center text-green-600">{successMessage}</div>}
+        {errorMessage && <div className="text-center text-red-600">{errorMessage}</div>}
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Country or region</label>
-                <Select defaultValue="us">
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select country" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="us">United States</SelectItem>
-                    <SelectItem value="ca">Canada</SelectItem>
-                    <SelectItem value="uk">United Kingdom</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Input type="text" placeholder="ZIP" className="max-w-[8rem]" />
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <div>
+            <label className="text-sm font-medium">Card Information</label>
+            <div className="relative">
+              <Input
+                {...form.register("number")}
+                placeholder="4242 4242 4242 4242"
+                className="pr-12"
+              />
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1">
+                <VisaCardIcon />
+                <CreditCard />
+                <BankCardIcon />
               </div>
-
-              <Button 
-                type="submit" 
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                Pay ${amount.toFixed(2)}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <Input {...form.register("exp_month")} placeholder="MM" />
+            <Input {...form.register("exp_year")} placeholder="YY" />
+            <Input {...form.register("cvc")} placeholder="CVC" />
+          </div>
+          <div>
+            <label className="text-sm font-medium">Type</label>
+            <Select
+              onValueChange={(value) => form.setValue("type", value)}
+              defaultValue={form.getValues("type")}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="card">Card</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Button
+            type="submit"
+            className="w-full bg-[#0872BA] text-white rounded-[8px]"
+            disabled={isLoading}
+          >
+            {isLoading ? "Processing..." : `Pay $${amount.toFixed(2)}`}
+          </Button>
+        </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
-
