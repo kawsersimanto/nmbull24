@@ -24,10 +24,10 @@ export default function Footer() {
           <Link href="/careers" className="hover:text-gray-800">
             Careers
           </Link>
-          <Link href="/terms" className="hover:text-gray-800">
+          <Link href="/privacy-policy" className="hover:text-gray-800">
             Terms & Conditions
           </Link>
-          <Link href="/privacy" className="hover:text-gray-800">
+          <Link href="/privacy-policy" className="hover:text-gray-800">
             Privacy Policy
           </Link>
         </nav>

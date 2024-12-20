@@ -8,13 +8,32 @@ import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store"; // Assuming this is the path to your store
 import Profile from "@/components/profile/Profile";
+import { useEffect, useState } from "react";
 
 const HomeNavbar = () => {
   const path = usePathname();
   const isBlack = path.startsWith('/basic');
+  const [isScrolled, setIsScrolled] = useState(false);
   
   // Get the user data from Redux store
   const user = useSelector((state: RootState) => state.Auth);
+
+  useEffect(() => {
+    const handleScroll = () => {
+        // Check if user has scrolled past the banner (100vh)
+        if (window.scrollY >= 100 ) {
+            setIsScrolled(true);
+        } else {
+            setIsScrolled(false);
+        }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+        window.removeEventListener("scroll", handleScroll);
+    };
+}, []);
 
   
   return (
@@ -36,7 +55,10 @@ const HomeNavbar = () => {
                     href={item.href}
                     className={`font-medium transition-colors duration-300 ${isBlack ? "text-gray-700" : "text-white"}  hover:text-primary`}
                   >
+                    <span className={`${isScrolled ? "text-black" : "text-white" }`}> 
+
                     {item.label}
+                    </span>
                   </Link>
                 </li>
               ))}
