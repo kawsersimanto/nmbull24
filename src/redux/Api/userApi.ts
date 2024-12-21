@@ -63,9 +63,31 @@ const userApi = baseApi.injectEndpoints({
                 }
             },
             
-        })
+        }),
+        allUser: build.query({
+            query: (data:any) => {
+                return {
+                    url: "/users",
+                    method: "GET",
+                   
+                }
+            },
+            
+        }),
+        getUser: build.query({
+            query: (data:any) => {
+                return {
+                    url: "/auth/profile",
+                    method: "GET",
+                   
+                }
+            },
+            
+        }),
+       
+        
     }),
 })
 
 
-export const { useLoginUserMutation,useRegisterUserMutation,useForgotUserMutation,useOtpUserMutation,useResetPassMutation,useUpdateByUserMutation } = userApi
+export const { useLoginUserMutation,useRegisterUserMutation,useForgotUserMutation,useOtpUserMutation,useResetPassMutation,useUpdateByUserMutation,useAllUserQuery,useGetUserQuery } = userApi

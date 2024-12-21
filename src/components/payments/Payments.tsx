@@ -21,11 +21,11 @@ import logoPayments from '@/assets/stripePayments.png'
 
 
 const paymentSchema = z.object({
-  number: z.string().min(15, "Card number must be 15 digits.").max(16, "Card number must be 16 digits."),
-  exp_month: z.string().min(2, "Month must be 2 digits.").max(2, "Month must be 2 digits."),
-  exp_year: z.string().min(4, "Year must be 2 digits.").max(4, "Year must be 2 digits."),
-  cvc: z.string().min(3, "CVC must be 3 digits.").max(3, "CVC must be 3 digits."),
-  type: z.string().min(1, "Card type is required."),
+  number: z.string(),
+  exp_month: z.string(),
+  exp_year: z.string(),
+  cvc: z.string(),
+  type: z.string(),
 });
 
 interface PaymentFormProps {
@@ -82,6 +82,7 @@ export default function Payments({ amount, priceId, isOpen, onClose }: PaymentFo
       }
   
       setPaymentMethodId(paymentMethodId); // Store the payment method ID
+      console.log(methodId);
   
       // Proceed with subscription
       setLoadingMessage("Processing subscription...");

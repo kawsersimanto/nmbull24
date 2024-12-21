@@ -13,6 +13,16 @@ const userApi = baseApi.injectEndpoints({
             
            
         }),
+        getMyTop: build.query({
+            query: () => {
+                return {
+                    url: "selection/get-my",
+                    method: "GET",
+                }
+            },
+            
+           
+        }),
       
 
         
@@ -20,4 +30,4 @@ const userApi = baseApi.injectEndpoints({
 })
 
 
-export const { useMytopAddMutation } = userApi
+export const { useMytopAddMutation,useGetMyTopQuery } = userApi

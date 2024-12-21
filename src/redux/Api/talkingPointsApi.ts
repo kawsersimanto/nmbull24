@@ -1,11 +1,12 @@
+import { talkingPointsData } from "@/constants/talkingPointsData";
 import baseApi from "./baseApi";
 
 const userApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        lifeCicleAdd: build.mutation({
+        talkingPoints: build.mutation({
             query: (data: any) => {
                 return {
-                    url: "/lifestyle/create",
+                    url: "/takingPoint/create",
                     method: "POST",
                     body: data
                 }
@@ -13,12 +14,12 @@ const userApi = baseApi.injectEndpoints({
             
            
         }),
-        lifStyleMy: build.query({
+        getTalkingPoints: build.query({
             query: () => {
                 return {
-                    url: "/lifestyle/my-lifestyle",
+                    url: "/takingPoint/get-my-taking",
                     method: "GET",
-            
+              
                 }
             },
             
@@ -31,4 +32,4 @@ const userApi = baseApi.injectEndpoints({
 })
 
 
-export const { useLifeCicleAddMutation,useLifStyleMyQuery } = userApi
+export const { useTalkingPointsMutation,useGetTalkingPointsQuery } = userApi

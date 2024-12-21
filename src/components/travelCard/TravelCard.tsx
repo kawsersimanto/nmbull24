@@ -4,32 +4,29 @@ import Image from 'next/image';
 import { Button } from '../ui/button';
 import { Heart } from 'lucide-react';
 
+
 interface TravelCardProps {
-  id: string;
-  name: string;
-  age: number;
-  travelType: string;
-  travelDate: string;
-  destination: string;
-  imageUrl: string;
+  result: {
+    id: string;
+    firstName: string;
+    age: number;
+    country: string;
+    travelDate: string;
+    destination: string;
+    profileImage: string;
+  };
 }
 
-const TravelCard: React.FC<TravelCardProps> = ({
-  id,
-  name,
-  age,
-  travelType,
-  travelDate,
-  destination,
-  imageUrl,
-}) => {
+const TravelCard: React.FC<TravelCardProps> = ({ result }) => {
+  const { id, firstName, age, destination, profileImage } = result;
+
   return (
     <Card key={id} className="overflow-hidden shadow-lg rounded-lg">
       <CardContent className="p-4">
         <div className="relative">
           <Image
-            src={imageUrl}
-            alt={name}
+            src={profileImage}
+            alt={firstName}
             width={355.994}
             height={263.971}
             className="object-cover rounded-md w-full h-[200px] sm:h-[250px] lg:h-[263px]"
@@ -44,22 +41,12 @@ const TravelCard: React.FC<TravelCardProps> = ({
         </div>
         <div className="mt-5">
           <div className="flex flex-col sm:flex-row sm:items-center mb-4 justify-between">
-            <h3 className="font-semibold text-lg sm:text-xl">{name}</h3>
+            <h3 className="font-semibold text-lg sm:text-xl">{firstName}</h3>
             <span className="text-sm text-gray-600 mt-2 sm:mt-0">
               Age: {age}y
             </span>
           </div>
-          <div className="space-y-2 text-sm text-gray-600">
-            <p>
-              <span className="font-medium">Travel type:</span> {travelType}
-            </p>
-            <p>
-              <span className="font-medium">Travel date:</span> {travelDate}
-            </p>
-            <p>
-              <span className="font-medium">Destination:</span> {destination}
-            </p>
-          </div>
+          <div className="space-y-2 text-sm text-gray-600"></div>
           <Button
             variant="ghost"
             className="w-full mt-6 sm:mt-8 border border-solid border-[#0872BA] justify-center text-[#0872BA] hover:text-blue-700 text-[15.011px] font-medium"

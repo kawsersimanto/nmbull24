@@ -1,11 +1,51 @@
+"use client"
+import { useGetMyTopQuery } from '@/redux/Api/myTopApi';
 import React from 'react'
-import { categories } from "@/constants/categories";
 
+// Define types for the API response
+interface MyTopData {
+  personality: string[];
+  philosophies: string[];
+  goals: string[];
+  hobbies: string[];
+  socialGroups: string[];
+  foodieFan: string[];
+  musicTastes: string[];
+}
 
+// Define the type for the categories
+interface Category {
+  title: string;
+  items: string[];
+}
+
+// The MyTopView component
 export const MyTopView = () => {
+  // Destructure the hook result to get the data, isLoading, and isError
+  const { data, isLoading, isError } = useGetMyTopQuery(undefined);
+  
+  // Check if data exists and access the first item in the array
+  const myTopData = data?.data?.[0]; // Make sure to access `data` and then the first item in the array
+  console.log('API Response:', data);
+
+  // Array of categories and their respective items
+  const categories: Category[] = [
+    { title: "Personality", items: myTopData?.personality || [] },
+    { title: "Philosophies", items: myTopData?.philosophies || [] },
+    { title: "Goals", items: myTopData?.goals || [] },
+    { title: "Hobbies", items: myTopData?.hobbies || [] },
+    { title: "Social Groups", items: myTopData?.socialGroups || [] },
+    { title: "Foodie Fan", items: myTopData?.foodieFan || [] },
+    { title: "Music Tastes", items: myTopData?.musicTastes || [] }
+  ];
+
+  // If loading or error, you can handle these cases
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading data.</div>;
+
   return (
     <div>
-        <section>
+      <section>
         <div className="mt-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-6 text-center md:text-left">
             My Top 3&apos;s
@@ -35,5 +75,5 @@ export const MyTopView = () => {
         </div>
       </section>
     </div>
-  )
+  );
 }
