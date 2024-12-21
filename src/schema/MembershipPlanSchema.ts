@@ -2,17 +2,15 @@ import * as z from "zod";
 
 // Define schema for the MembershipPlan based on the interface
 export const membershipSchema = z.object({
-  id: z.string().uuid("Invalid ID format"), // Ensure the ID is a valid UUID
-  amount: z.string(), // Ensure amount is a positive number
-  name: z.string().nonempty("Title is required"), // Title is required
-  priceId: z.string().optional(), // Optional field
-  productId: z.string().optional(), // Optional field
-  list: z
+  id: z.string().optional(),
+  amount: z.number(),
+  name: z.string().nonempty("Title is required"),
+  features: z
     .array(z.object({ title: z.string().nonempty("Feature cannot be empty") }))
     .min(1, "At least one feature is required"), // List should contain at least one feature
   description: z.string().optional(), // Optional field
   currency: z.string().optional(), // Optional field
-  interval: z.enum(["monthly", "yearly", "lifetime"], {
+  billingInterval: z.enum(["month", "year", "lifetime"], {
     errorMap: () => ({
       message: "Billing interval must be 'monthly', 'yearly', or 'lifetime'",
     }),

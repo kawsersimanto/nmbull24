@@ -6,7 +6,7 @@ import { Member } from "@/types/Member";
 import Image from "next/image";
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa6";
-import { LiaTrashAltSolid } from "react-icons/lia";
+import { LiaEyeSlash, LiaTrashAltSolid } from "react-icons/lia";
 import { MdOutlineDone } from "react-icons/md";
 import ViewMemberDialog from "../Dialogs/ViewMemberDialog";
 import DeleteMemberDialog from "../Dialogs/DeleteMemberDialog";
@@ -23,6 +23,7 @@ import {
   useDeleteMemberMutation,
 } from "@/redux/Api/memberApi";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 interface props {
   member: Member;
@@ -51,6 +52,7 @@ const MemberTableRow = ({ member }: props) => {
   const handleVerifyMember = async () => {
     try {
       const res = await updateSummit(member).unwrap();
+      toast.success("Verified");
     } catch (error) {
       console.log(error);
     } finally {
@@ -66,6 +68,8 @@ const MemberTableRow = ({ member }: props) => {
     } finally {
     }
   };
+
+  
 
   return (
     <>
@@ -87,7 +91,10 @@ const MemberTableRow = ({ member }: props) => {
                 </span>
               </p>
               <p className="md:text-[16px]  text-[#263238] my-[12px] font-medium">
-                Country: <span className="font-light">{member.country}</span>
+                Country:{" "}
+                <span className="font-light">
+                  {member.country ? member.country : "No data"}
+                </span>
               </p>
               <div className="flex items-center gap-2 text-sm flex-shrink-0">
                 <div className="flex items-center gap-2">
@@ -128,7 +135,7 @@ const MemberTableRow = ({ member }: props) => {
                     </defs>
                   </svg>
                   <p className="font-sans font-[16px] text-secondery">
-                    {member.age}
+                    {member.age ? member.age : "No data"}
                   </p>
                 </div>
                 <div className="flex flex-shrink-0 items-center gap-2 ">
@@ -166,7 +173,7 @@ const MemberTableRow = ({ member }: props) => {
                     </defs>
                   </svg>
                   <p className="font-sans font-[16px] text-secondery">
-                    {member.state}
+                    {member.state ? member.state : "No data"}
                   </p>
                 </div>
               </div>
@@ -176,7 +183,10 @@ const MemberTableRow = ({ member }: props) => {
 
         <TableCell className="flex-1 shrink-0 min-w-[180px]">
           <p className="text-[16px] text-[#263238]  font-medium">
-            Membership: <span className="font-light">{member.planName}</span>
+            Membership:{" "}
+            <span className="font-light">
+              {member.planName ? member.planName : "No data"}
+            </span>
           </p>
           <p className="text-[16px] text-[#263238] mt-[12px] font-medium">
             Acooumendation: <span className="font-light">standard</span>
@@ -185,53 +195,70 @@ const MemberTableRow = ({ member }: props) => {
 
         <TableCell className="flex-1 mt-[12px] flex-shrink-0 gap-2  min-w-[200px] text-wrap">
           <p>Exodus summit member?</p>
-          <p className="font-light mt-[12px]">{member.summitMember}</p>
+          <p className="font-light mt-[12px]">
+            {member.summitMember ? member.summitMember : "No data"}
+          </p>
         </TableCell>
         <TableCell className="flex flex-shrink-0 gap-2 justify-end flex-1 min-w-[250px]">
           <button
             onClick={handleVerifyMember}
-            className={`bg-[rgba(0,229,8,0.32)] border rounded px-3 py-[6px]`}
+            disabled={isUpdatingSummit || member.summitVerify}
+            className={`bg-[rgba(0,229,8,0.32)] border rounded px-3 py-[6px] disabled:bg-[rgba(0,229,8,0.20)] cursor-not-allowed`}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="17"
-              height="16"
-              viewBox="0 0 17 16"
-              fill="none"
-            >
-              <path
-                d="M14.7148 4.35156L6.36328 12.7109L2.01172 8.35156L2.71484 7.64844L6.36328 11.2891L14.0117 3.64844L14.7148 4.35156Z"
-                fill="black"
-              />
-            </svg>
+            {isUpdatingSummit ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="16"
+                viewBox="0 0 17 16"
+                fill="none"
+              >
+                <path
+                  d="M14.7148 4.35156L6.36328 12.7109L2.01172 8.35156L2.71484 7.64844L6.36328 11.2891L14.0117 3.64844L14.7148 4.35156Z"
+                  fill="black"
+                />
+              </svg>
+            )}
           </button>
 
           <button
             className=" border rounded px-3 py-[6px]"
             onClick={hideUnhideMember}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="17"
-              height="16"
-              viewBox="0 0 17 16"
-              fill="none"
-            >
-              <path
-                d="M1.73698 8.23224C1.68142 8.08256 1.68142 7.91792 1.73698 7.76824C2.27812 6.45614 3.19666 5.33427 4.37616 4.54484C5.55567 3.75541 6.94301 3.33398 8.36232 3.33398C9.78162 3.33398 11.169 3.75541 12.3485 4.54484C13.528 5.33427 14.4465 6.45614 14.9876 7.76824C15.0432 7.91792 15.0432 8.08256 14.9876 8.23224C14.4465 9.54434 13.528 10.6662 12.3485 11.4556C11.169 12.2451 9.78162 12.6665 8.36232 12.6665C6.94301 12.6665 5.55567 12.2451 4.37616 11.4556C3.19666 10.6662 2.27812 9.54434 1.73698 8.23224Z"
-                stroke="#344054"
-                strokeWidth="1.3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M8.36328 10C9.46785 10 10.3633 9.10457 10.3633 8C10.3633 6.89543 9.46785 6 8.36328 6C7.25871 6 6.36328 6.89543 6.36328 8C6.36328 9.10457 7.25871 10 8.36328 10Z"
-                stroke="#344054"
-                strokeWidth="1.3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            {isHideUnhiding ? (
+              <div className="flex gap-2 items-center">
+                <Loader2 className="animate-spin" />
+              </div>
+            ) : (
+                member.status ? (
+                <LiaEyeSlash/>
+                ): (
+                  <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="16"
+                viewBox="0 0 17 16"
+                fill="none"
+              >
+                <path
+                  d="M1.73698 8.23224C1.68142 8.08256 1.68142 7.91792 1.73698 7.76824C2.27812 6.45614 3.19666 5.33427 4.37616 4.54484C5.55567 3.75541 6.94301 3.33398 8.36232 3.33398C9.78162 3.33398 11.169 3.75541 12.3485 4.54484C13.528 5.33427 14.4465 6.45614 14.9876 7.76824C15.0432 7.91792 15.0432 8.08256 14.9876 8.23224C14.4465 9.54434 13.528 10.6662 12.3485 11.4556C11.169 12.2451 9.78162 12.6665 8.36232 12.6665C6.94301 12.6665 5.55567 12.2451 4.37616 11.4556C3.19666 10.6662 2.27812 9.54434 1.73698 8.23224Z"
+                  stroke="#344054"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M8.36328 10C9.46785 10 10.3633 9.10457 10.3633 8C10.3633 6.89543 9.46785 6 8.36328 6C7.25871 6 6.36328 6.89543 6.36328 8C6.36328 9.10457 7.25871 10 8.36328 10Z"
+                  stroke="#344054"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+                )
+            )}
           </button>
 
           <button
@@ -239,7 +266,7 @@ const MemberTableRow = ({ member }: props) => {
             className="border rounded px-3 py-[6px]"
           >
             {isDeleting ? (
-              <div>Deleting ....</div>
+              <Loader2 />
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"

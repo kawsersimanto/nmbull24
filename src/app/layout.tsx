@@ -38,14 +38,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} ${outfit.variable}`}>
+      <body className={`${montserrat.variable} ${outfit.variable} ${inter.variable}`}>
        <ReduxProvider>
           {
             children
             
           }
         </ReduxProvider>
-        <Toaster position="top-right" />
+        <Toaster  />
       </body>
     </html>
   );

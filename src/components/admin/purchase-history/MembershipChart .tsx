@@ -16,27 +16,6 @@ import { useEffect, useState } from "react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-// Dummy data for "This month" and "Last month"
-const dataThisMonth = {
-  labels: ["Business membership", "Standard membership"],
-  datasets: [
-    {
-      data: [2, 31], // Data for this month
-      backgroundColor: ["#2563eb", "#f97316"],
-    },
-  ],
-};
-
-const dataLastMonth = {
-  labels: ["Business membership", "Standard membership"],
-  datasets: [
-    {
-      data: [4, 28], // Data for last month
-      backgroundColor: ["#2563eb", "#f97316"],
-    },
-  ],
-};
-
 const options = {
   plugins: {
     legend: {
@@ -46,9 +25,7 @@ const options = {
 };
 
 const MembershipChart = () => {
-  const [selectedPeriod, setSelectedPeriod] = useState("this-month");
-  const [chartData, setChartData] = useState(dataThisMonth); // Default to "this-month"
-
+  const [chartData, setChartData] = useState<any>(null); // Chart data state
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1024px)" });
 
   const responsiveOptions = {
@@ -57,37 +34,75 @@ const MembershipChart = () => {
     aspectRatio: isTabletOrMobile ? 1 : 2,
   };
 
-  // Update the chart data based on the selected period
-  useEffect(() => {
-    if (selectedPeriod === "this-month") {
-      setChartData(dataThisMonth);
-    } else if (selectedPeriod === "last-month") {
-      setChartData(dataLastMonth);
+  const year = new Date().getFullYear();
+
+  const fetchData = async () => {
+    try {
+      // Fetch data from the API
+      const response = await fetch(
+        `https://nmbull.vercel.app/api/v1/payment/membership?year=${year}`
+      );
+      if (!response.ok) {
+        throw new Error(`API request failed with status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+
+      // Transform API response data into chart-compatible data
+      const labels = responseData.data.map(
+        (item: any) => item.subscriptionPlane
+      );
+      const counts = responseData.data.map((item: any) => item.count);
+
+      // Define static colors for the chart
+      const backgroundColors = [
+        "#2563eb", // Blue
+        "#f97316", // Orange
+        "#34d399", // Green
+        "#facc15", // Yellow
+        "#ec4899", // Pink
+        "#8b5cf6", // Purple
+      ];
+
+      // Prepare the chart data
+      const formattedChartData = {
+        labels,
+        datasets: [
+          {
+            data: counts,
+            backgroundColor: backgroundColors.slice(0, counts.length),
+          },
+        ],
+      };
+
+      setChartData(formattedChartData);
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
     }
-  }, [selectedPeriod]);
+  };
+
+  useEffect(() => {
+    // Fetch data when the component mounts
+    fetchData();
+  }, []);
 
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between flex-shrink-0 overflow-hidden">
         <CardTitle className="md:text-[18px] font-semibold text-sm">
-          Order review status
+          Membership Statistics
         </CardTitle>
-        <Select defaultValue="this-month" onValueChange={setSelectedPeriod}>
-          <SelectTrigger className="md:w-[131px] w-[70px] !p-[8px] text-[12px] ">
-            <SelectValue placeholder="Select period" />
-          </SelectTrigger>
-          <SelectContent className="text-[12px]">
-            <SelectItem value="this-month">This month</SelectItem>
-            <SelectItem value="last-month">Last month</SelectItem>
-          </SelectContent>
-        </Select>
       </CardHeader>
       <CardContent className="flex items-center justify-center">
-        <Doughnut
-          className="md:min-h-[200px] h-[200px] sm:w-auto !w-full"
-          data={chartData}
-          options={responsiveOptions}
-        />
+        {chartData ? (
+          <Doughnut
+            className="md:min-h-[200px] h-[200px] sm:w-auto !w-full"
+            data={chartData}
+            options={responsiveOptions}
+          />
+        ) : (
+          <p>Loading...</p>
+        )}
       </CardContent>
     </Card>
   );

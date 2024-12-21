@@ -26,8 +26,9 @@ import {
 import { SlRefresh } from "react-icons/sl";
 import { LiaFilterSolid, LiaSearchSolid } from "react-icons/lia";
 import SearchBox from "../FilterHomeData/SearchBox";
-import { transactions } from "@/constants/transsactions";
+// import { transactions } from "@/constants/transsactions";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { useAllTransactionQuery } from "@/redux/Api/transactionApi";
 
 const PaymentTable = () => {
   const [searchBoxOpen, setSearchBoxOpen] = React.useState<boolean>(false);
@@ -36,7 +37,39 @@ const PaymentTable = () => {
   // Pagination state
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = React.useState<number>(3);
+  // Destructuring correctly from the query result
+  const {
+    data: allTransaction,
+    isLoading: transactionLoading,
+    error: transactionError,
+  } = useAllTransactionQuery(undefined);
+  const {
+    data: thisDayTransaction,
+    isLoading: thisDayTransactionLoading,
+    error: thisDayTransactionError,
+  } = useAllTransactionQuery(undefined);
+  const {
+    data: totalRevinue,
+    isLoading: totalRevinueLoading,
+    error: totalRevinueError,
+  } = useAllTransactionQuery(undefined);
+  const {
+    data: totalMember,
+    isLoading: totalMemberLoading,
+    error: totalMemberError,
+  } = useAllTransactionQuery(undefined);
 
+  // Optionally handle loading state or errors
+  if (
+    transactionLoading ||
+    thisDayTransactionLoading ||
+    totalRevinueLoading ||
+    totalMemberLoading
+  ) {
+    return <div>Loading...</div>;
+  }
+
+  console.log(allTransaction);
   // Handle changing items per page
   const handleItemsPerPageChange = (value: string) => {
     setItemsPerPage(Number(value));
@@ -44,12 +77,12 @@ const PaymentTable = () => {
   };
 
   // Filtered Transactions based on Search Query
-  const filteredTransactions = transactions.filter(
-    (t) =>
-      t.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.customerEmail.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  const filteredTransactions = allTransaction?.data.filter(
+    (t:Transaction) =>
+      t.tranId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t.userEmail.toLowerCase().includes(searchQuery.toLowerCase()) ||
       t.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.membership.toLowerCase().includes(searchQuery.toLowerCase())
+      t.subscriptionPlane.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Pagination Logic
@@ -162,11 +195,11 @@ const PaymentTable = () => {
           </TableHeader>
           <TableBody>
             {paginatedData.length > 0 ? (
-              paginatedData.map((transaction) => (
+              paginatedData?.map((transaction: Transaction) => (
                 <TableRow key={transaction.id}>
                   <TableCell>{formatDate(transaction.date)}</TableCell>
-                  <TableCell>{transaction.id}</TableCell>
-                  <TableCell>{transaction.membership}</TableCell>
+                  <TableCell>{transaction.tranId}</TableCell>
+                  <TableCell>{transaction.subscriptionPlane}</TableCell>
                   <TableCell>{formatCurrency(transaction.amount)}</TableCell>
                   <TableCell>
                     <Button

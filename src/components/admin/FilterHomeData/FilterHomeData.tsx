@@ -52,6 +52,7 @@ const FilterHomeData: React.FC = () => {
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     setCurrentPage(1);
+    setSearchBoxOpen(false);
   };
 
   const handleFilters = (filters: {
@@ -103,7 +104,7 @@ const FilterHomeData: React.FC = () => {
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
-  );
+  )
 
   const handleItemsPerPageChange = (value: string) => {
     setItemsPerPage(Number(value));

@@ -25,12 +25,11 @@ export function generatePDF(data: ReceiptData): string {
   doc.text(`Transaction ID: ${transaction.id}`, 20, y);
   y += 10;
   doc.text(`Date: ${formatDate(transaction.date)}`, 20, y);
+
   y += 10;
-  doc.text(`Customer: ${transaction.customerName}`, 20, y);
+  doc.text(`Email: ${transaction.userEmail}`, 20, y);
   y += 10;
-  doc.text(`Email: ${transaction.customerEmail}`, 20, y);
-  y += 10;
-  doc.text(`Membership: ${transaction.membership}`, 20, y);
+  doc.text(`Membership: ${transaction.subscriptionPlane}`, 20, y);
   y += 10;
   doc.text(`Amount: ${formatCurrency(transaction.amount)}`, 20, y);
 

@@ -5,10 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { SideDrawer } from "../side-drawer/SideDrawer";
 import { usePathname } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store"; // Assuming this is the path to your store
+import Profile from "@/components/profile/Profile";
 
 const HomeNavbar = () => {
-  const path=usePathname()
-  const isBlack = path.startsWith('/basic') ;
+  const path = usePathname();
+  const isBlack = path.startsWith('/basic');
+  
+  // Get the user data from Redux store
+  const user = useSelector((state: RootState) => state.Auth);
+
+  
   return (
     <div className="fixed top-6 left-0 right-0 z-[999]">
       <div className="container">
@@ -35,12 +43,19 @@ const HomeNavbar = () => {
             </ul>
             <div className="flex items-center gap-3">
               <SideDrawer className="lg:hidden" />
-              <Link
-                href="/login"
-                className="bg-white py-[10px] lg:px-6 px-4 rounded-xl lg:font-semibold font-medium text-primary"
-              >
-                Log in
-              </Link>
+              
+              {/* Show Profile if logged in, otherwise show Login */}
+              {user?.token ? (
+            <Profile/>
+               
+              ) : (
+                <Link
+                  href="/login"
+                  className="bg-white py-[10px] lg:px-6 px-4 rounded-xl lg:font-semibold font-medium text-primary"
+                >
+                  Log in
+                </Link>
+              )}
             </div>
           </div>
         </div>

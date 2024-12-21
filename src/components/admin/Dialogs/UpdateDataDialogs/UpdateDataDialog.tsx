@@ -2,21 +2,29 @@
 
 import React, { useState } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { MdOutlineDone } from "react-icons/md";
 import { Input } from "@/components/ui/input";
-import { LiaPlusSolid, LiaTimesSolid } from "react-icons/lia";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import { MembershipPlanType } from "@/types/MembershipPlanType";
-import { membershipSchema } from "@/schema/MembershipPlanSchema";
+import { LiaPlusSolid, LiaTimesSolid } from "react-icons/lia";
+import { Loader2, X } from "lucide-react";
+
+import {
+  MembershipPlanType,
+  membershipSchema,
+} from "@/schema/MembershipPlanSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { useUpdatePlanMutation } from "@/redux/Api/membershipPlansApi";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface UpdateDataDialogProps {
   isOpen: boolean;
@@ -38,69 +46,79 @@ const UpdateDataDialog = ({
     formState: { errors },
   } = useForm<MembershipPlanType>({
     defaultValues: initialData,
-    resolver: zodResolver(membershipSchema),
+    // resolver: zodResolver(membershipSchema),
   });
 
-  // Use the list from initialData for features (list is an array of objects with a title)
-  const [features, setFeatures] = useState<{ title: string }[]>(
-    initialData.list || []
-  );
-  const [showFeatureInput, setShowFeatureInput] = useState<boolean>(false);
+  const [
+    updateNewPlan,
+    { isLoading: isCreating, isError: createError, error: createErrorDetails },
+  ] = useUpdatePlanMutation();
 
-  const handleAddFeature = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const [plans, setPlans] = useState(initialData);
+  const [features, setFeatures] = useState(initialData.features);
+  const [show, setShow] = useState(false);
+
+  const handleAddFeatures = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     const inputElement = document.getElementById(
       "featureInput"
     ) as HTMLInputElement | null;
 
     if (inputElement) {
-      const featureValue = inputElement.value.trim();
-      if (featureValue.length < 5) {
-        toast.error("Feature must be at least 5 characters long.");
-        return;
+      const data = inputElement.value;
+      if (data.length <= 5) {
+        return toast.error("At least 5 characters");
       }
-      // Add the new feature as an object with the 'title' property
-      setFeatures((prev) => [...prev, { title: featureValue }]);
+      setFeatures([{ title: data }, ...features]);
       inputElement.value = "";
-      toast.success("Feature added!");
     }
   };
 
-  const handleRemoveFeature = (feature: { title: string }) => {
-    setFeatures((prev) => prev.filter((f) => f.title !== feature.title));
+  const handleRemoveFeature = (feature: { title: string }, idx: number) => {
+    setFeatures((prev) => prev.filter((_, i) => i !== idx));
     toast.success("Feature removed!");
   };
 
-  const handleShowFeatureInput = () => {
-    setShowFeatureInput(true);
+  const handleShow = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    setShow(true);
   };
 
-  const onSubmitHandler: SubmitHandler<MembershipPlanType> = (data) => {
-    // Include the updated features in the data to be submitted
-    const updatedData = {
+  const onsubmit: SubmitHandler<MembershipPlanType> = async (data) => {
+    const mPandata = {
       ...data,
-      list: features,
+      amount: Number(data.amount), // Convert amount to a number if needed
+      features: features, // Pass the updated features
+      id: initialData.id, // Make sure to include the id
+      interval: initialData.billingInterval || "monthly", // Keep the interval
     };
 
-    console.log("Updated Data:", updatedData);
-    onSubmit(updatedData); // Pass the updated data to onSubmit
-    onClose();
+    console.log("Updated Membership Plan Data:", mPandata);
+
+    try {
+      const response = await updateNewPlan(mPandata).unwrap(); // .unwrap() to handle response properly
+      toast.success("Updated successfully!");
+      onClose(); // Close the modal
+      onSubmit(mPandata); // Inform parent component about the update
+    } catch (error) {
+      toast.error("Failed to update membership plan.");
+      console.error("Error updating plan: ", error);
+    }
   };
 
   return (
     <Dialog open={isOpen}>
-      <DialogContent>
-        <div
-          onClick={onClose}
-          className="absolute top-8 right-3 cursor-pointer text-[#0076ef] font-bold"
-        >
-          <X size={24} />
+      <DialogContent className="overflow-y-auto max-h-[90vh]">
+        <div className="absolute top-3 right-3" onClick={onClose}>
+          <X className="h-4 w-4 cursor-pointer" />
         </div>
         <DialogHeader>
-          <DialogTitle className="text-[24px] font-semibold mb-[18.5px]">
+          <DialogTitle className="text-[30px] font-semibold mb-[18.5px]">
             Update Membership Plan
           </DialogTitle>
-          <form onSubmit={handleSubmit(onSubmitHandler)} className="space-y-5">
+          <form onSubmit={handleSubmit(onsubmit)} className="space-y-5">
             {/* Title Field */}
             <div className="flex flex-col gap-1">
               <label>Title</label>
@@ -123,9 +141,9 @@ const UpdateDataDialog = ({
             </div>
 
             {/* Features Section */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 md:mt-0 mt-5">
               {features.map((feature, idx) => (
-                <div className="flex items-center gap-2" key={idx}>
+                <div className="flex items-center gap-1" key={idx}>
                   <div className="flex items-center justify-center bg-[#D9D9D9] rounded-full p-[2px]">
                     <MdOutlineDone className="text-sm" />
                   </div>
@@ -133,48 +151,68 @@ const UpdateDataDialog = ({
                     {feature.title}{" "}
                     <LiaTimesSolid
                       className="text-red-500 cursor-pointer"
-                      onClick={() => handleRemoveFeature(feature)}
+                      onClick={() => handleRemoveFeature(feature, idx)}
                     />
                   </p>
                 </div>
               ))}
             </div>
 
-            {/* Add New Feature */}
-            {showFeatureInput && (
-              <div className="flex gap-2 items-center">
+            {/* Add New Membership Plan Link */}
+            {show && (
+              <div className={`flex gap-2 items-center `}>
                 <Input
+                  className=""
                   placeholder="Add new feature"
                   id="featureInput"
-                  className="flex-1"
                 />
                 <Button
-                  onClick={handleAddFeature}
+                  onClick={(e) => handleAddFeatures(e)}
                   className="px-[12px] py-[6px]"
-                  type="button"
                 >
                   <LiaPlusSolid />
                 </Button>
               </div>
             )}
             <Button
-              variant="ghost"
+              variant={"ghost"}
               className="flex items-center gap-2 mt-5 text-[#0872BA]"
-              onClick={handleShowFeatureInput}
+              onClick={(e) => handleShow(e)}
             >
-              <LiaPlusSolid /> Add new feature
+              <LiaPlusSolid className="" /> Add new membership plan
             </Button>
+
+            {/* Interval Field */}
+            <Controller
+              name="active"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  onValueChange={(value) => field.onChange(value === "true")} // Convert string back to boolean
+                  defaultValue={field.value ? "true" : "false"} // Convert boolean to string
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select billing interval" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="true">true</SelectItem>
+                    <SelectItem value="false">false</SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
+            />
 
             {/* Price Field */}
             <div className="flex flex-col gap-1 mt-3">
               <label>Price</label>
               <Controller
+                disabled
                 name="amount"
                 control={control}
                 render={({ field }) => (
                   <Input
                     {...field}
-                    type="number"
+                    type="string"
                     placeholder="Enter price"
                     className="border p-2 rounded"
                   />
@@ -187,14 +225,31 @@ const UpdateDataDialog = ({
               )}
             </div>
 
-            {/* Submit Button */}
-            <div className="flex justify-end gap-4 mt-5">
+            {/* Submit and Cancel Buttons */}
+            <div className="flex justify-center items-center gap-4 mt-5">
               <Button
-                type="submit"
-                className="bg-blue-500 text-white px-6 py-2 rounded-full"
+                type="button"
+                onClick={onClose}
+                className="bg-gray-500 text-white px-6 py-2 rounded-full"
               >
-                Update
+                Cancel
               </Button>
+              {isCreating ? (
+                <Button
+                  type="submit"
+                  className="bg-blue-500 text-white px-6 py-2 rounded-full flex items-center"
+                >
+                  <Loader2 className="animate-spin" />
+                  Updating..
+                </Button>
+              ) : (
+                <Button
+                  type="submit"
+                  className="bg-blue-500 text-white px-6 py-2 rounded-full"
+                >
+                  Submit
+                </Button>
+              )}
             </div>
           </form>
         </DialogHeader>

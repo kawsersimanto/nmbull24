@@ -1,12 +1,16 @@
 import { membershipPlan } from '@/types/membershipPlan';
 import CheckIcon from '../icon/CheckIcon';
 import ArrowLeftIcon from '../icon/ArrowLeftIcon';
+import { useState } from 'react';
+import Payments from '../payments/Payments';
 
 type MembershipCardProps = {
   plan: membershipPlan;
 };
 
 export default function MembershipCard({ plan }: MembershipCardProps) {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
     <div className="bg-[#fff] border-1 border rounded-xl p-6">
       <h2 className="text-[28px] text-[#000] font-bold mb-4">{plan.name}</h2>
@@ -32,13 +36,20 @@ export default function MembershipCard({ plan }: MembershipCardProps) {
 
         {/* Button Section */}
         <div className="ml-4">
-          <button className="bg-[#0077CC] text-white lg:px-4  px-2 py-2 rounded-lg hover:bg-[#0066B3] transition-colors flex items-center">
+          <button className="bg-[#0077CC] text-white lg:px-4  px-2 py-2 rounded-lg hover:bg-[#0066B3] transition-colors flex items-center"
+           onClick={() => setIsOpen(true)}
+           >
             Continue with this
             <span className="ml-2"><ArrowLeftIcon width={15} height={14} stroke={"#FFFFFF"}/>
             </span>
           </button>
         </div>
       </div>
+      <Payments
+        isOpen={isOpen} 
+        onClose={() => setIsOpen(false)}
+        amount={12.00}
+      />
     </div>
   );
 }

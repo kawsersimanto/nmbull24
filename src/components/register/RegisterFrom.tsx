@@ -10,10 +10,14 @@ import { useForm } from "react-hook-form";
 import { useRegisterUserMutation } from "@/redux/Api/userApi";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { setRegister } from "@/redux/allSlice/registerSlice";
+import Loader from "../Loader";
 
 const RegisterForm = () => {
-    const [registerUser, { isLoading, isError, error }] = useRegisterUserMutation(); // Hook usage
+    const [registerUser, { isLoading, isError, error }] = useRegisterUserMutation(); 
     const router=useRouter()
+    const dispatch=useDispatch()
   
 
   const {
@@ -26,6 +30,11 @@ const RegisterForm = () => {
   const onSubmit = async (data: RegistrationFormData) => {
     try {
         const response = await registerUser(data).unwrap();
+        dispatch(setRegister({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+        }));
        
 
      
@@ -41,7 +50,9 @@ reset()
 };
  
   return (
-    <div className="pt-5 pb-6 px-6 bg-[rgba(56,56,56,0.20)] backdrop-blur-[12px] rounded-xl">
+  <>
+          <Loader isOpen={isLoading} message="Register Runing" />
+          <div className="pt-5 pb-6 px-6 bg-[rgba(56,56,56,0.20)] backdrop-blur-[12px] rounded-xl">
       <Card className="w-full bg-transparent border-none p-0">
         <CardHeader className="p-0">
           <CardTitle className="text-2xl text-white mb-[26px]">
@@ -134,6 +145,7 @@ reset()
         </form>
       </Card>
     </div>
+  </>
   );
 };
 

@@ -1,11 +1,10 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { MembershipPlanType } from "@/types/MembershipPlanType";
 import React, { useState } from "react";
 import { LiaEdit } from "react-icons/lia";
 import { MdOutlineDone } from "react-icons/md";
 import UpdateDataDialog from "../Dialogs/UpdateDataDialogs/UpdateDataDialog";
+import { useUpdatePlanMutation } from "@/redux/Api/membershipPlansApi";
 
 interface Props {
   membership: MembershipPlanType;
@@ -14,12 +13,13 @@ interface Props {
 const MembershipCard = ({ membership }: Props) => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
+  console.log(membership);
+
   // Handle dialog visibility
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
 
   const handleUpdateSubmit = (updatedData: MembershipPlanType) => {
-    console.log("Updated Data:", updatedData);
     closeDialog();
   };
 
@@ -42,7 +42,7 @@ const MembershipCard = ({ membership }: Props) => {
 
       {/* Features List */}
       <div className="flex flex-col gap-2 mt-4">
-        {membership.list.map((feature, idx) => (
+        {membership.features.map((feature, idx) => (
           <div className="flex items-center gap-2" key={idx}>
             <div className="flex items-center justify-center bg-[#D9D9D9] rounded-full p-[2px]">
               <MdOutlineDone className="text-sm" />
@@ -64,10 +64,15 @@ const MembershipCard = ({ membership }: Props) => {
         onClose={closeDialog}
         onSubmit={handleUpdateSubmit}
         initialData={{
-          id: membership.id,
+          id: membership.id || "", 
           name: membership.name,
-          list: membership.list,
+          features: membership.features,
           amount: membership.amount,
+          billingInterval: membership.billingInterval as
+            | "month"
+            | "year"
+            | "lifetime", // Ensure this is one of the allowed values
+          active: membership.active,
         }}
       />
     </div>

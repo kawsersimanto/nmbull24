@@ -31,6 +31,7 @@ ChartJS.register(
   Legend
 );
 
+// Chart options
 const options = {
   responsive: true,
   plugins: {
@@ -55,9 +56,21 @@ const labels = [
   "Dec",
 ];
 
+interface MonthlyData {
+  month: string;
+  totalRevenue: number;
+  totalCount: number;
+}
+
 const StatisticsChart = () => {
-  const [selectedPeriod, setSelectedPeriod] = useState("this-year");
-  const [data, setData] = useState<any>(null); // This will store the dynamic data
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [selectedPeriod, setSelectedPeriod] = useState<
+    "this-year" | "last-year"
+  >("this-year");
+  const [selectedYear, setSelectedYear] = useState<number>(
+    new Date().getFullYear()
+  );
 
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1024px)" });
 
@@ -67,48 +80,45 @@ const StatisticsChart = () => {
     aspectRatio: isTabletOrMobile ? 1 : 2,
   };
 
-  // Current Month (zero-based index: 0 = January, 11 = December)
-  const currentMonth = new Date().getMonth(); // Returns a value between 0 and 11
+  // Fetch data based on the selected year
+  const fetchData = async (year: number) => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `https://nmbull.vercel.app/api/v1/payment/monthly-statistic?year=${year}`
+      );
+      const result = await response.json();
 
-  // Simulated dummy data for "This Year" and "Last Year"
-  const thisYearData = {
-    business: [65, 75, 70, 80, 60, 75, 90, 70, 80, 75, 70, 80], // Full year data
-    standard: [35, 45, 35, 45, 35, 45, 35, 45, 35, 45, 35, 45], // Full year data
+      if (result.success) {
+        const businessData = result.data.map(
+          (item: MonthlyData) => item.totalRevenue
+        );
+        setData({
+          labels,
+          datasets: [
+            {
+              label: `Business (${year})`,
+              data: businessData,
+              backgroundColor: "#2563eb",
+            },
+          ],
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const lastYearData = {
-    business: [55, 65, 60, 70, 50, 65, 80, 60, 70, 65, 60, 70],
-    standard: [30, 40, 30, 40, 30, 40, 30, 40, 30, 40, 30, 40],
-  };
-
-  // Fetch or switch data based on selected period
   useEffect(() => {
-    // Adjust "This Year" data to only include up to the current month
-    const adjustedThisYearData = {
-      business: thisYearData.business.slice(0, currentMonth + 1),
-      standard: thisYearData.standard.slice(0, currentMonth + 1),
-    };
-
-    // Select data based on the selected period
-    const dataset =
-      selectedPeriod === "this-year" ? adjustedThisYearData : lastYearData;
-
-    setData({
-      labels: labels.slice(0, currentMonth + 1), // Only show labels up to the current month
-      datasets: [
-        {
-          label: "Business",
-          data: dataset.business,
-          backgroundColor: "#2563eb",
-        },
-        {
-          label: "Standard",
-          data: dataset.standard,
-          backgroundColor: "#f97316",
-        },
-      ],
-    });
-  }, [selectedPeriod]); // Only trigger the effect when selectedPeriod changes
+    const year =
+      selectedPeriod === "this-year"
+        ? new Date().getFullYear()
+        : new Date().getFullYear() - 1;
+    setSelectedYear(year);
+    fetchData(year);
+  }, [selectedPeriod]);
 
   return (
     <Card>
@@ -116,7 +126,12 @@ const StatisticsChart = () => {
         <CardTitle className="md:text-[18px] font-semibold text-sm">
           Statistics
         </CardTitle>
-        <Select defaultValue="this-year" onValueChange={setSelectedPeriod}>
+        <Select
+          defaultValue="this-year"
+          onValueChange={(value) =>
+            setSelectedPeriod(value as "this-year" | "last-year")
+          }
+        >
           <SelectTrigger className="md:w-[94px] w-[70px] !p-[8px] text-[12px]">
             <SelectValue placeholder="Select period" />
           </SelectTrigger>
@@ -128,10 +143,12 @@ const StatisticsChart = () => {
       </CardHeader>
       <CardContent className="flex items-center justify-center w-full">
         <div className="w-full md:px-4 px-1">
-          {data ? (
+          {loading ? (
+            <p>Loading data...</p>
+          ) : data ? (
             <Bar className="!w-full" options={responsiveOptions} data={data} />
           ) : (
-            <p>Loading data...</p>
+            <p>No data available.</p>
           )}
         </div>
       </CardContent>

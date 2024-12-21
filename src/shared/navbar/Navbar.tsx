@@ -5,8 +5,12 @@ import { menuItems } from "@/constants/menuItems";
 import Image from "next/image";
 import Link from "next/link";
 import { SideDrawer } from "../side-drawer/SideDrawer";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const Navbar = () => {
+    // Get the user data from Redux store
+    const user = useSelector((state: RootState) => state.Auth);
   return (
     <div className="fixed top-6 left-0 right-0 z-[999]">
       <div className="container">
@@ -33,7 +37,17 @@ const Navbar = () => {
             </ul>
             <div className="flex items-center gap-3">
               <SideDrawer className="lg:hidden" />
-              <Profile />
+              {user?.token ? (
+            <Profile/>
+               
+              ) : (
+                <Link
+                  href="/login"
+                  className="bg-white py-[10px] lg:px-6 px-4 rounded-xl lg:font-semibold font-medium text-primary"
+                >
+                  Log in
+                </Link>
+              )}
             </div>
           </div>
         </div>

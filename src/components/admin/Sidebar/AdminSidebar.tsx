@@ -11,6 +11,13 @@ import { CiMenuFries } from "react-icons/ci";
 import { AiOutlineLogout } from "react-icons/ai";
 import logoutSvg from "@/assets/dashboard/logout.svg";
 import Link from "next/link";
+import { logOut } from "@/redux/ReduxFunction";
+
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { clearFormData } from "@/redux/allSlice/formslice";
+import { clearRegister } from "@/redux/allSlice/registerSlice";
+import Cookies from "js-cookie";
 
 interface props {
   expand: boolean;
@@ -19,7 +26,21 @@ interface props {
 
 const Sidebar = ({ expand, setExpand }: props) => {
   // const [expand, setExpand] = useState(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
   const handleclick = () => {};
+
+  const handleLogout = () => {
+    // Remove token from cookies
+    Cookies.remove("token");
+
+    // Dispatch the logOut action to update the Redux store
+    dispatch(logOut());
+    // Clear the registration and form data
+    dispatch(clearFormData());
+    dispatch(clearRegister());
+    router.push("/login");
+  };
 
   return (
     <div
@@ -66,25 +87,30 @@ const Sidebar = ({ expand, setExpand }: props) => {
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2  w-full">
         <div className="flex items-center justify-center md:gap-2 gap-1">
-          <Image
-            src={logoutSvg}
-            height={24}
-            width={24}
-            alt=""
-            className={`size-6 ${expand ? "flex" : "flex"}`}
-            unoptimized
-          />
-          {
-            <p
-              className={`${
-                expand
-                  ? "md:flex block md:text-[16px] text-sm"
-                  : "md:flex hidden "
-              } text-[#0F0F0F]`}
-            >
-              Logout
-            </p>
-          }
+          <button
+            onClick={() => handleLogout()}
+            className="flex items-center md:gap-2 gap-1"
+          >
+            <Image
+              src={logoutSvg}
+              height={24}
+              width={24}
+              alt=""
+              className={`size-6 ${expand ? "flex" : "flex"}`}
+              unoptimized
+            />
+            {
+              <p
+                className={`${
+                  expand
+                    ? "md:flex block md:text-[16px] text-sm"
+                    : "md:flex hidden "
+                } text-[#0F0F0F]`}
+              >
+                Logout
+              </p>
+            }
+          </button>
         </div>
       </div>
     </div>
